@@ -3,6 +3,8 @@ zood
 #### Check out the project
 $ git clone https://github.com/orodsem/zood.git
 
+$ composer install
+
 #### Run symfony server
 $ php bin/console server:run
 
