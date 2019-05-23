@@ -49,6 +49,12 @@ class Provider
      */
     private $password;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deleted", type="boolean", options={"default":"0"}))
+     */
+    private $deleted;
 
     /**
      * Get id
@@ -154,6 +160,22 @@ class Provider
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param string $deleted
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
     }
 }
 
