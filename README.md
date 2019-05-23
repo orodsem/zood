@@ -9,7 +9,7 @@ $ composer install
 $ php bin/console server:run
 
 #### Run the API
-Endpoint: http://localhost:8000/provider
+Endpoint: http://localhost:8000/providers
 
 Method: GET
 
