@@ -10,3 +10,7 @@ provider:
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+#app_register:
+#    path:     /recognition/reply
+#    defaults: { _controller: DitttoRecognitionBundle:Default:recogniseBack }

@@ -1,76 +1,186 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div id="wrapper">
-        <div id="container">
-            <div id="welcome">
-                <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
-            </div>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Effortless medical tourism for everyone</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-            <div id="status">
-                <p>
-                    <svg id="icon-status" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1671 566q0 40-28 68l-724 724-136 136q-28 28-68 28t-68-28l-136-136-362-362q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295 656-657q28-28 68-28t68 28l136 136q28 28 28 68z" fill="#759E1A"/></svg>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </head>
+    <body>
 
-                    Your application is now ready. You can start working on it at:
-                    <code>{{ base_dir }}</code>
-                </p>
-            </div>
+    <div class="container">
+        <div class="logo-container"><img class="logo" src="{{ asset('/img/zood-logo.png') }}"></div>
+        <h2 class="slogan header-top">Book you overseas doctor at <span style="color: #DD8508">ZOOD</span></h2>
+        <h2 class="slogan header-bottom">hassle free and secure</h2>
 
-            <div id="next">
-                <h2>What's next?</h2>
-                <p>
-                    <svg id="icon-book" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="-12.5 9 64 64" enable-background="new -12.5 9 64 64" xml:space="preserve">
-                        <path fill="#AAA" d="M6.8,40.8c2.4,0.8,4.5-0.7,4.9-2.5c0.2-1.2-0.3-2.1-1.3-3.2l-0.8-0.8c-0.4-0.5-0.6-1.3-0.2-1.9
-                            c0.4-0.5,0.9-0.8,1.8-0.5c1.3,0.4,1.9,1.3,2.9,2.2c-0.4,1.4-0.7,2.9-0.9,4.2l-0.2,1c-0.7,4-1.3,6.2-2.7,7.5
-                            c-0.3,0.3-0.7,0.5-1.3,0.6c-0.3,0-0.4-0.3-0.4-0.3c0-0.3,0.2-0.3,0.3-0.4c0.2-0.1,0.5-0.3,0.4-0.8c0-0.7-0.6-1.3-1.3-1.3
-                            c-0.6,0-1.4,0.6-1.4,1.7s1,1.9,2.4,1.8c0.8,0,2.5-0.3,4.2-2.5c2-2.5,2.5-5.4,2.9-7.4l0.5-2.8c0.3,0,0.5,0.1,0.8,0.1
-                            c2.4,0.1,3.7-1.3,3.7-2.3c0-0.6-0.3-1.2-0.9-1.2c-0.4,0-0.8,0.3-1,0.8c-0.1,0.6,0.8,1.1,0.1,1.5c-0.5,0.3-1.4,0.6-2.7,0.4l0.3-1.3
-                            c0.5-2.6,1-5.7,3.2-5.8c0.2,0,0.8,0,0.8,0.4c0,0.2,0,0.2-0.2,0.5c-0.2,0.3-0.3,0.4-0.2,0.7c0,0.7,0.5,1.1,1.2,1.1
-                            c0.9,0,1.2-1,1.2-1.4c0-1.2-1.2-1.8-2.6-1.8c-1.5,0.1-2.8,0.9-3.7,2.1c-1.1,1.3-1.8,2.9-2.3,4.5c-0.9-0.8-1.6-1.8-3.1-2.3
-                            c-1.1-0.7-2.3-0.5-3.4,0.3c-0.5,0.4-0.8,1-1,1.6c-0.4,1.5,0.4,2.9,0.8,3.4l0.9,1c0.2,0.2,0.6,0.8,0.4,1.5c-0.3,0.8-1.2,1.3-2.1,1
-                            c-0.4-0.2-1-0.5-0.9-0.9c0.1-0.2,0.2-0.3,0.3-0.5s0.1-0.3,0.1-0.3c0.2-0.6-0.1-1.4-0.7-1.6c-0.6-0.2-1.2,0-1.3,0.8
-                            C4.3,38.4,4.7,40,6.8,40.8z M46.1,20.9c0-4.2-3.2-7.5-7.1-7.5h-3.8C34.8,10.8,32.7,9,30.2,9L-2.3,9.1c-2.8,0.1-4.9,2.4-4.9,5.4
-                            L-7,58.6c0,4.8,8.1,13.9,11.6,14.1l34.7-0.1c3.9,0,7-3.4,7-7.6L46.1,20.9z M-0.3,36.4c0-8.6,6.5-15.6,14.5-15.6
-                            c8,0,14.5,7,14.5,15.6S22.1,52,14.2,52C6.1,52-0.3,45-0.3,36.4z M42.1,65.1c0,1.8-1.5,3.1-3.1,3.1H4.6c-0.7,0-3-1.8-4.5-4.4h30.4
-                            c2.8,0,5-2.4,5-5.4V17.9h3.7c1.6,0,2.9,1.4,2.9,3.1V65.1L42.1,65.1z"/>
-                    </svg>
+        <h3 class="">Combine your next trip with a joyful retreat of mind, body and soul</h3>
+        <h3>Search through hundreds of health and beaty professinals overseaes</h3>
 
-                    Read the documentation to learn
-                    <a href="https://symfony.com/doc/{{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION')[:3] }}/page_creation.html">
-                        How to create your first page in Symfony
-                    </a>
-                </p>
-            </div>
+        <input type="email" value="" name="EMAIL" class="email-field" id="email-field" placeholder="Register your interest here and receive 5% discount for your first appointment">
 
-        </div>
+        <input type="submit" value="Subscribe" name="subscribe" id="subscribe-button" class="">
+
     </div>
+
+
+    <footer>
+        <div>Copyright © 2019 ZOOD - All Rights Reserved.</div>
+        <div>ABN: 1234 5678</div>
+    </footer>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    </body>
+    </html>
+
+
+    <script>
+        // remap jQuery to $
+        (function($){
+
+            /* trigger when page is ready */
+            $(document).ready(function (){
+
+                // your functions go here
+                $('#email-field').click(function() {
+                    $(this).addClass("active");
+                    $(this).attr('placeholder','Email Address...');
+                    $('#subscribe-button').addClass("show");
+                });
+
+                $('#subscribe-button').click(function(){
+                    var email = $('#email-field').val();
+
+                    console.log(email);
+
+                    $.ajax({
+                        url: '{{ (path('register')) }}',
+                        type: "GET",
+                        dataType: "json",
+                        data: {
+                            "email": email
+                        },
+                        success: function (data)
+                        {
+                        }
+                    });
+
+                });
+            });
+
+        })(window.jQuery);
+    </script>
+
+
 {% endblock %}
 
 {% block stylesheets %}
-<style>
-    body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
-    h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
-    h1 { font-size: 36px; }
-    h2 { font-size: 21px; margin-bottom: 1em; }
-    p { margin: 0 0 1em 0; }
-    a { color: #0000F0; }
-    a:hover { text-decoration: none; }
-    code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
-    #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
-    #container { padding: 2em; }
-    #welcome, #status { margin-bottom: 2em; }
-    #welcome h1 span { display: block; font-size: 75%; }
-    #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
-    #icon-book { display: none; }
+    <style>
+        body {
+            background-color: #F3F7FA !important;
+            color: #DD8508;
+            font-family: Lato, Tahoma, sans-serif;
+        }
 
-    @media (min-width: 768px) {
-        #wrapper { width: 80%; margin: 2em auto; }
-        #icon-book { display: inline-block; }
-        #status a, #next a { display: block; }
+        .logo-container {
+            text-align: center;
+            /*width: 60%;*/
+            padding: 10px;
+        }
 
-        @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
-        .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
-    }
+        .logo {
+            width: 250px !important;
+        }
+
+        .slogan {
+            font-size: 3em;
+            color: #243041;
+        }
+
+        /* style input field text */
+        ::-webkit-input-placeholder {
+            color: #f4f2ca;
+            opacity: .8;
+        }
+
+        /* Input field that looks like a button */
+        .email-field {
+            display: inline-block;
+            color: #f4f2ca;
+            text-align: center;
+            background-color: #243041;
+            padding: .9em 1.8em;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            -webkit-transition: all .1s linear;
+            -moz-transition: all .1s linear;
+            transition: all .1s linear;
+        }
+        .email-field:hover {
+            background-color: #243041;
+        }
+
+        /* after button is clicked */
+        .email-field.active {
+            width: 400px;
+            outline: none;
+            /*color: #efaa9d;*/
+            text-align: left;
+            cursor: inherit;
+        }
+
+        /* Email submit button */
+        #subscribe-button {
+            width: 35px;
+            height: 35px;
+            border: none;
+            text-indent: -9999px;
+            opacity: .25;
+            background: url(http://helixpowered.com/assets/img/arrow-circle-on-right.svg) no-repeat;
+            background-size: 13px;
+            background-position: 0 1px;
+            -webkit-transition: all .2s linear;
+            -moz-transition: all .2s linear;
+            transition: all .2s linear;
+
+            cursor: pointer; /* for demo only */
+
+            display: none;
+        }
+        #subscribe-button:hover {
+            opacity: .33;
+        }
+
+        #subscribe-button.show {
+            display: inline-block;
+            background-size: 33px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: .7em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header-top {
+            margin-bottom: 0px;
+        }
+        .header-bottom {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
 </style>
 {% endblock %}
