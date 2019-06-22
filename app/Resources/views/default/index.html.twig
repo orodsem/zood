@@ -4,38 +4,46 @@
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <title>Effortless medical tourism for everyone</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <title>ZOOD</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="ZOOD">
+        <link rel="shortcut icon" type="image/ico" href="favicon.ico">
+        <link rel="stylesheet" href="dist/main.css" type="text/css">
     </head>
     <body>
+    <section class="initial-section">
+        <div class="logo"></div>
 
-    <div class="container">
-        <div class="logo-container"><img class="logo" src="{{ asset('/img/zood-logo.png') }}"></div>
-        <h2 class="slogan header-top">Book you overseas doctor at <span style="color: #DD8508">ZOOD</span></h2>
-        <h2 class="slogan header-bottom">hassle free and secure</h2>
+        <div class="row row-center no-margin-bottom">
+            <h1 class="text-center no-margin-bottom">Book your overseas doctor.</h1>
+        </div>
+        <div class="row row-center margin-bottom-large">
+            <h3 class="no-margin-bottom text-center">Hassle free and secure</h3>
+        </div>
 
-        <h3 class="">Combine your next trip with a joyful retreat of mind, body and soul</h3>
-        <h3>Search through hundreds of health and beaty professinals overseaes</h3>
-
-        <input type="email" value="" name="EMAIL" class="email-field" id="email-field" placeholder="Register your interest here and receive 5% discount for your first appointment">
-
-        <input type="submit" value="Subscribe" name="subscribe" id="subscribe-button" class="">
-
-    </div>
+    </section>
+    <section class="implied-bg">
 
 
-    <footer>
-        <div>Copyright © 2019 ZOOD - All Rights Reserved.</div>
-        <div>ABN: 1234 5678</div>
-    </footer>
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
+        <div class="row row-center">
+            <h3 class="text-center no-margin-bottom">Enter your email for early subsciption</h3>
+        </div>
+        <div class="row row-center" style="position: relative;max-width: 300px; margin: 2em auto;">
+            <input type="email" class="margin-bottom-small regular-input" id="email-field" />
+            <div class="submit-email"></div>
+        </div>
+        <div class="row row-center">
+            <p class="text-center">Combine your next trip with a joyful retreat of mind, body and soul.
+                <br />
+                Search through hundreds of health and beauty professionals overseas</p>
+        </div>
+        <div>
+        </div>
+        <div class="footer">
+            <p>Copyright &copy; 2019 ZOOD - All rights reserved.</p>
+            <p>ABN: 1234 5678</p>
+        </div>
+    </section>
     </body>
     </html>
 
@@ -46,15 +54,7 @@
 
             /* trigger when page is ready */
             $(document).ready(function (){
-
-                // your functions go here
-                $('#email-field').click(function() {
-                    $(this).addClass("active");
-                    $(this).attr('placeholder','Email Address...');
-                    $('#subscribe-button').addClass("show");
-                });
-
-                $('#subscribe-button').click(function(){
+                $('.submit-email').click(function(){
                     var email = $('#email-field').val();
 
                     console.log(email);
@@ -81,106 +81,5 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <style>
-        body {
-            background-color: #F3F7FA !important;
-            color: #DD8508;
-            font-family: Lato, Tahoma, sans-serif;
-        }
 
-        .logo-container {
-            text-align: center;
-            /*width: 60%;*/
-            padding: 10px;
-        }
-
-        .logo {
-            width: 250px !important;
-        }
-
-        .slogan {
-            font-size: 3em;
-            color: #243041;
-        }
-
-        /* style input field text */
-        ::-webkit-input-placeholder {
-            color: #f4f2ca;
-            opacity: .8;
-        }
-
-        /* Input field that looks like a button */
-        .email-field {
-            display: inline-block;
-            color: #f4f2ca;
-            text-align: center;
-            background-color: #243041;
-            padding: .9em 1.8em;
-            border: none;
-            cursor: pointer;
-            outline: none;
-            -webkit-border-radius: 4px;
-            -moz-border-radius: 4px;
-            border-radius: 4px;
-            -webkit-transition: all .1s linear;
-            -moz-transition: all .1s linear;
-            transition: all .1s linear;
-        }
-        .email-field:hover {
-            background-color: #243041;
-        }
-
-        /* after button is clicked */
-        .email-field.active {
-            width: 400px;
-            outline: none;
-            /*color: #efaa9d;*/
-            text-align: left;
-            cursor: inherit;
-        }
-
-        /* Email submit button */
-        #subscribe-button {
-            width: 35px;
-            height: 35px;
-            border: none;
-            text-indent: -9999px;
-            opacity: .25;
-            background: url(http://helixpowered.com/assets/img/arrow-circle-on-right.svg) no-repeat;
-            background-size: 13px;
-            background-position: 0 1px;
-            -webkit-transition: all .2s linear;
-            -moz-transition: all .2s linear;
-            transition: all .2s linear;
-
-            cursor: pointer; /* for demo only */
-
-            display: none;
-        }
-        #subscribe-button:hover {
-            opacity: .33;
-        }
-
-        #subscribe-button.show {
-            display: inline-block;
-            background-size: 33px;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            font-size: .7em;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .header-top {
-            margin-bottom: 0px;
-        }
-        .header-bottom {
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-</style>
 {% endblock %}
