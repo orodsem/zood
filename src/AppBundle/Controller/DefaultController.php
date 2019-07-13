@@ -35,22 +35,26 @@ class DefaultController extends Controller
      */
     public function registerAction(Request $request)
     {
-        $email = $request->get('email', null);
+        try {
+            $email = $request->get('email', null);
 
-        if (empty($email)) {
+            if (empty($email)) {
+                return new View('all good', Response::HTTP_OK);
+            }
+
+            $registeredUser = new RegisteredUser();
+            $registeredUser->setEmail($email);
+
+            $em = $this->getDoctrine()->getManager();
+
+
+            $em->persist($registeredUser);
+            $em->flush();
+
             return new View('all good', Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return new View($e->getMessage(), Response::HTTP_OK);
         }
-
-        $registeredUser = new RegisteredUser();
-        $registeredUser->setEmail($email);
-
-        $em = $this->getDoctrine()->getManager();
-
-
-        $em->persist($registeredUser);
-        $em->flush();
-
-        return new View('all good', Response::HTTP_OK);
 
 //        // Create the message
 //        $emailMessage = (new \Swift_Message('Recovery Link'))
