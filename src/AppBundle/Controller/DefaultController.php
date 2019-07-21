@@ -46,14 +46,12 @@ class DefaultController extends Controller
             $registeredUser->setEmail($email);
 
             $em = $this->getDoctrine()->getManager();
-
-
             $em->persist($registeredUser);
             $em->flush();
 
             return new View('all good', Response::HTTP_OK);
         } catch (\Exception $e) {
-            return new View($e->getMessage(), Response::HTTP_OK);
+            return new View($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
 //        // Create the message

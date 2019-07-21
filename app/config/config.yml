@@ -1,6 +1,5 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: parameters_dev.yml }
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@ProviderBundle/Resources/config/services.yml" }
