@@ -3,7 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\RegisteredUser;
+use AppBundle\Repository\RegisteredUserRepository;
 use FOS\RestBundle\View\View;
+use ProviderBundle\Entity\Provider;
+use ProviderBundle\Repository\ProviderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,20 +39,35 @@ class DefaultController extends Controller
     public function registerAction(Request $request)
     {
         try {
+            $clientIpAddress = $request->getClientIp();
             $email = $request->get('email', null);
 
             if (empty($email)) {
-                return new View('all good', Response::HTTP_OK);
+                return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
+            }
+
+            /** @var RegisteredUserRepository $repo */
+            $repo = $this->getDoctrine()->getRepository(RegisteredUser::class);
+            $registeredUser = $repo->findBy(['email' => $email]);
+
+            if (!empty($registeredUser)) {
+                // already registered
+                return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
             }
 
             $registeredUser = new RegisteredUser();
             $registeredUser->setEmail($email);
+            $registeredUser->setIpAddress($clientIpAddress);
 
+            if (!$registeredUser->isEmailValid()) {
+                // invalid email
+                return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($registeredUser);
             $em->flush();
 
-            return new View('all good', Response::HTTP_OK);
+            return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
         } catch (\Exception $e) {
             return new View($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }

@@ -57,8 +57,6 @@
                 $('.submit-email').click(function(){
                     var email = $('#email-field').val();
 
-                    console.log(email);
-
                     $.ajax({
                         url: '{{ (path('register')) }}',
                         type: "GET",
