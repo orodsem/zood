@@ -1,71 +1,137 @@
 {% extends 'base.html.twig' %}
 
+{% block styles %}
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <title>ZOOD</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="ZOOD">
-        <link rel="shortcut icon" type="image/ico" href="{{ asset('favicon.ico') }}">
-        <link rel="stylesheet" href="dist/main.css" type="text/css">
-    </head>
-    <body>
-    <section class="initial-section">
-        <div class="logo"></div>
+    <div class="container-fluid">
 
-        <div class="row row-center no-margin-bottom">
-            <h1 class="text-center no-margin-bottom">Book your overseas doctor.</h1>
-        </div>
-        <div class="row row-center margin-bottom-large">
-            <h3 class="no-margin-bottom text-center">Hassle free and secure</h3>
-        </div>
+        <div class="row">
+            <div class="col-md-7 col-sm-12">
 
-    </section>
-    <section class="implied-bg">
+                <div class="row header">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="logo"></div>
+                    </div>
+                    <div class="col-md-6 col-sm-12 tag-line">
+                        Health Without A Border
+                    </div><!-- .col-md-6 -->
+                </div><!-- .row -->
 
+                <div class="row">
+                    <div class="col">
+                        <ul class="feature-list">
+                            <li>
+                                Book your overseas cosmetic doctor, dentist, herbal, medicine,
+                                yoga or meditation camp at ZOOD.
+                            </li>
+                            <li>
+                                Secure and hassle free
+                            </li>
+                            <li>
+                                Get to know them before booking your flight
+                            </li>
+                        </ul><!-- .feature-list -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
 
-        <div class="row row-center">
-            <h3 class="text-center no-margin-bottom">Enter your email for early subsciption</h3>
-        </div>
-        <div class="row row-center" style="position: relative;max-width: 300px; margin: 2em auto;">
-            <input type="email" class="margin-bottom-small regular-input" id="email-field" />
-            <div class="submit-email"></div>
-        </div>
-        <div class="row row-center">
-            <p class="text-center">Combine your next trip with a joyful retreat of mind, body and soul.
-                <br />
-                Search through hundreds of health and beauty professionals overseas</p>
-        </div>
-        <div>
-        </div>
-        <div class="footer">
-            <p>Copyright &copy; 2019 ZOOD - All rights reserved.</p>
-            <p>ABN: 1234 5678</p>
-        </div>
-    </section>
-    </body>
-    </html>
+            </div><!-- .col-md-7 -->
 
+            <div class="col-md-5 col-sm-12 subscribtion-wrapper">
+                <div class="col subscribtion-container">
+                    <p>
+                        Subscribe here to recieve
+                        5% discount for your first
+                        booking
+                    </p>
+                    <div class="input-group mb-3">
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Your Email..." aria-label="Recipient's email" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="btn-send">Send</button>
+                        </div>
+                    </div>
+                </div><!-- .col -->
+            </div><!-- .col-md-5 -->
+
+        </div><!-- .row -->
+
+        <div class="row card-container">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Convinience</p>
+                        <p class="card-text">
+                            Easy to search, compare the fees and services, location and availability
+                        </p>
+                    </div>
+                </div>
+            </div><!-- .col-md-4 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Clarity</p>
+                        <p class="card-text">
+                            Check their degree, experience, real testimonials all in one place
+                        </p>
+                    </div>
+                </div>
+            </div><!-- .col-md-4 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title">Security</p>
+                        <p class="card-text">
+                            Get the quote before booking, pay securely with your own currency
+                        </p>
+                    </div>
+                </div>
+            </div><!-- .col-md-4 -->
+        </div><!-- .row -->
+
+    </div><!-- .container-fluid -->
+{% endblock %}
+
+{% block scripts %}
+
+    <script src="/vendor/sweetalert/js/sweetalert.min.js"></script>
 
     <script>
+
+
+
         // remap jQuery to $
         (function($){
 
             /* trigger when page is ready */
             $(document).ready(function (){
-                $('.submit-email').click(function(){
-                    var email = $('#email-field').val();
+                $('#btn-send').click(function(){
+                    var email = $('#email');
 
                     $.ajax({
                         url: '{{ (path('register')) }}',
                         type: "GET",
                         dataType: "json",
                         data: {
-                            "email": email
+                            "email": email.val()
                         },
                         success: function (data)
                         {
+                            swal({
+                                title: "Than you!",
+                                text: data,
+                                icon: "success",
+                            });
+
+                            email.val(null);
+                        },
+                        error: function (xhr, status, errorThrown) {
+                            swal({
+                                title: "Something went wront!",
+                                text: "We have encountered an error with the message:'" + errorThrown + "'",
+                                icon: "error",
+                            });
                         }
                     });
 
@@ -74,10 +140,4 @@
 
         })(window.jQuery);
     </script>
-
-
-{% endblock %}
-
-{% block stylesheets %}
-
 {% endblock %}

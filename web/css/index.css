@@ -1,0 +1,118 @@
+*, h5, h6
+ {
+    font-family: 'Open Sans', Helvetica, sans-serif;
+    font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 767px) {
+    *, h5, h6
+    {
+        font-size: 1em;
+    }
+}
+
+.container-fluid {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.logo {
+    display: block;
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 170px;
+    width: auto;
+    background-image: url(../svg/logo.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin: 24px auto;
+}
+
+@media only screen and (max-width: 767px) {
+    .logo {
+        margin: 0 auto;
+        height: 100px;
+    }
+}
+
+.header .tag-line {
+    display: table-cell;
+    padding: 10px;
+    vertical-align: middle;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-weight: 500;
+    text-align: center;
+}
+
+@media only screen and (max-width: 480px) {
+    .header .tag-line {
+        padding: 0;
+        margin-top: 0;
+        margin-bottom: 30px;
+    }
+}
+
+.feature-list {
+    color: #0c7791;
+}
+
+.subscribtion-wrapper {
+    height: 120%;
+    padding-top: 120px;
+}
+
+@media only screen and (max-width: 767px) {
+    .subscribtion-wrapper {
+        padding-top: 0;
+    }
+}
+
+.subscribtion-wrapper .subscribtion-container {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    margin-top: 5%;
+    padding-top: 30px;
+    padding-bottom: 40px;
+    background: #f0940a;
+}
+
+@media only screen and (max-width: 767px) {
+    .subscribtion-wrapper .subscribtion-container {
+        margin-top: 0;
+        padding-top: 10px;
+        padding-bottom: 12px;
+    }
+}
+
+.subscribtion-wrapper .subscribtion-container p {
+    color: #fff;
+}
+
+.card-container {
+    margin-top: 50px;
+}
+
+@media only screen and (max-width: 767px) {
+    .card-container {
+        margin-top: 10px;
+        padding-bottom: 30px;
+    }
+}
+
+.card-container .card {
+    border-color: #00a6ff;
+    background: #b0e3ff;
+}
+
+@media only screen and (max-width: 767px) {
+    .card-container .card {
+        margin-top: 20px;
+    }
+}
