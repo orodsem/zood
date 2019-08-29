@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block styles %}
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
+
+    {% include 'templates/login.html.twig' %}
+
     <div class="container-fluid">
 
         <div class="row">
@@ -100,11 +103,9 @@
 {% block scripts %}
 
     <script src="/vendor/sweetalert/js/sweetalert.min.js"></script>
+    <script src="/js/login.js"></script>
 
     <script>
-
-
-
         // remap jQuery to $
         (function($){
 
@@ -141,6 +142,8 @@
 
                 });
             });
+
+            var login = new Login();
 
         })(window.jQuery);
     </script>
