@@ -133,8 +133,8 @@
                         },
                         error: function (xhr, status, errorThrown) {
                             swal({
-                                title: "Something went wront!",
-                                text: "We have encountered an error with the message:'" + errorThrown + "'",
+                                title: "Something went wrong!",
+                                text: "We apologize for the inconvinience. Please report this by sending us an email to contact@zood.com",
                                 icon: "error",
                             });
                         }
@@ -144,6 +144,7 @@
             });
 
             var login = new Login();
+            login.url = '{{ url('homepage') }}authenticate';
 
         })(window.jQuery);
     </script>
