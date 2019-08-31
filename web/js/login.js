@@ -7,9 +7,18 @@ class Login {
 
         var _this = this;
         this.url = '';
+        this.isLoading = false;
 
         $('#btn-login').on('click', function() {
             _this.tryLogin();
+        });
+
+        $('#loginModal').find('.alert').find('button').on('click', function() {
+            _this.hideModalError();
+        })
+
+        $('#loginModal').on('hide.bs.modal', function(e) {
+            _this.tryPreventModalClose(e);
         });
 
         // @todo: delete
@@ -20,8 +29,8 @@ class Login {
     tryLogin() {
 
         let _this = this;
-        let emailVal = $('#email').val();
-        let passwordVal = $('#password').val();
+        let emailVal = $('#modal-email').val();
+        let passwordVal = $('#modal-password').val();
         let rememberVal = $('#remember').val();
 
         this.showLoading();
@@ -34,10 +43,16 @@ class Login {
                 email: emailVal,
                 password: passwordVal
             },
-            success: function (data)
+            success: function (res)
             {
                 _this.hideLoading();
-                console.log(data);
+
+                if (!res.result || res.result == '400') {
+                    _this.showModalError(res.message);
+                    return;
+                }
+
+                window.location = res.data.url;
             },
             error: function (xhr, status, errorThrown) {
                 _this.hideLoading();
@@ -51,18 +66,43 @@ class Login {
 
     }
 
+    hideModalError() {
+        $('#loginModal').find('.alert').addClass('d-none');
+    }
+
+    showModalError(msg) {
+
+        if (typeof msg === 'undefined' || !msg)
+            return;
+
+        let modalAlert = $('#loginModal').find('.alert');
+        modalAlert.find('small').html(msg);
+        modalAlert.removeClass('d-none');
+    }
+
+    tryPreventModalClose(e) {
+
+        if(typeof e === 'undefined')
+            return;
+
+        if (this.isLoading)
+            e.preventDefault();
+    }
+
     showLoading() {
+        this.isLoading = true;
         $('#btn-login').attr('disabled', true);
-        $('#email').attr('disabled', true);
-        $('#password').attr('disabled', true);
+        $('#modal-email').attr('disabled', true);
+        $('#modal-password').attr('disabled', true);
         $('#login-text').addClass('d-none');
         $('#login-spinner').removeClass('d-none');
     }
 
     hideLoading() {
+        this.isLoading = false;
         $('#btn-login').attr('disabled', false);
-        $('#email').attr('disabled', false);
-        $('#password').attr('disabled', false);
+        $('#modal-email').attr('disabled', false);
+        $('#modal-password').attr('disabled', false);
         $('#login-text').removeClass('d-none');
         $('#login-spinner').addClass('d-none');
     }

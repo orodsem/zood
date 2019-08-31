@@ -18,6 +18,14 @@
                 </button>
             </div>
             <div class="modal-body">
+
+                <div class="alert alert-danger alert-dismissible fade show p-1 d-none rounded-0 text-center" role="alert">
+                  <small></small>
+                  <button type="button" class="close p-1 pr-2" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
                 <form action="" method="post" role="form" name="login-form">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -25,7 +33,7 @@
                                 <i class="fas fa-envelope"></i>
                             </label>
                         </div>
-                        <input type="email" name="email" id="email" class="form-control rounded-0" placeholder="Email" aria-label="Email" aria-describedby="email-addon" autocomplete="off">
+                        <input type="email" name="email" id="modal-email" class="form-control rounded-0" placeholder="Email" aria-label="Email" aria-describedby="email-addon" autocomplete="off" title="Please enter your email here" required>
                     </div><!-- .input-group -->
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -33,9 +41,9 @@
                                 <i class="fas fa-key"></i>
                             </label>
                         </div>
-                        <input type="password" name="password" id="password" class="form-control rounded-0" placeholder="Password" aria-label="Email" aria-describedby="password-addon" autocomplete="off">
+                        <input type="password" name="password" id="modal-password" class="form-control rounded-0" placeholder="Password" aria-label="Email" aria-describedby="password-addon" autocomplete="off" title="Please enter your password here" required>
                     </div><!-- .input-group -->
-                    <div class="input-group">
+                    <!-- <div class="input-group">
                         <div class="input-group-prepend">
                             <label for="remember">
                                 <small>Remember me</small>
@@ -45,7 +53,8 @@
                             <input type="checkbox" name="remember" id="remember">
                             <span class="slider round"></span>
                         </label>
-                    </div><!-- .input-group -->
+                    </div> -->
+                    <!-- .input-group -->
                 </form>
             </div>
             <div class="modal-footer border-0">
