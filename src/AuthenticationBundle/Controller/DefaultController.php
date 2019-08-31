@@ -38,15 +38,19 @@ class DefaultController extends Controller
             }
 
             if ($provider->getPassword() === $password) {
-                return new View('Successfully authenticated', Response::HTTP_OK);
+                // return new View('Successfully authenticated', Response::HTTP_OK);
+                return ['message' => 'Login success.', 'result' => Response::HTTP_OK, 'data' => ['url' => '/dashboard']];
             }
 
-            return new View('Invalid credential given', Response::HTTP_OK);
+            // return new View('Invalid credential given', Response::HTTP_OK);
+            return ['message' => 'Login failed. Invalid email or password.', 'result' => Response::HTTP_BAD_REQUEST];
 
         } catch (\InvalidArgumentException $e) {
-            return new View($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            // return new View($e->getMessage(), Response::HTTP_BAD_REQUEST);
+                return ['message' => 'Login failed. Invalid email or password.', 'result' => Response::HTTP_BAD_REQUEST];
         } catch (NonUniqueResultException $e) {
-            return new View($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            // return new View($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            return ['message' => $e->getMessage(), 'result' => Response::HTTP_BAD_REQUEST];
         }
     }
 }
