@@ -57,6 +57,20 @@ class Provider
     private $deleted;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @var datetime $token_expiration
+     *
+     * @ORM\Column(name="token_expiration", type="datetime", nullable=true)
+     */
+    private $token_expiration;
+
+    /**
      * Get id
      *
      * @return int
@@ -178,4 +192,3 @@ class Provider
         $this->deleted = $deleted;
     }
 }
-
