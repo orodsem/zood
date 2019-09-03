@@ -21,9 +21,6 @@ class Login {
             _this.tryPreventModalClose(e);
         });
 
-        // @todo: delete
-        $('#login-button').click();
-
     } // constructor()
 
     tryLogin() {
