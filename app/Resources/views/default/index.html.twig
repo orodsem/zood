@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block styles %}
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
+
+    {% include 'templates/login.html.twig' %}
+
+    <div class="container-fluid pb-5 mb-5">
 
         <div class="row">
             <div class="col-md-7 col-sm-12">
@@ -54,7 +57,7 @@
 
         </div><!-- .row -->
 
-        <div class="row card-container">
+        <div class="row card-container pb-5">
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
@@ -86,25 +89,25 @@
                 </div>
             </div><!-- .col-md-4 -->
         </div><!-- .row -->
+    </div><!-- .container-fluid -->
 
-        <div class="row" id="footer">
-            <div class="col mt-5 mb-3 text-center">
+    <footer class="pd-2 text-wrap p-3 bg-dark mt-5 text-center fixed-bottom">
+        <div class="row">
+            <div class="col">
                 <small class="text-light">Your best treatment option is not always available at home, browse through hundreds of skilled doctors and clinics in South Asia, in ZOOD.</small>
             </div>
         </div>
+    </footer>
 
-    </div><!-- .container-fluid -->
     <div id="background-mask"></div>
 {% endblock %}
 
 {% block scripts %}
 
     <script src="/vendor/sweetalert/js/sweetalert.min.js"></script>
+    <script src="/js/login.js"></script>
 
     <script>
-
-
-
         // remap jQuery to $
         (function($){
 
@@ -132,8 +135,8 @@
                         },
                         error: function (xhr, status, errorThrown) {
                             swal({
-                                title: "Something went wront!",
-                                text: "We have encountered an error with the message:'" + errorThrown + "'",
+                                title: "Something went wrong!",
+                                text: "We apologize for the inconvinience. Please report this by sending us an email to contact@zood.com",
                                 icon: "error",
                             });
                         }
@@ -141,6 +144,9 @@
 
                 });
             });
+
+            var login = new Login();
+            login.url = '{{ url('homepage') }}authenticate';
 
         })(window.jQuery);
     </script>

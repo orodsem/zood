@@ -38,4 +38,25 @@ class ProviderRepository extends EntityRepository
             ->getOneOrNullResult();
         ;
     }
+
+    /**
+     * @param $string String
+     * @param $expiration Integer
+     * @return String
+     */
+    public function generateToken($string='', $expiration=14400)
+    {
+        if (!$string)
+            return '';
+
+        try {
+            return $this->get('lexik_jwt_authentication.encoder')
+                ->encode([
+                    'username' => $string,
+                    'exp' => time() + $expiration
+                ]);
+        } catch (Exception $e) {
+            throw $e->getMessage();
+        }
+    }
 }
