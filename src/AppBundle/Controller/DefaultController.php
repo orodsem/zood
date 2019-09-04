@@ -30,6 +30,27 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/dashboard", name="dashboard")
+     */
+    public function dashboardAction(Request $request)
+    {
+        $email = $this->get('session')->get('email');
+
+        if ($email === null) {
+            // no access and back to homepage
+            $this->indexAction($request);
+        }
+
+        // replace this example code with whatever you need
+        $html = ($this->render('default/dashboard.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        ]));
+
+        echo $html->getContent();
+        exit;
+    }
+
+    /**
      * @Route("/register", name="register")
      * @Method("GET")
      *
@@ -82,4 +103,6 @@ class DefaultController extends Controller
 //
 //        $this->get('mailer')->send($emailMessage);
     }
+
+
 }

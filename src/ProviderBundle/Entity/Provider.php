@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Provider
 {
+    const SALT = '44FABEE29691B6DF5F93B5C416F5C';
+
     /**
      * @var int
      *
@@ -64,7 +66,7 @@ class Provider
     private $token;
 
     /**
-     * @var datetime $token_expiration
+     * @var \DateTime $token_expiration
      *
      * @ORM\Column(name="token_expiration", type="datetime", nullable=true)
      */
@@ -190,5 +192,76 @@ class Provider
     public function setDeleted($deleted)
     {
         $this->deleted = $deleted;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTokenExpiration()
+    {
+        return $this->token_expiration;
+    }
+
+    /**
+     * @param \DateTime $token_expiration
+     */
+    public function setTokenExpiration($token_expiration)
+    {
+        $this->token_expiration = $token_expiration;
+    }
+
+    /**
+     *
+     */
+    public function generateToken()
+    {
+        $token = password_hash($this->getEmail() . self::SALT, PASSWORD_BCRYPT);
+        $this->setToken($token);
+
+        $date = new \DateTime();
+        $date->modify('+4 hours');
+        $this->setTokenExpiration($date);
+        return;
+    }
+
+    /**
+     * @return bool
+     * @throws \Exception
+     */
+    public function isTokenValid()
+    {
+        if (empty($this->getToken())) {
+            return false;
+        }
+
+        $now = new \DateTime();
+        if ($this->getTokenExpiration() < $now) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function clearToken()
+    {
+        $this->setToken(null);
+        $this->setTokenExpiration(null);
+        return;
     }
 }

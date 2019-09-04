@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block styles %}
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <h1>dashboard mate</h1>
+
+    <a href={{ 'logout?email='~app.session.get('email') }}>logout</a>
+
+{% endblock %}
+
+{% block scripts %}
+
+
+{% endblock %}
