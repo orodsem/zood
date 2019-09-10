@@ -22,24 +22,20 @@ class Login {
         });
 
         $('#btn-signup').on('click', function() {
-            _this.showSignUpModal();
+            $('#loginModal').modal('hide');
+            setTimeout(function() {
+                $('#signUpModal').modal('show');
+            }, 500);
         });
 
-        // @todo: delete
-        $('#btn-signup').click();
-
     } // constructor()
-
-    showSignUpModal() {
-
-    }
 
     tryLogin() {
 
         let _this = this;
         let emailVal = $('#modal-email').val();
         let passwordVal = $('#modal-password').val();
-        let rememberVal = $('#remember').val();
+        // let rememberVal = $('#remember').val();
 
         this.showLoading();
 
@@ -102,7 +98,7 @@ class Login {
         $('#btn-login').attr('disabled', true);
         $('#modal-email').attr('disabled', true);
         $('#modal-password').attr('disabled', true);
-        $('#login-text').addClass('d-none');
+        $('#login-icon').addClass('d-none');
         $('#login-spinner').removeClass('d-none');
     }
 
@@ -111,7 +107,7 @@ class Login {
         $('#btn-login').attr('disabled', false);
         $('#modal-email').attr('disabled', false);
         $('#modal-password').attr('disabled', false);
-        $('#login-text').removeClass('d-none');
+        $('#login-icon').removeClass('d-none');
         $('#login-spinner').addClass('d-none');
     }
 

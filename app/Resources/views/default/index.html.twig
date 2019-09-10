@@ -3,6 +3,7 @@
 {% block styles %}
     <link href="css/index.css" rel="stylesheet">
     <link href="css/login.css" rel="stylesheet">
+    <link href="css/signUp.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -10,7 +11,7 @@
     {% include 'templates/login.html.twig' %}
     {% include 'templates/signUp.html.twig' %}
 
-    <div class="container-fluid pb-5 mb-5">
+    <div class="container-fluid pb-5 mb-5" id="index">
 
         <div class="row">
             <div class="col-md-7 col-sm-12">
@@ -107,6 +108,7 @@
 
     <script src="/vendor/sweetalert/js/sweetalert.min.js"></script>
     <script src="/js/login.js"></script>
+    <script src="/js/signUp.js"></script>
 
     <script>
         // remap jQuery to $
@@ -148,6 +150,9 @@
 
             var login = new Login();
             login.url = '{{ url('homepage') }}authenticate';
+
+            var signUp = new SignUp();
+            signUp.url = '{{ url('homepage') }}sign-up';
 
         })(window.jQuery);
     </script>

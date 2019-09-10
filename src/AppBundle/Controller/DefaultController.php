@@ -105,4 +105,18 @@ class DefaultController extends Controller
     }
 
 
+    /**
+     * @Route("/sign-up", name="sign-up")
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function signUp(Request $request)
+    {
+        var_dump($request->get('email'));die;
+        // @todo: validation
+        // @todo: singup save
+    }
+
+
 }
