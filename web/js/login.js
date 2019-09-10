@@ -21,7 +21,18 @@ class Login {
             _this.tryPreventModalClose(e);
         });
 
+        $('#btn-signup').on('click', function() {
+            _this.showSignUpModal();
+        });
+
+        // @todo: delete
+        $('#btn-signup').click();
+
     } // constructor()
+
+    showSignUpModal() {
+
+    }
 
     tryLogin() {
 

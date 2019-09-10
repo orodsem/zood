@@ -1,18 +1,9 @@
-
-<!-- login template -->
-
-<div class="login-button-container">
-    <button class="btn btn-secondary pr-2 pl-2 pt-1 pb-1" data-toggle="modal" data-target="#loginModal" id="login-button">
-        <i class="fas fa-bars"></i>
-    </button>
-</div><!-- .login-button-container -->
-
 <!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
+<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content rounded-0">
             <div class="modal-header border-0">
-                <h5 class="modal-title text-center" id="loginModalTitle">Login</h5>
+                <h5 class="modal-title text-center" id="signUpModalTitle">signUp</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -26,7 +17,7 @@
                   </button>
                 </div>
 
-                <form action="" method="post" role="form" name="login-form">
+                <form action="" method="post" role="form" name="signUp-form">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <label class="input-group-text rounded-0" id="email-addon" for="email">
@@ -56,12 +47,12 @@
                     </div> -->
                     <!-- .input-group -->
                     <div class="input-group mt-5">
-                        <button type="button" class="btn btn-primary btn-md btn-block rounded-0" id="btn-login">
-                            <span id="login-text">Login</span>
-                            <i id="login-spinner" class="fas fa-circle-notch fa-spin d-none"></i>
+                        <button type="button" class="btn btn-primary btn-md btn-block rounded-0" id="btn-signUp">
+                            <span id="signUp-text">signUp</span>
+                            <i id="signUp-spinner" class="fas fa-circle-notch fa-spin d-none"></i>
                         </button>
-                        <button type="button" class="btn btn-orange btn-md btn-block rounded-0 mt-3" data-toggle="modal" data-target="#signUpModal" id="btn-signup">
-                            <span>Sign Up</span>
+                        <button type="button" class="btn btn-orange btn-md btn-block rounded-0 mt-3" id="btn-signup">
+                            <span id="signUp-text">Sign Up</span>
                         </button>
                     </div>
                     <!-- .input-group -->
@@ -71,4 +62,4 @@
     </div>
 </div>
 
-<!-- /login template -->
+<!-- /signUp template -->
