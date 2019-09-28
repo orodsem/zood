@@ -1,0 +1,65 @@
+<!-- Modal -->
+<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content rounded-0">
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-center" id="signUpModalTitle">Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body overflow-auto">
+
+                <div class="alert alert-danger alert-dismissible fade show p-1 d-none rounded-0 text-center" role="alert">
+                  <small></small>
+                  <button type="button" class="close p-1 pr-2" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <form action="{{ url('homepage') }}sign-up" method="post" role="form" name="signUpForm" id="signUpForm" autocomplete="off">
+
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" name="first_name" class="form-control rounded-0" id="signUp-first_name" aria-describedby="first_name" placeholder="" maxlength="255" autocomplete="off">
+                    </div><!-- .form-group -->
+
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" name="last_name" class="form-control rounded-0" id="signUp-last_name" aria-describedby="last_name" placeholder="" maxlength="255" autocomplete="off">
+                    </div><!-- .form-group -->
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" class="form-control rounded-0" id="signUp-email" aria-describedby="email" placeholder="" maxlength="255" autocomplete="off">
+                    </div><!-- .form-group -->
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control rounded-0" id="signUp-password" aria-describedby="password" placeholder="" maxlength="255" autocomplete="new-password">
+                    </div><!-- .form-group -->
+
+                    <div class="form-group">
+                        <label for="password_confirmation">Password Confirmation</label>
+                        <input type="password" name="password_confirmation" class="form-control rounded-0" id="signUp-password_confirmation" aria-describedby="password_confirmation" placeholder="" maxlength="255" autocomplete="off">
+                    </div><!-- .form-group -->
+
+                    <!-- reCaptcha here -->
+
+                    <div class="input-group mt-5">
+                        <button type="button" class="btn btn-orange btn-md btn-block rounded-0 mt-3" id="btn-signUp-submit">
+                            <span id="signUp-text">
+                                <i id="signUp-icon" class="fas fa-paper-plane mr-1"></i>
+                                <i id="signUp-spinner" class="fas fa-circle-notch fa-spin d-none"></i>
+                                Submit
+                            </span>
+                        </button>
+                    </div>
+                    <!-- .input-group -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /signUp template -->

@@ -1,0 +1,30 @@
+/** general.css **/
+.bg-orange {
+    background: #f0940a !important;
+}
+
+.btn-orange:not(:disabled):not(.disabled).active:focus, .btn-orange:not(:disabled):not(.disabled):active:focus, .show>.btn-orange.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 164, 28,.5);
+}
+
+.btn-orange:not(:disabled):not(.disabled).active, .btn-orange:not(:disabled):not(.disabled):active, .show>.btn-orange.dropdown-toggle {
+    color: #fff;
+    background-color: #c97d0c;
+    border-color: #bd750b;
+}
+
+.btn-orange.focus, .btn-orange:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 207, 135,.5);
+}
+
+.btn-orange:hover {
+    color: #fff;
+    background-color: #d4840d;
+    border-color: #c97d0c;
+}
+
+.btn-orange {
+    color: #fff;
+    background-color: #f0940a;
+    border-color: #f0940a;
+}

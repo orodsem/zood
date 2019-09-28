@@ -21,6 +21,13 @@ class Login {
             _this.tryPreventModalClose(e);
         });
 
+        $('#btn-signup').on('click', function() {
+            $('#loginModal').modal('hide');
+            setTimeout(function() {
+                $('#signUpModal').modal('show');
+            }, 500);
+        });
+
     } // constructor()
 
     tryLogin() {
@@ -28,7 +35,7 @@ class Login {
         let _this = this;
         let emailVal = $('#modal-email').val();
         let passwordVal = $('#modal-password').val();
-        let rememberVal = $('#remember').val();
+        // let rememberVal = $('#remember').val();
 
         this.showLoading();
 
@@ -91,7 +98,7 @@ class Login {
         $('#btn-login').attr('disabled', true);
         $('#modal-email').attr('disabled', true);
         $('#modal-password').attr('disabled', true);
-        $('#login-text').addClass('d-none');
+        $('#login-icon').addClass('d-none');
         $('#login-spinner').removeClass('d-none');
     }
 
@@ -100,7 +107,7 @@ class Login {
         $('#btn-login').attr('disabled', false);
         $('#modal-email').attr('disabled', false);
         $('#modal-password').attr('disabled', false);
-        $('#login-text').removeClass('d-none');
+        $('#login-icon').removeClass('d-none');
         $('#login-spinner').addClass('d-none');
     }
 
