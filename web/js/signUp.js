@@ -21,9 +21,6 @@ class SignUp {
             _this.tryPreventModalClose(e);
         });
 
-        // @todo: delete
-        $('#signUpModal').modal('show');
-
     } // constructor()
 
     trySignUp() {

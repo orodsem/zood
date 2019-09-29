@@ -20,6 +20,22 @@
                 <form action="{{ url('homepage') }}sign-up" method="post" role="form" name="signUpForm" id="signUpForm" autocomplete="off">
 
                     <div class="form-group">
+                        <label for="first_name">I am:</label>
+                        <div class="form-check">
+                            <input type="radio" value="provider" class="form-check-input signUp-type" name="type" id="signUp-type-provider" aria-describedby="type">
+                            <label class="form-check-label" for="type">
+                                Providing a service
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" value="seeker" class="form-check-input signUp-type" name="type" id="signUp-type-seeker" aria-describedby="type">
+                            <label class="form-check-label" for="type">
+                                Looking for a service
+                            </label>
+                        </div>
+                    </div><!-- .form-group -->
+
+                    <div class="form-group">
                         <label for="first_name">First Name</label>
                         <input type="text" name="first_name" class="form-control rounded-0" id="signUp-first_name" aria-describedby="first_name" placeholder="" maxlength="255" autocomplete="off">
                     </div><!-- .form-group -->
