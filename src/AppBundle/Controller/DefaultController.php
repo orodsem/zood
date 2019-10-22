@@ -51,6 +51,20 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/about-us", name="aboutUs")
+     */
+    public function aboutUsAction(Request $request)
+    {
+        // replace this example code with whatever you need
+        $html = ($this->render('default/about-us.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        ]));
+
+        echo $html->getContent();
+        exit;
+    }
+
+    /**
      * @Route("/register", name="register")
      * @Method("GET")
      *
