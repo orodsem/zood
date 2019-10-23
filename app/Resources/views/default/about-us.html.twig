@@ -4,16 +4,47 @@
 
 {% block styles %}
     <link href="css/index.css" rel="stylesheet">
-
-    <style>
-        #about-us {
-            /* background:  */
-        }
-    </style>
+    <link href="css/aboutUs.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
 
+    <div class="">
+        <header class="background1">
+            <div class="text">
+                <div class="row">
+                    <div class="col-md-7 col-sm-12">
+                        <div class="row header">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="logo"></div>
+                                <p class="tag-line">
+                                    Health Without A Border
+                                </p>
+                            </div>
+                        </div><!-- .row -->
+                    </div>
+                </div>
+            </div>
+        </header>
+        <header class="">
+            <div class=" text">
+                <h1>Parallax CSS1</h1>
+            </div>
+        </header>
+        <header class="background3">
+            <div class="text">
+                <h1>Parallax CSS2</h1>
+            </div>
+        </header>
+
+        <header class="background1">
+            <div class="text">
+                <h1>Parallax CSS3</h1>
+            </div>
+        </header>
+    </div>
+
+    {#
     <div class="container-fluid pb-5 mb-5" id="about-us">
 
         <div class="row">
@@ -87,9 +118,18 @@
         </div><!-- .row -->
 
     </div><!-- .container-fluid -->
-
+#}
 {% endblock %}
 
 {% block scripts %}
+
+    <script>
+        // $(window).scroll(function(){ var curentPosition = Math.round($(this).scrollTop()); console.log(curentPosition); $('.midground').css({ 'transform': 'translate(0px, -' + (curentPosition / 5) + '%)' }); $('.forground').css({ 'transform':
+        // 'translate('+(curentPosition / 2)+'%, ' + (curentPosition / 2) + '%)', 'opacity': '0.5' });
+        //
+        // $('.text').css({ 'transform': 'translate(0px, ' + (curentPosition / 7) + '%)' });
+        //
+        // });
+    </script>
 
 {% endblock %}

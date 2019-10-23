@@ -1,0 +1,49 @@
+header {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding-bottom: 10%;
+  float: left;
+  min-height: 100px;
+}
+
+header.background1 {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-image: url(../images/aboutUs/beach_with_wood.jpg);
+}
+
+header.background2 {
+    background-attachment: fixed;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-image: url(http://wellnesscounselingmilwaukee.com/wp-content/uploads/2015/07/4-Nature-Wallpapers-2014-1.jpg);
+}
+
+header.background3 {
+    background-attachment: fixed;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-image: url(http://static7.depositphotos.com/1038411/739/v/950/depositphotos_7395803-Red-pattern-heart-background-seamless.jpg);
+
+.textBox1 {
+  background-color: rgba(200,200,200,1);
+  width: 100%;
+  padding-bottom: 30%;
+  float: left;
+}
+.text {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+}
+ .text h1 {
+    display: block;
+    font-size: 8vw;
+    color: rgb(250, 250, 250);
+    transform: translateY(-50%);
+    text-align: center;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+}
