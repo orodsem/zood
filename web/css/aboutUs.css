@@ -1,0 +1,145 @@
+
+.parallax-wrapper {
+  perspective: 1px;
+  transform-style: preserve-3d;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.background {
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex: 1 0 auto;
+  position: relative;
+  z-index: -1;
+  height: 70vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  transform: translateZ(-1px) scale(2);
+}
+
+.background--first {
+  background-image: url('../images/aboutUs/beach_with_wood.jpg');
+}
+
+.background--second {
+  background-image: url('../images/aboutUs/beach_with_wood.jpg');
+}
+
+.background--third {
+  background-image: url('../images/aboutUs/beach_with_wood.jpg');
+}
+
+.background--fourth {
+  background-image: url('../images/aboutUs/beach_with_wood.jpg');
+}
+
+.background--fifth {
+  background-image: url('../images/aboutUs/beach_with_wood.jpg');
+}
+
+.title {
+  position: absolute;
+  margin: 0;
+  top: calc(50% - 50px);
+  width: 100%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  min-height: 60px;
+  height: auto;
+  color: white;
+  font-size: 3rem;
+  background: rgba(240, 148, 10,0.7);
+}
+.desc {
+  z-index: 1;
+  position: relative;
+  background: #ffffff;
+  color: #212529;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  line-height: 2em;
+  padding: 3rem;
+  min-height: 100vh;
+  height: auto;
+  margin: 0;
+  display: flex;
+  .desc-wrapper {
+    margin: auto;
+    box-sizing: border-box;
+  }
+  .desc--title {
+    text-align: center;
+    font-size: 4rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin: 20px 0;
+  }
+  .desc--about {
+    margin-top: 50px;
+    padding: 0;
+  }
+}
+.desc-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('../images/aboutUs/md.jpg');
+    background-position: center;
+    background-size: cover;
+    opacity: 0.05;
+    z-index: -1;
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+    .title {
+        font-size: 2rem;
+        min-height: 40px;
+    }
+
+    .background {
+        height: 50vh;
+    }
+}
+
+@media (max-width: 998px) and (orientation: portrait) {
+  .desc {
+    padding: 1.5rem 20px;
+    font-size: 1rem;
+    height: unset;
+    min-height: 100vh;
+    .title {
+      font-size: 2.5rem;
+      margin: 20px 0;
+      letter-spacing: unset;
+     }
+    .about {
+      margin-top: 20px;
+     }
+   }
+ }
+
+.bg-light {
+     background-color: #ffffff !important;
+ }
+
+ .logo {
+     height: auto;
+     min-height: 50px;
+     width: auto;
+     min-width: 100px;
+     margin: 0;
+ }
+
+ .tag-line {
+     font-size: 1rem;
+     text-align: left;
+ }

@@ -2,3 +2,8 @@
 #signUpModal label {
     font-size: 1rem !important;
 }
+
+#signUpModal .signUp-type {
+    transform:scale(1.5);
+    margin-top: 12px;
+}
