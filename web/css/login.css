@@ -8,12 +8,21 @@
     left: 15px;
 }
 
-.login-button-container #login-button {
+.login-button-container #burger-button {
     opacity: 0.5;
 }
 
-.login-button-container #login-button:hover {
+.login-button-container #burger-button.hover {
     opacity: 1;
+}
+
+.popover a {
+    font-size: 0.9rem;
+    color: #343a40;
+}
+
+.popover a:hover {
+    text-decoration: none;
 }
 
 /* The switch - the box around the slider */
