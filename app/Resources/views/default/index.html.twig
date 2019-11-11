@@ -10,6 +10,19 @@
 
     {% include 'templates/login.html.twig' %}
     {% include 'templates/signUp.html.twig' %}
+            <!-- data-toggle="modal"  -->
+
+    <div class="login-button-container">
+        <button
+            class="btn btn-secondary pr-2 pl-2 pt-1 pb-1"
+            id="burger-button"
+            data-container="body"
+            data-toggle="popover"
+            data-placement="bottom"
+        >
+            <i class="fas fa-bars"></i>
+        </button>
+    </div><!-- .login-button-container -->
 
     <div class="container-fluid pb-5 mb-5" id="index">
 
@@ -114,6 +127,7 @@
         // remap jQuery to $
         (function($){
 
+
             /* trigger when page is ready */
             $(document).ready(function (){
                 $('#btn-send').click(function(){
@@ -146,6 +160,8 @@
                     });
 
                 });
+
+
             });
 
             var login = new Login();

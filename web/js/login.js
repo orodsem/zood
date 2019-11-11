@@ -9,6 +9,19 @@ class Login {
         this.url = '';
         this.isLoading = false;
 
+        $('body').on('click', '#login-button', function() {
+            $("#burger-button").popover('hide');
+            $('#loginModal').modal('show');
+            $("#burger-button").removeClass('hover');
+        });
+
+        $("#burger-button").on('click', function() {
+            if ($('.popover').length)
+                $(this).removeClass('hover');
+            else
+                $(this).addClass('hover');
+        });
+
         $('#btn-login').on('click', function() {
             _this.tryLogin();
         });
@@ -26,6 +39,22 @@ class Login {
             setTimeout(function() {
                 $('#signUpModal').modal('show');
             }, 500);
+        });
+
+        $("#burger-button").popover({
+            html: true,
+            content: function() {
+                return '' +
+                    '<a href="#" id="login-button">' +
+                        'Log In' +
+                    '</a><br />' +
+                    '<a href="about-us" class="">' +
+                        'About Us' +
+                    '</a>';
+            },
+            title: function() {
+                return '';
+            }
         });
 
     } // constructor()
@@ -47,8 +76,7 @@ class Login {
                 email: emailVal,
                 password: passwordVal
             },
-            success: function (res)
-            {
+            success: function(res) {
                 _this.hideLoading();
 
                 if (!res.result || res.result == '400') {
@@ -58,7 +86,7 @@ class Login {
 
                 window.location = res.data.url;
             },
-            error: function (xhr, status, errorThrown) {
+            error: function(xhr, status, errorThrown) {
                 _this.hideLoading();
                 swal({
                     title: "Something went wrong!",
@@ -86,7 +114,7 @@ class Login {
 
     tryPreventModalClose(e) {
 
-        if(typeof e === 'undefined')
+        if (typeof e === 'undefined')
             return;
 
         if (this.isLoading)
