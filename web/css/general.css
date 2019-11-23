@@ -3,6 +3,7 @@
     background: #f0940a !important;
 }
 
+
 .btn-orange:not(:disabled):not(.disabled).active:focus, .btn-orange:not(:disabled):not(.disabled):active:focus, .show>.btn-orange.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(255, 164, 28,.5);
 }
@@ -27,4 +28,18 @@
     color: #fff;
     background-color: #f0940a;
     border-color: #f0940a;
+}
+
+.text-orange {
+    color: #f0940a !important
+}
+
+a.text-orange {
+    color: #f0940a !important;
+}
+
+a.text-orange:hover,
+a.text-orange:visited,
+{
+    color: #f0940a !important;
 }

@@ -1,0 +1,16 @@
+nav a {
+    font-size: 18px !important;
+    color: #fff  !important;
+}
+
+nav a:hover,
+nav a.active
+{
+    color: #d4840d  !important;
+    background-color: #fff !important;
+    border-radius: 50%;
+}
+
+.block-body {
+    padding-top: 70px;
+}

@@ -12,7 +12,7 @@
     {% include 'templates/signUp.html.twig' %}
             <!-- data-toggle="modal"  -->
 
-    <div class="login-button-container">
+    <!-- <div class="login-button-container">
         <button
             class="btn btn-secondary pr-2 pl-2 pt-1 pb-1"
             id="burger-button"
@@ -22,7 +22,8 @@
         >
             <i class="fas fa-bars"></i>
         </button>
-    </div><!-- .login-button-container -->
+    </div> -->
+    <!-- .login-button-container -->
 
     <div class="container-fluid pb-5 mb-5" id="index">
 
@@ -62,7 +63,7 @@
                         Subscribe here to receive 5% discount on your first booking
                     </p>
                     <div class="input-group mb-3">
-                        <input type="email" name="email" id="email" class="form-control" placeholder="Your Email..." aria-label="Recipient's email" aria-describedby="button-addon2">
+                        <input type="email" name="email" id="email" class="form-control rounded-0" placeholder="Your Email..." aria-label="Recipient's email" aria-describedby="button-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="btn-send">Send</button>
                         </div>
@@ -166,6 +167,9 @@
 
             var login = new Login();
             login.url = '{{ url('homepage') }}authenticate';
+            login.aboutUsUrl = '{{ url('aboutUs') }}';
+            login.healthProviderUrl = '{{ url('healthProvider.index') }}';
+            login.init();
 
             var signUp = new SignUp();
             signUp.url = '{{ url('homepage') }}sign-up';
