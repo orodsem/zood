@@ -1,16 +1,63 @@
-nav a {
+
+nav {
+    padding: 0 !important;
+}
+
+nav a:not(.navbar-brand) {
     font-size: 18px !important;
     color: #fff  !important;
+    font-weight: 600;
+    height:70px;
+    line-height: 2.75;
 }
 
-nav a:hover,
-nav a.active
+nav a:hover:not(.navbar-brand)
 {
-    color: #d4840d  !important;
-    background-color: #fff !important;
-    border-radius: 50%;
+    color: #fff  !important;
+    text-shadow: 0.1px 0.1px #fff;
+    background-color: #ff9d0a;
+    transition: 0.5s ease;
 }
 
-.block-body {
-    padding-top: 70px;
+nav .navbar-brand img {
+    height:50px;
+    margin-left: 10px;
+}
+
+@media only screen and (min-width: 992px) {
+    nav .navbar-brand {
+        padding: 0 !important;
+    }
+
+    nav #navbarNav {
+        height:70px;
+    }
+
+    nav #navbarNav ul {
+        height:70px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    nav .nav-item {
+        margin-left: 0 !important;
+        padding: 0;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    nav a {
+        text-align: center;
+    }
+
+    nav #btn-login {
+        margin-top: 15px !important;
+        width: 100%;
+    }
+
+    nav #nav-search {
+        margin-top: 15px !important;
+        margin-right: 0 !important;
+        width: 100%;
+    }
 }

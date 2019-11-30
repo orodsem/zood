@@ -1,8 +1,21 @@
 /** general.css **/
+
+*, h5, h6
+ {
+    font-family: 'Open Sans', Helvetica, sans-serif;
+    font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 767px) {
+    *, h5, h6
+    {
+        font-size: 1em;
+    }
+}
+
 .bg-orange {
     background: #f0940a !important;
 }
-
 
 .btn-orange:not(:disabled):not(.disabled).active:focus, .btn-orange:not(:disabled):not(.disabled):active:focus, .show>.btn-orange.dropdown-toggle:focus {
     box-shadow: 0 0 0 0.2rem rgba(255, 164, 28,.5);
@@ -42,4 +55,8 @@ a.text-orange:hover,
 a.text-orange:visited,
 {
     color: #f0940a !important;
+}
+
+.block-body {
+    padding-top: 70px;
 }
