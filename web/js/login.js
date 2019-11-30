@@ -20,12 +20,12 @@ class Login {
             // $("#burger-button").removeClass('hover');
         });
 
-        $("#burger-button").on('click', function() {
-            if ($('.popover').length)
-                $(this).removeClass('hover');
-            else
-                $(this).addClass('hover');
-        });
+        // $("#burger-button").on('click', function() {
+        //     if ($('.popover').length)
+        //         $(this).removeClass('hover');
+        //     else
+        //         $(this).addClass('hover');
+        // });
 
         $('#btn-login').on('click', function() {
             _this.tryLogin();

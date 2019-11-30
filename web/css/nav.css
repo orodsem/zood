@@ -36,6 +36,10 @@ nav .navbar-brand img {
     nav #navbarNav ul {
         height:70px;
     }
+
+    nav #login-button {
+        margin-right: 10px;
+    }
 }
 
 @media only screen and (max-width: 991px) {
@@ -50,7 +54,7 @@ nav .navbar-brand img {
         text-align: center;
     }
 
-    nav #btn-login {
+    nav #login-button {
         margin-top: 15px !important;
         width: 100%;
     }
