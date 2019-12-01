@@ -8,10 +8,10 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
-        <link rel="stylesheet" href="vendor/fontawesome/css/all.css" />
-        <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/nav.css">
+        <link rel="stylesheet" href="{{ url('homepage') }}vendor/fontawesome/css/all.css" />
+        <link rel="stylesheet" href="{{ url('homepage') }}vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url('homepage') }}css/general.css">
+        <link rel="stylesheet" href="{{ url('homepage') }}css/nav.css">
 
         {% block styles %}{% endblock %}
 
@@ -41,7 +41,7 @@
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="nav-search">
+                    <input class="form-control mr-sm-2 rounded-0" type="search" placeholder="Search" aria-label="Search" id="nav-search">
                     <button class="btn btn-primary my-2 my-sm-0 rounded-0" id="login-button" type="button">Login</button>
                 </form>
             </div>
@@ -52,8 +52,8 @@
         </div>
 
 
-        <script src="/vendor/bootstrap/js/popper.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script src="{{ url('homepage') }}vendor/bootstrap/js/popper.min.js"></script>
+        <script src="{{ url('homepage') }}vendor/bootstrap/js/bootstrap.min.js"></script>
         {% block scripts %}{% endblock %}
     </body>
 </html>

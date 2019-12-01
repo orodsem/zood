@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block styles %}
-    <link href="css/index.css" rel="stylesheet">
-    <link href="css/login.css" rel="stylesheet">
-    <link href="css/signUp.css" rel="stylesheet">
+    <link href="{{ url('homepage') }}css/index.css" rel="stylesheet">
+    <link href="{{ url('homepage') }}css/login.css" rel="stylesheet">
+    <link href="{{ url('homepage') }}css/signUp.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -120,9 +120,9 @@
 
 {% block scripts %}
 
-    <script src="/vendor/sweetalert/js/sweetalert.min.js"></script>
-    <script src="/js/login.js"></script>
-    <script src="/js/signUp.js"></script>
+    <script src="{{ url('homepage') }}vendor/sweetalert/js/sweetalert.min.js"></script>
+    <script src="{{ url('homepage') }}js/login.js"></script>
+    <script src="{{ url('homepage') }}js/signUp.js"></script>
 
     <script>
         // remap jQuery to $
