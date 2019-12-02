@@ -3,6 +3,7 @@
 {% block title %}Health Providers - Register{% endblock %}
 
 {% block styles %}
+    <link href="{{ url('homepage') }}vendor/select2/css/select2.min.css" rel="stylesheet">
     <link href="{{ url('homepage') }}css/general.css" rel="stylesheet">
     <link href="{{ url('homepage') }}css/health-provider.css" rel="stylesheet">
 {% endblock %}
@@ -58,16 +59,18 @@
 
                     <div class="form-group">
                         <label for="country">Country</label>
-                        <input type="text"
+                        <select type="text"
                             name="country"
-                            class="form-control rounded-0"
+                            class="select2 form-control rounded-0"
                             id="country"
                             aria-describedby="country"
                             placeholder=""
                             maxlength="255"
                             autocomplete="off"
                             required
-                        >
+                        ><option>
+                            test
+                        </option></select>
                         <div class="invalid-feedback">
                             Invalid Country
                         </div>
@@ -233,11 +236,14 @@
 
 
 {% block scripts %}
-    <script src="/js/app.min.js"></script>
-    <script src="/js/health-provider.js"></script>
+    <script src="{{ url('homepage') }}js/app.min.js"></script>
+    <script src="{{ url('homepage') }}vendor/sweetalert/js/sweetalert.min.js"></script>
+    <script src="{{ url('homepage') }}vendor/select2/js/select2.min.js"></script>
+    <script src="{{ url('homepage') }}js/health-provider.js"></script>
     <script>
         var hp = new HealthProvider();
         hp.validateEmailUrl = '{{ url('healthProvider.validateEmail') }}';
+        hp.url.countriesSearch = '{{ url('healthProvider.countriesSearch') }}'
         hp.init();
     </script>
 {% endblock %}

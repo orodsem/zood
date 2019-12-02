@@ -56,4 +56,45 @@ class HealthProviderController extends Controller
         exit;
     }
 
+    /**
+     * @Route("/health-provider/counries-search", name="healthProvider.countriesSearch")
+     */
+    public function countriesSearchAction(Request $request)
+    {
+
+        $search = trim($request->get('search'));
+
+        $countriesJson = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/countries-and-cities.json');
+
+        if (!$countriesJson) {
+            echo json_encode(['message' => 'Countries and cities not found.', 'result' => Response::HTTP_BAD_REQUEST, 'data' => null]);
+            exit;
+        }
+
+        $countriesArr = json_decode($countriesJson);
+
+        $countries = [];
+
+        foreach($countriesArr as $k => $v) {
+
+            if (count($countries) > 10)
+                break;
+            if (strpos($k, $search) !== false)
+                $countries[] = $k;
+        }
+
+        if (count($countries) < 1) {
+            foreach($countriesArr as $k => $v) {
+                if (count($countries) > 10)
+                    break;
+                    
+                $countries[] = $k;
+            }
+        }
+
+        echo json_encode(['message' => '', 'result' => Response::HTTP_OK, 'data' => $countries]);
+
+        exit;
+    }
+
 }

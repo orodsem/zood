@@ -1,4 +1,6 @@
 
+
+
 /**
  * HealthProvider class
  */
@@ -7,7 +9,9 @@ class HealthProvider {
     constructor() {
         this.isLoading = false;
 
-        this.apiGoogleMaps = 'AIzaSyCOEAvI592saN4jClvr04YFEBbWF1qJoZI';
+        this.url = {
+            countriesSearch: ''
+        };
 
     } // constructor()
 
@@ -38,47 +42,105 @@ class HealthProvider {
             });
         }, false);
 
+        this.getCountries();
+
+        $('#country').select2({
+            width: 'resolve'
+        });
+
+        // $('#country').selectpicker({
+        //     liveSearchStyle: function(searchTerm, item) {
+        //         console.log(searchTerm);
+        //         console.log(item);
+        //         // return searchTerm.toLowerCase().split(' ').every(function(word) {
+        //         //     return item.toLowerCase().indexOf(word) !== -1;
+        //         // });
+        //     }
+        // });
 
         $('#btn-verify-email').on('click', () => {
+            this.verifyEmail();
+        });
 
-            var _this = this;
+    }
 
-            this.showVerifyEmailLoading();
+    getCountries() {
 
-            $.ajax({
-                url: this.validateEmailUrl,
-                type: "post",
-                dataType: "json",
-                data: {
-                    email: $('#email').val(),
-                },
-                success: function(res) {
-                    _this.hideVerifyEmailLoading();
+        var _this = this;
 
-                    if (!res.result || res.result == '400') {
-                        _this.showModalError(res.message);
-                        return;
-                    }
+        $.ajax({
+            url: this.url.countriesSearch,
+            type: "post",
+            dataType: "json",
+            data: {
+                search: 'test',
+            },
+            success: function(res) {
 
-                    if (!res.data.valid) {
-                        $('.email-wrapper').find('.invalid-feedback').addClass('d-block');
-                        $('.email-wrapper').find('.valid-feedback').removeClass('d-block');
-                    } else {
-                        $('.email-wrapper').find('.invalid-feedback').removeClass('d-block');
-                        $('.email-wrapper').find('.valid-feedback').addClass('d-block');
-                    }
-                },
-                error: function(xhr, status, errorThrown) {
-                    _this.hideVerifyEmailLoading();
+                if (!res.result || res.result == '400') {
+                    swal({
+                        title: "Something went wrong!",
+                        text: res.message + " We apologize for the inconvinience. Please report this by sending us an email to contact@zood.com",
+                        icon: "error",
+                    });
+                    return;
+                }
+
+                // add countries drop down select
+            },
+            error: function(xhr, status, errorThrown) {
+                swal({
+                    title: "Something went wrong!",
+                    text: "We apologize for the inconvinience. Please report this by sending us an email to contact@zood.com",
+                    icon: "error",
+                });
+            }
+        });
+
+    }
+
+    verifyEmail() {
+
+        var _this = this;
+
+        this.showVerifyEmailLoading();
+
+        $.ajax({
+            url: this.validateEmailUrl,
+            type: "post",
+            dataType: "json",
+            data: {
+                email: $('#email').val(),
+            },
+            success: function(res) {
+                _this.hideVerifyEmailLoading();
+
+                if (!res.result || res.result == '400') {
                     swal({
                         title: "Something went wrong!",
                         text: "We apologize for the inconvinience. Please report this by sending us an email to contact@zood.com",
                         icon: "error",
                     });
+                    return;
                 }
-            });
-        });
 
+                if (!res.data.valid) {
+                    $('.email-wrapper').find('.invalid-feedback').addClass('d-block');
+                    $('.email-wrapper').find('.valid-feedback').removeClass('d-block');
+                } else {
+                    $('.email-wrapper').find('.invalid-feedback').removeClass('d-block');
+                    $('.email-wrapper').find('.valid-feedback').addClass('d-block');
+                }
+            },
+            error: function(xhr, status, errorThrown) {
+                _this.hideVerifyEmailLoading();
+                swal({
+                    title: "Something went wrong!",
+                    text: "We apologize for the inconvinience. Please report this by sending us an email to contact@zood.com",
+                    icon: "error",
+                });
+            }
+        });
     }
 
     showVerifyEmailLoading() {
