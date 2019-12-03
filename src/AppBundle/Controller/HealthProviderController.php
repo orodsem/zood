@@ -57,9 +57,9 @@ class HealthProviderController extends Controller
     }
 
     /**
-     * @Route("/health-provider/counries-search", name="healthProvider.countriesSearch")
+     * @Route("/health-provider/country-search", name="healthProvider.countrySearch")
      */
-    public function countriesSearchAction(Request $request)
+    public function countrySearchAction(Request $request)
     {
 
         $search = trim($request->get('search'));
@@ -67,7 +67,7 @@ class HealthProviderController extends Controller
         $countriesJson = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/countries-and-cities.json');
 
         if (!$countriesJson) {
-            echo json_encode(['message' => 'Countries and cities not found.', 'result' => Response::HTTP_BAD_REQUEST, 'data' => null]);
+            echo json_encode(["results" => []]);
             exit;
         }
 
@@ -76,24 +76,54 @@ class HealthProviderController extends Controller
         $countries = [];
 
         foreach($countriesArr as $k => $v) {
-
             if (count($countries) > 10)
                 break;
-            if (strpos($k, $search) !== false)
-                $countries[] = $k;
+            if (strpos(strtolower($k), strtolower($search)) !== false)
+                $countries[] = ['id' => $k, 'text' => $k];
         }
 
-        if (count($countries) < 1) {
-            foreach($countriesArr as $k => $v) {
-                if (count($countries) > 10)
-                    break;
-                    
-                $countries[] = $k;
-            }
+        echo json_encode(["results" => $countries]);
+        exit;
+    }
+
+    /**
+     * @Route("/health-provider/city-search", name="healthProvider.citySearch")
+     */
+    public function citySearchAction(Request $request)
+    {
+
+        $search = trim($request->get('search'));
+        $country = trim($request->get('country'));
+
+        $citiesJson = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/countries-and-cities.json');
+
+        if (!$citiesJson) {
+            echo json_encode(["results" => []]);
+            exit;
         }
 
-        echo json_encode(['message' => '', 'result' => Response::HTTP_OK, 'data' => $countries]);
+        if (!$country) {
+            echo json_encode(["results" => []]);
+            exit;
+        }
 
+        $citiesArr = json_decode($citiesJson);
+
+        if (!isset($citiesArr->$country)) {
+            echo json_encode(["results" => []]);
+            exit;
+        }
+
+        $cities = [];
+
+        foreach($citiesArr->$country as $v) {
+            if (count($cities) > 10)
+                break;
+            if (strpos(strtolower($v), strtolower($search)) !== false)
+                $cities[] = ['id' => $v, 'text' => $v];
+        }
+
+        echo json_encode(["results" => $cities]);
         exit;
     }
 

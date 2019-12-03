@@ -61,16 +61,14 @@
                         <label for="country">Country</label>
                         <select type="text"
                             name="country"
-                            class="select2 form-control rounded-0"
+                            class="form-control rounded-0"
                             id="country"
                             aria-describedby="country"
                             placeholder=""
                             maxlength="255"
                             autocomplete="off"
                             required
-                        ><option>
-                            test
-                        </option></select>
+                        ></select>
                         <div class="invalid-feedback">
                             Invalid Country
                         </div>
@@ -78,16 +76,19 @@
 
                     <div class="form-group">
                         <label for="city">City</label>
-                        <input type="text"
+                        <select type="text"
                             name="city"
-                            class="form-control rounded-0"
+                            class="select2 form-control rounded-0"
                             id="city"
                             aria-describedby="city"
                             placeholder=""
                             maxlength="255"
                             autocomplete="off"
                             required
-                        >
+                        ></select>
+                        <small class="form-text text-muted">
+                            Please select a country before selecting a city
+                        </small>
                         <div class="invalid-feedback">
                             Invalid City
                         </div>
@@ -157,7 +158,7 @@
                             required
                             maxlength="1000"
                         ></textarea>
-                        <small id="passwordHelpBlock" class="form-text text-muted">
+                        <small class="form-text text-muted">
                             Your bio must be no more than 1000 characters long must not contain special characters.
                         </small>
                         <div class="invalid-feedback">
@@ -243,7 +244,8 @@
     <script>
         var hp = new HealthProvider();
         hp.validateEmailUrl = '{{ url('healthProvider.validateEmail') }}';
-        hp.url.countriesSearch = '{{ url('healthProvider.countriesSearch') }}'
+        hp.url.countrySearch = '{{ url('healthProvider.countrySearch') }}'
+        hp.url.citySearch = '{{ url('healthProvider.citySearch') }}'
         hp.init();
     </script>
 {% endblock %}

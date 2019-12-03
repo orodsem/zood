@@ -10,7 +10,8 @@ class HealthProvider {
         this.isLoading = false;
 
         this.url = {
-            countriesSearch: ''
+            countrySearch: '',
+            citySearch: '',
         };
 
     } // constructor()
@@ -42,21 +43,8 @@ class HealthProvider {
             });
         }, false);
 
-        this.getCountries();
 
-        $('#country').select2({
-            width: 'resolve'
-        });
-
-        // $('#country').selectpicker({
-        //     liveSearchStyle: function(searchTerm, item) {
-        //         console.log(searchTerm);
-        //         console.log(item);
-        //         // return searchTerm.toLowerCase().split(' ').every(function(word) {
-        //         //     return item.toLowerCase().indexOf(word) !== -1;
-        //         // });
-        //     }
-        // });
+        this.initSelect2();
 
         $('#btn-verify-email').on('click', () => {
             this.verifyEmail();
@@ -64,39 +52,53 @@ class HealthProvider {
 
     }
 
-    getCountries() {
-
-        var _this = this;
-
-        $.ajax({
-            url: this.url.countriesSearch,
-            type: "post",
-            dataType: "json",
-            data: {
-                search: 'test',
+    initSelect2() {
+        $('#country').select2({
+            width: 'resolve',
+            delay: 500,
+            placeholder: 'Search a Country',
+            minimumInputLength: 1,
+            ajax: {
+                cache: false,
+                url: this.url.countrySearch,
+                data: function(params) {
+                    var query = {
+                        search: params.term
+                    }
+                    return query;
+                },
+                processResults: function(res) {
+                    let result = $.parseJSON(res);
+                    return {
+                        results: result.results,
+                    };
+                },
             },
-            success: function(res) {
-
-                if (!res.result || res.result == '400') {
-                    swal({
-                        title: "Something went wrong!",
-                        text: res.message + " We apologize for the inconvinience. Please report this by sending us an email to contact@zood.com",
-                        icon: "error",
-                    });
-                    return;
-                }
-
-                // add countries drop down select
-            },
-            error: function(xhr, status, errorThrown) {
-                swal({
-                    title: "Something went wrong!",
-                    text: "We apologize for the inconvinience. Please report this by sending us an email to contact@zood.com",
-                    icon: "error",
-                });
-            }
         });
 
+        $('#city').select2({
+            width: 'resolve',
+            delay: 500,
+            placeholder: 'Search a City',
+            minimumInputLength: 1,
+            ajax: {
+                cache: false,
+                url: this.url.citySearch,
+                data: function(params) {
+                    var query = {
+                        search: params.term,
+                        country: $('#country').val()
+                    }
+                    return query;
+                },
+                processResults: function(res) {
+                    let result = $.parseJSON(res);
+                    return {
+                        results: result.results,
+                    };
+                },
+            },
+        });
     }
 
     verifyEmail() {
