@@ -142,11 +142,17 @@
                         <label for="clinic_files">Photo, You can upload up to 20 photos of your clinic and yourself</label>
                         <input type="file"
                             name="clinic_files"
-                            accept="image/x-png,image/gif,image/jpeg"
+                            id="clinic_files"
+                            accept="image/x-png,image/jpeg"
+                            multiple
                         >
+                        <small class="form-text text-muted">
+                            Only accepts images/photos of png and jpeg in format
+                        </small>
                         <div class="invalid-feedback">
                             Invalid Files
                         </div>
+                        <div id="clinic_files_preview_container"></div>
                     </div><!-- .form-group -->
 
                     <div class="form-group mt-5">

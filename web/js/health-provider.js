@@ -27,6 +27,8 @@ class HealthProvider {
 
     ready() {
 
+        var _this = this;
+
         'use strict';
         window.addEventListener('load', function() {
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -50,6 +52,51 @@ class HealthProvider {
             this.verifyEmail();
         });
 
+        $('#clinic_files').change(function() {
+            _this.previewClinicFiles($(this).prop('files'));
+        });
+
+    }
+
+    validateClinicFiles(clinic_files) {
+
+        // clinic_files = $(clinic_files);
+        const validImageTypes = ['image/jpeg', 'image/png'];
+
+        if (!clinic_files || !clinic_files[0])
+            return false;
+
+        for (const i in clinic_files) {
+
+            let fileType = clinic_files[i]['type'];
+
+            if (!fileType) continue;
+
+            if (!validImageTypes.includes(fileType))
+                return false;
+        }
+
+        return true;
+    }
+
+    previewClinicFiles(clinic_files) {
+
+        let valid = this.validateClinicFiles(clinic_files);
+
+        $('#clinic_files_preview_container').html(null);
+
+        let html = '';
+
+        if (valid) {
+            for (const i in clinic_files) {
+                try {
+                    let url = window.URL.createObjectURL(clinic_files[i]);
+                    html += `<img src="${url}" class="img-thumbnail m-1" height="100" width="100">`;
+                } catch (e) {}
+            }
+            console.log(html);
+            $('#clinic_files_preview_container').html(html);
+        }
     }
 
     initSelect2() {
