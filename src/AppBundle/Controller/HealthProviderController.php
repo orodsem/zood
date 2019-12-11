@@ -53,6 +53,8 @@ class HealthProviderController extends Controller
 
         echo json_encode(['message' => '', 'result' => Response::HTTP_OK, 'data' => ['valid' => $valid]]);
 
+        // @todo: check if email already exists on the database
+
         exit;
     }
 

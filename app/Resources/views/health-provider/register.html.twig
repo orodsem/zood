@@ -150,7 +150,7 @@
                             Only accepts images/photos of png and jpeg in format
                         </small>
                         <div class="invalid-feedback">
-                            Invalid Files
+                            Invalid Files. Please select valid images/photos and not exceeding 20
                         </div>
                         <div id="clinic_files_preview_container"></div>
                     </div><!-- .form-group -->
@@ -172,18 +172,24 @@
                         </div>
                     </div><!-- .form-group -->
 
-                    <div class="form-group">
+                    <div class="form-group mt-5">
                         <label for="certificates_licenses">Upload your university degrees, certificates and license, up to 15 files</label>
                         <input type="file"
-                            name="certificates_licenses"
-                            accept="application/msword, application/vnd.ms-excel,application/vnd.ms-powerpoint,text/plain, application/pdf, image/*"
+                            name="certificates_licenses_files"
+                            id="certificates_licenses_files"
+                            accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,image/x-png,image/jpeg"
+                            multiple
                         >
+                        <small class="form-text text-muted">
+                            Only accepts images/photos of png and jpeg in format, documents and files in MS Word and PDF
+                        </small>
                         <div class="invalid-feedback">
-                            Invalid Certificate Licenses
+                            Invalid Certificate Licenses. Please select valid images/photos, documents and files and not exceeding 15
                         </div>
+                        <div id="certificates_licenses_files_preview_container"></div>
                     </div><!-- .form-group -->
 
-                    <div class="form-group">
+                    <div class="form-group mt-5">
                         <label for="">Working hours, address, upload your google map</label>
                     </div><!-- .form-group -->
 
