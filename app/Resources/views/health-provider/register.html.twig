@@ -6,6 +6,7 @@
     <link href="{{ url('homepage') }}vendor/select2/css/select2.min.css" rel="stylesheet">
     <link href="{{ url('homepage') }}css/general.css" rel="stylesheet">
     <link href="{{ url('homepage') }}css/health-provider.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 {% endblock %}
 
 {% block body %}
@@ -190,7 +191,42 @@
                     </div><!-- .form-group -->
 
                     <div class="form-group mt-5">
-                        <label for="">Working hours, address, upload your google map</label>
+                        <label for="working_hours">Working hours</label>
+                        <ul id="working_hours_list_container"></ul>
+                        <div>
+                            <select name="working_hours_start_day"
+                                id="working_hours_start_day"
+                                class="form-control d-inline rounded-0 col-sm-3 col-md-3 mb-2 text-center working_hours_days"
+                                ></select>
+                            <select name="working_hours_end_day"
+                                id="working_hours_end_day"
+                                class="form-control d-inline rounded-0 col-sm-3 col-md-3 mb-2 text-center working_hours_days"
+                                ></select>
+                            <input type="text"
+                                name="working_hours_text"
+                                class="form-control d-inline-block rounded-0 col-sm-4 col-md-4 mb-2 text-center"
+                                id="working_hours_text"
+                                aria-describedby="working_hours_text"
+                                placeholder=""
+                                maxlength="50"
+                                autocomplete="off"
+                                required
+                            >
+                            <button id="btn-add-working-hour"
+                                class="btn btn-primary d-inline-block rounded-0 col-sm-1 col-md-1"
+                                style="margin-top: -2px;"
+                                title="Add Working hour"
+                                type="button"
+                            >
+                                <span class="d-sm-none">Add</span>
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+
+                    </div><!-- .form-group -->
+
+                    <div class="form-group mt-5">
+                        <label for="working_hours">Working hours, address, upload your google map</label>
                     </div><!-- .form-group -->
 
                     <div class="form-group">
@@ -252,6 +288,8 @@
     <script src="{{ url('homepage') }}js/app.min.js"></script>
     <script src="{{ url('homepage') }}vendor/sweetalert/js/sweetalert.min.js"></script>
     <script src="{{ url('homepage') }}vendor/select2/js/select2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="{{ url('homepage') }}js/health-provider.js"></script>
     <script>
         var hp = new HealthProvider();

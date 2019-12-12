@@ -1,6 +1,3 @@
-
-
-
 /**
  * HealthProvider class
  */
@@ -48,8 +45,24 @@ class HealthProvider {
 
         this.initSelect2();
 
+        this.populateWorkingHourDays();
+
+        $('#working_hours_text').daterangepicker({
+            opens: 'center',
+            timePicker: true,
+            locale: {
+                format: 'hh:mm A'
+            }
+        }).on('show.daterangepicker', (ev, picker) => {
+            $('.calendar-table').addClass('d-none');
+        });
+
+        $('#btn-add-working-hour').on('click', () => {
+            _this.addWorkingHour();
+        });
+
         $('#btn-verify-email').on('click', () => {
-            this.verifyEmail();
+            _this.verifyEmail();
         });
 
         $('#clinic_files').change(function() {
@@ -62,9 +75,58 @@ class HealthProvider {
 
     }
 
+    addWorkingHour() {
+
+        let html = $('#working_hours_list_container').html();
+
+        let working_hour_value = `${$('#working_hours_start_day').val()} - ${$('#working_hours_end_day').val()} ${$('#working_hours_text').val()}`;
+
+        if ($('.working_hours').length) {
+            for(const i in $('.working_hours')) {
+                if ($('.working_hours').val() == working_hour_value) {
+                    swal({
+                        title: "Working hours already exists",
+                        text: "Please choose other days and/or time",
+                        icon: "error",
+                    });
+                    return;
+                }
+            }
+        }
+
+        html += `
+            <li class="text-muted working_hours_item">
+                <input type="hidden" name="working_hours[]" class="working_hours" value="${working_hour_value}">
+                <span>${working_hour_value}</span>
+                <a href="javascript:void(0)" class="text-danger btn-delete-working-hour-item" title="Remove">
+                    <i class="fas fa-times"></i>
+                </a>
+            </li>
+        `;
+
+        $('#working_hours_list_container')
+            .html(html)
+            .on('click', '.btn-delete-working-hour-item', function(e)  {
+                $(this).parent('.working_hours_item').remove();
+            });
+    }
+
+    populateWorkingHourDays() {
+
+        let days = ['Monday', 'Tuesday', 'Wednesday', 'Thrusday', 'Friday', 'Saturday', 'Sunday'];
+
+        let working_hours_days_html = '';
+
+        for (const i in days) {
+            working_hours_days_html += `<option value="${days[i]}">${days[i]}</option>`;
+        }
+
+        $('.working_hours_days').html(working_hours_days_html);
+    }
+
     validateCertificatesLicensesFiles(files) {
 
-        const validTypes = ['image/jpeg', 'image/png', 'application/msword', 'application/pdf', '.doc' , '.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        const validTypes = ['image/jpeg', 'image/png', 'application/msword', 'application/pdf', '.doc', '.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
 
         if (!files || !files[0])
             return false;
@@ -78,7 +140,7 @@ class HealthProvider {
 
             if (fileType == '') {
                 let fileNameArr = files[i].name.split('.');
-                if (['pdf', 'doc', 'docx'].includes(fileNameArr[fileNameArr.length -1 ]))
+                if (['pdf', 'doc', 'docx'].includes(fileNameArr[fileNameArr.length - 1]))
                     continue
             }
 
