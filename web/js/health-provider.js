@@ -24,24 +24,11 @@ class HealthProvider {
 
     ready() {
 
+        'use strict';
+
         var _this = this;
 
-        'use strict';
-        window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-
+        this.initSubmit();
 
         this.initSelect2();
 
@@ -73,6 +60,73 @@ class HealthProvider {
             _this.previewCertificatesLicensesFiles($(this));
         });
 
+        $('#btn-register-submit').on('click', function(e) {
+            _this.validateFormsAndSubmit(e);
+        });
+        // scripts.js custom js file
+    $(document).ready(function () {
+       google.maps.event.addDomListener(window, 'load', initialize);
+    });
+
+    function initialize() {
+        var input = document.getElementById('location');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+    }
+
+    }
+
+    validateOtherFormsAndSubmit(e) {
+
+        let valid = true;
+
+        if ($('[name="first_name"]').val().trim() == '')
+            $('[name="first_name"]').focus();
+
+        if ($('[name="last_name"]').val().trim() == '')
+            $('[name="last_name"]').focus();
+
+        if ($('[name="country"]').val().trim() == '')
+            $('[name="country"]').focus();
+
+        if ($('[name="city"]').val().trim() == '')
+            $('[name="city"]').focus();
+
+        if ($('[name="profession"]').val().trim() == '')
+            $('[name="profession"]').focus();
+
+        if ($('[name="email"]').val().trim() == '')
+            $('[name="email"]').focus();
+
+        if ($('[name="working_hours[]"]').length < 1) {
+            swal({
+                title: "Working Hours is required",
+                text: "Please add working hours",
+                icon: "error",
+            }).then(() => {
+                $('#working_hours_start_day').focus();
+            });
+            valid = false;
+        }
+
+        if (valid)
+            $('#registrationForm').submit();
+    }
+
+    initSubmit() {
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
     }
 
     addWorkingHour() {

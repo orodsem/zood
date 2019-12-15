@@ -7,6 +7,7 @@
     <link href="{{ url('homepage') }}css/general.css" rel="stylesheet">
     <link href="{{ url('homepage') }}css/health-provider.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 {% endblock %}
 
 {% block body %}
@@ -22,7 +23,7 @@
                     </div>
                 </div>
 
-                <form action="{{ url('homepage') }}sign-up" method="post" role="form" name="registrationForm" id="form" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <form action="{{ url('homepage') }}sign-up" method="post" role="form" name="registrationForm" id="registrationForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
 
                     <div class="form-group">
                         <label for="first_name">First Name</label>
@@ -226,7 +227,20 @@
                     </div><!-- .form-group -->
 
                     <div class="form-group mt-5">
-                        <label for="working_hours">Working hours, address, upload your google map</label>
+                        <label for="address">Address</label>
+                        <input type="text"
+                            name="address"
+                            class="form-control d-inline-block rounded-0 col-sm-4 col-md-4 mb-2 r"
+                            id="address"
+                            aria-describedby="address"
+                            placeholder=""
+                            maxlength="255"
+                            autocomplete="off"
+                            required
+                        >
+                        <input type="text" id="location">
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOLySoW2gNxPTSlp0sFZEPNXkue1nfQFQ&libraries=places"></script>
+
                     </div><!-- .form-group -->
 
                     <div class="form-group">
