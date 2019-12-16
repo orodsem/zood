@@ -48,6 +48,10 @@ class HealthProvider {
             _this.addWorkingHour();
         });
 
+        $('#btn-add-service').on('click', () => {
+            _this.addService();
+        });
+
         $('#btn-verify-email').on('click', () => {
             _this.verifyEmail();
         });
@@ -63,16 +67,19 @@ class HealthProvider {
         $('#btn-register-submit').on('click', function(e) {
             _this.validateFormsAndSubmit(e);
         });
-        // scripts.js custom js file
-    $(document).ready(function () {
-       google.maps.event.addDomListener(window, 'load', initialize);
-    });
 
-    function initialize() {
-        var input = document.getElementById('location');
-        var autocomplete = new google.maps.places.Autocomplete(input);
+        $('.btn-next-previous').on('click', function() {
+            _this.showRegForm($(this).attr('data-value'));
+        });
+
+        this.showRegForm(2);
     }
 
+    showRegForm(reg_form_no) {
+        $('#reg_form_1').addClass('d-none');
+        $('#reg_form_2').addClass('d-none');
+        $('#reg_form_3').addClass('d-none');
+        $('#reg_form_'+reg_form_no).removeClass('d-none');
     }
 
     validateOtherFormsAndSubmit(e) {
@@ -135,18 +142,23 @@ class HealthProvider {
 
         let working_hour_value = `${$('#working_hours_start_day').val()} - ${$('#working_hours_end_day').val()} ${$('#working_hours_text').val()}`;
 
+        let valid = true;
+
         if ($('.working_hours').length) {
-            for(const i in $('.working_hours')) {
-                if ($('.working_hours').val() == working_hour_value) {
+            $('.working_hours').each(function(i,v) {
+                if ($(v).val() == working_hour_value) {
                     swal({
                         title: "Working hours already exists",
                         text: "Please choose other days and/or time",
                         icon: "error",
                     });
+                    valid = false;
                     return;
                 }
-            }
+            });
         }
+
+        if (!valid) return;
 
         html += `
             <li class="text-muted working_hours_item">
@@ -163,6 +175,57 @@ class HealthProvider {
             .on('click', '.btn-delete-working-hour-item', function(e)  {
                 $(this).parent('.working_hours_item').remove();
             });
+    }
+
+    addService() {
+
+        let html = $('#services_offered_list_container').html();
+
+        let service = $('#services_offered_text').val().trim();
+
+        let valid = true;
+
+        $('#service-error').addClass('d-none');
+
+        if (service == '') {
+            $('#service-error').removeClass('d-none');
+            return;
+        }
+
+        if ($('.services_offered').length) {
+            $('.services_offered').each(function(i,v) {
+                if ($(v).val() == service) {
+                    swal({
+                        title: "Service already exists",
+                        text: "Please add another service that is not on the list",
+                        icon: "error",
+                    });
+                    $('#service-error').removeClass('d-none');
+                    valid = false;
+                    return;
+                }
+            });
+        }
+
+        if (!valid) return;
+
+        html += `
+            <li class="text-muted services_offered_item">
+                <input type="hidden" name="services_offered[]" class="services_offered" value="${$('#services_offered_text').val()}">
+                <span>${$('#services_offered_text').val()}</span>
+                <a href="javascript:void(0)" class="text-danger btn-delete-service-item" title="Remove">
+                    <i class="fas fa-times"></i>
+                </a>
+            </li>
+        `;
+
+        $('#services_offered_list_container')
+            .html(html)
+            .on('click', '.btn-delete-service-item', function(e)  {
+                $(this).parent('.services_offered_item').remove();
+            });
+
+        $('#services_offered_text').val(null);
     }
 
     populateWorkingHourDays() {

@@ -25,269 +25,313 @@
 
                 <form action="{{ url('homepage') }}sign-up" method="post" role="form" name="registrationForm" id="registrationForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
 
-                    <div class="form-group">
-                        <label for="first_name">First Name</label>
-                        <input type="text"
-                            name="first_name"
-                            class="form-control rounded-0"
-                            id="first_name"
-                            aria-describedby="first_name"
-                            placeholder=""
-                            maxlength="255"
-                            autocomplete="off"
-                            required
-                        >
-                        <div class="invalid-feedback">
-                            Invalid First Name
-                        </div>
-                    </div><!-- .form-group -->
-
-                    <div class="form-group">
-                        <label for="last_name">Last Name</label>
-                        <input type="text"
-                            name="last_name"
-                            class="form-control rounded-0"
-                            id="last_name"
-                            aria-describedby="last_name"
-                            placeholder=""
-                            maxlength="255"
-                            autocomplete="off"
-                            required
-                        >
-                        <div class="invalid-feedback">
-                            Invalid Last Name
-                        </div>
-                    </div><!-- .form-group -->
-
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <select type="text"
-                            name="country"
-                            class="form-control rounded-0"
-                            id="country"
-                            aria-describedby="country"
-                            placeholder=""
-                            maxlength="255"
-                            autocomplete="off"
-                            required
-                        ></select>
-                        <div class="invalid-feedback">
-                            Invalid Country
-                        </div>
-                    </div><!-- .form-group -->
-
-                    <div class="form-group">
-                        <label for="city">City</label>
-                        <select type="text"
-                            name="city"
-                            class="select2 form-control rounded-0"
-                            id="city"
-                            aria-describedby="city"
-                            placeholder=""
-                            maxlength="255"
-                            autocomplete="off"
-                            required
-                        ></select>
-                        <small class="form-text text-muted">
-                            Please select a country before selecting a city
-                        </small>
-                        <div class="invalid-feedback">
-                            Invalid City
-                        </div>
-                    </div><!-- .form-group -->
-
-                    <div class="form-group">
-                        <label for="profession">Profession</label>
-                        <input type="text"
-                            name="profession"
-                            class="form-control rounded-0"
-                            id="profession"
-                            aria-describedby="profession"
-                            placeholder=""
-                            maxlength="255"
-                            autocomplete="off"
-                            required
-                        >
-                        <div class="invalid-feedback">
-                            Invalid Profession
-                        </div>
-                    </div><!-- .form-group -->
-
-                    <div class="form-group email-wrapper">
-                        <label for="email">Email</label>
-                        <input type="email"
-                            name="email"
-                            class="form-control rounded-0"
-                            id="email"
-                            aria-describedby="email"
-                            placeholder=""
-                            maxlength="255"
-                            autocomplete="off"
-                            required
-                        >
-                        <div class="invalid-feedback">
-                            Invalid Email
-                        </div>
-                        <div class="valid-feedback">
-                            Valid Email
-                        </div>
-                    </div><!-- .form-group -->
-
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary rounded-0" id="btn-verify-email">
-                            <i class="fas fa-check"></i>&nbsp;
-                            Verify your email
-                        </button>
-                    </div><!-- .form-group -->
-
-                    <div class="form-group mt-5">
-                        <label for="clinic_files">Photo, You can upload up to 20 photos of your clinic and yourself</label>
-                        <input type="file"
-                            name="clinic_files"
-                            id="clinic_files"
-                            accept="image/x-png,image/jpeg"
-                            multiple
-                        >
-                        <small class="form-text text-muted">
-                            Only accepts images/photos of png and jpeg in format
-                        </small>
-                        <div class="invalid-feedback">
-                            Invalid Files. Please select valid images/photos and not exceeding 20
-                        </div>
-                        <div id="clinic_files_preview_container"></div>
-                    </div><!-- .form-group -->
-
-                    <div class="form-group mt-5">
-                        <label for="bio">Bio: tell us about yourself, your experience and your personality. Make it catchy</label>
-                        <textarea name="bio"
-                            rows="8"
-                            class="form-control"
-                            placeholder="Make your story interesting yet professional"
-                            required
-                            maxlength="1000"
-                        ></textarea>
-                        <small class="form-text text-muted">
-                            Your bio must be no more than 1000 characters long must not contain special characters.
-                        </small>
-                        <div class="invalid-feedback">
-                            Invalid Bio
-                        </div>
-                    </div><!-- .form-group -->
-
-                    <div class="form-group mt-5">
-                        <label for="certificates_licenses">Upload your university degrees, certificates and license, up to 15 files</label>
-                        <input type="file"
-                            name="certificates_licenses_files"
-                            id="certificates_licenses_files"
-                            accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,image/x-png,image/jpeg"
-                            multiple
-                        >
-                        <small class="form-text text-muted">
-                            Only accepts images/photos of png and jpeg in format, documents and files in MS Word and PDF
-                        </small>
-                        <div class="invalid-feedback">
-                            Invalid Certificate Licenses. Please select valid images/photos, documents and files and not exceeding 15
-                        </div>
-                        <div id="certificates_licenses_files_preview_container"></div>
-                    </div><!-- .form-group -->
-
-                    <div class="form-group mt-5">
-                        <label for="working_hours">Working hours</label>
-                        <ul id="working_hours_list_container"></ul>
-                        <div>
-                            <select name="working_hours_start_day"
-                                id="working_hours_start_day"
-                                class="form-control d-inline rounded-0 col-sm-3 col-md-3 mb-2 text-center working_hours_days"
-                                ></select>
-                            <select name="working_hours_end_day"
-                                id="working_hours_end_day"
-                                class="form-control d-inline rounded-0 col-sm-3 col-md-3 mb-2 text-center working_hours_days"
-                                ></select>
+                    <div class="" id="reg_form_1">
+                        <div class="form-group">
+                            <label for="first_name">First Name</label>
                             <input type="text"
-                                name="working_hours_text"
-                                class="form-control d-inline-block rounded-0 col-sm-4 col-md-4 mb-2 text-center"
-                                id="working_hours_text"
-                                aria-describedby="working_hours_text"
+                                name="first_name"
+                                class="form-control rounded-0"
+                                id="first_name"
+                                aria-describedby="first_name"
                                 placeholder=""
-                                maxlength="50"
+                                maxlength="255"
                                 autocomplete="off"
                                 required
                             >
-                            <button id="btn-add-working-hour"
-                                class="btn btn-primary d-inline-block rounded-0 col-sm-1 col-md-1"
-                                style="margin-top: -2px;"
-                                title="Add Working hour"
-                                type="button"
+                            <div class="invalid-feedback">
+                                Invalid First Name
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group">
+                            <label for="last_name">Last Name</label>
+                            <input type="text"
+                                name="last_name"
+                                class="form-control rounded-0"
+                                id="last_name"
+                                aria-describedby="last_name"
+                                placeholder=""
+                                maxlength="255"
+                                autocomplete="off"
+                                required
                             >
-                                <span class="d-sm-none">Add</span>
-                                <i class="fas fa-plus"></i>
+                            <div class="invalid-feedback">
+                                Invalid Last Name
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <select type="text"
+                                name="country"
+                                class="form-control rounded-0"
+                                id="country"
+                                aria-describedby="country"
+                                placeholder=""
+                                maxlength="255"
+                                autocomplete="off"
+                                required
+                            ></select>
+                            <div class="invalid-feedback">
+                                Invalid Country
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <select type="text"
+                                name="city"
+                                class="select2 form-control rounded-0"
+                                id="city"
+                                aria-describedby="city"
+                                placeholder=""
+                                maxlength="255"
+                                autocomplete="off"
+                                required
+                            ></select>
+                            <small class="form-text text-muted">
+                                Please select a country before selecting a city
+                            </small>
+                            <div class="invalid-feedback">
+                                Invalid City
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group">
+                            <label for="profession">Profession</label>
+                            <input type="text"
+                                name="profession"
+                                class="form-control rounded-0"
+                                id="profession"
+                                aria-describedby="profession"
+                                placeholder=""
+                                maxlength="255"
+                                autocomplete="off"
+                                required
+                            >
+                            <div class="invalid-feedback">
+                                Invalid Profession
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group email-wrapper">
+                            <label for="email">Email</label>
+                            <input type="email"
+                                name="email"
+                                class="form-control rounded-0"
+                                id="email"
+                                aria-describedby="email"
+                                placeholder=""
+                                maxlength="255"
+                                autocomplete="off"
+                                required
+                            >
+                            <div class="invalid-feedback">
+                                Invalid Email
+                            </div>
+                            <div class="valid-feedback">
+                                Valid Email
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary rounded-0" id="btn-verify-email">
+                                <i class="fas fa-check"></i>&nbsp;
+                                Verify your email
+                            </button>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="clinic_files">Photo, You can upload up to 20 photos of your clinic and yourself</label>
+                            <input type="file"
+                                name="clinic_files"
+                                id="clinic_files"
+                                accept="image/x-png,image/jpeg"
+                                multiple
+                            >
+                            <small class="form-text text-muted">
+                                Only accepts images/photos of png and jpeg in format
+                            </small>
+                            <div class="invalid-feedback">
+                                Invalid Files. Please select valid images/photos and not exceeding 20
+                            </div>
+                            <div id="clinic_files_preview_container"></div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="bio">Bio: tell us about yourself, your experience and your personality. Make it catchy</label>
+                            <textarea name="bio"
+                                rows="8"
+                                class="form-control"
+                                placeholder="Make your story interesting yet professional"
+                                required
+                                maxlength="1000"
+                            ></textarea>
+                            <small class="form-text text-muted">
+                                Your bio must be no more than 1000 characters long must not contain special characters.
+                            </small>
+                            <div class="invalid-feedback">
+                                Invalid Bio
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="certificates_licenses">Upload your university degrees, certificates and license, up to 15 files</label>
+                            <input type="file"
+                                name="certificates_licenses_files"
+                                id="certificates_licenses_files"
+                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,image/x-png,image/jpeg"
+                                multiple
+                            >
+                            <small class="form-text text-muted">
+                                Only accepts images/photos of png and jpeg in format, documents and files in MS Word and PDF
+                            </small>
+                            <div class="invalid-feedback">
+                                Invalid Certificate Licenses. Please select valid images/photos, documents and files and not exceeding 15
+                            </div>
+                            <div id="certificates_licenses_files_preview_container"></div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="working_hours">Working hours</label>
+                            <ul id="working_hours_list_container"></ul>
+                            <div>
+                                <select name="working_hours_start_day"
+                                    id="working_hours_start_day"
+                                    class="form-control d-inline rounded-0 col-sm-3 col-md-3 mb-2 text-center working_hours_days"
+                                    ></select>
+                                <select name="working_hours_end_day"
+                                    id="working_hours_end_day"
+                                    class="form-control d-inline rounded-0 col-sm-3 col-md-3 mb-2 text-center working_hours_days"
+                                    ></select>
+                                <input type="text"
+                                    name="working_hours_text"
+                                    class="form-control d-inline-block rounded-0 col-sm-4 col-md-4 mb-2 text-center"
+                                    id="working_hours_text"
+                                    aria-describedby="working_hours_text"
+                                    placeholder=""
+                                    maxlength="50"
+                                    autocomplete="off"
+                                    required
+                                >
+                                <button id="btn-add-working-hour"
+                                    class="btn btn-primary d-inline-block rounded-0 col-sm-1 col-md-1"
+                                    style="margin-top: -2px;"
+                                    title="Add Working hour"
+                                    type="button"
+                                >
+                                    <span class="d-sm-none">Add</span>
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+
+                        </div><!-- .form-group -->
+
+                        <button type="button" class="btn btn-primary btn-lg col-md-6 col-sm-6 col-xs-6 float-right rounded-0 mt-5 btn-next-previous" data-value="2">
+                            Next&nbsp;
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+
+                    </div><!-- #reg_form_1 -->
+
+                    <div id="reg_form_2" class="d-none">
+
+                        <div class="form-group mt-5">
+                            <label for="services_offered_text">What services do you offer</label>
+                            <ul id="services_offered_list_container"></ul>
+                            <div>
+                                <input type="text"
+                                    name="services_offered_text"
+                                    class="form-control d-inline rounded-0 col-sm-10 col-md-8 mb-2"
+                                    id="services_offered_text"
+                                    aria-describedby="address"
+                                    placeholder=""
+                                    maxlength="255"
+                                    autocomplete="off"
+                                    required
+                                >
+                                <button id="btn-add-service"
+                                    class="btn btn-primary d-inline rounded-0 col-sm-1 col-md-1"
+                                    style="margin-top: -2px;"
+                                    title="Add Service"
+                                    type="button"
+                                >
+                                    <span class="d-sm-none">Add</span>
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+
+                            <div class="text-danger d-none" id="service-error">
+                                Please add valid service that you offer
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group">
+                            <label for="availability">Availability</label>
+                            Calendar time
+                        </div><!-- .form-group -->
+
+                        <div class="form-group">
+                            <label for="availability">Availability</label>
+                            Calendar time
+                        </div><!-- .form-group -->
+
+                        <div class="form-group">
+                            <label for="available_interview">Would you be available for skype/whatsApp interview?</label>
+                            <input type="radio"
+                                name="available_interview"
+                                id="available_interview_"
+                                value="0"
+                            > No
+                            <br />
+                            <input type="radio"
+                                name="available_interview"
+                                value="1"
+                            > Yes
+                            <br />
+                            <div class="invalid-feedback">
+                                Invalid interview selected
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <button type="button" class="btn btn-orange btn-lg col-md-6 col-sm-6 col-xs-6 float-left rounded-0 mt-5 btn-next-previous" data-value="1">
+                            <i class="fas fa-arrow-left"></i>&nbsp;
+                            Previous
+                        </button>
+
+                        <button type="button" class="btn btn-primary btn-lg col-md-6 col-sm-6 col-xs-6 float-right rounded-0 mt-5 btn-next-previous" data-value="3">
+                            Next&nbsp;
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+
+                    </div><!-- #reg_form_2 -->
+
+
+                    <div id="reg_form_3" class="d-none">
+                        Questionaires here..
+                        <!-- reCaptcha here -->
+
+                        <div>
+                            <button type="button" class="btn btn-orange btn-lg col-md-6 col-sm-6 col-xs-6 float-left rounded-0 mt-5 btn-next-previous" data-value="2">
+                                <i class="fas fa-arrow-left"></i>&nbsp;
+                                Previous
                             </button>
                         </div>
 
-                    </div><!-- .form-group -->
-
-                    <div class="form-group mt-5">
-                        <label for="address">Address</label>
-                        <input type="text"
-                            name="address"
-                            class="form-control d-inline-block rounded-0 col-sm-4 col-md-4 mb-2 r"
-                            id="address"
-                            aria-describedby="address"
-                            placeholder=""
-                            maxlength="255"
-                            autocomplete="off"
-                            required
-                        >
-                        <input type="text" id="location">
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOLySoW2gNxPTSlp0sFZEPNXkue1nfQFQ&libraries=places"></script>
-
-                    </div><!-- .form-group -->
-
-                    <div class="form-group">
-                        <label for="services">What services do you offer</label>
-                        Service fee
-                    </div><!-- .form-group -->
-
-                    <div class="form-group">
-                        <label for="availability">Availability</label>
-                        Calendar time
-                    </div><!-- .form-group -->
-
-                    <div class="form-group">
-                        <label for="availability">Availability</label>
-                        Calendar time
-                    </div><!-- .form-group -->
-
-                    <div class="form-group">
-                        <label for="available_interview">Would you be available for skype/whatsApp interview?</label>
-                        <input type="radio"
-                            name="available_interview"
-                            id="available_interview_"
-                            value="0"
-                        > No
-                        <br />
-                        <input type="radio"
-                            name="available_interview"
-                            value="1"
-                        > Yes
-                        <br />
-                        <div class="invalid-feedback">
-                            Invalid interview selected
+                        <div class="input-group mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block rounded-0 mt-5" id="btn-register-submit">
+                                <span id="signUp-text">
+                                    <i id="signUp-icon" class="fas fa-paper-plane mr-1"></i>
+                                    <i id="signUp-spinner" class="fas fa-circle-notch fa-spin d-none"></i>
+                                    Submit
+                                </span>
+                            </button>
                         </div>
-                    </div><!-- .form-group -->
+                        <!-- .input-group -->
+                    </div><!-- reg_form_3 -->
 
-                    <!-- reCaptcha here -->
 
-                    <div class="input-group mt-5">
-                        <button type="submit" class="btn btn-orange btn-md btn-block rounded-0 mt-3" id="btn-register-submit">
-                            <span id="signUp-text">
-                                <i id="signUp-icon" class="fas fa-paper-plane mr-1"></i>
-                                <i id="signUp-spinner" class="fas fa-circle-notch fa-spin d-none"></i>
-                                Submit
-                            </span>
-                        </button>
-                    </div>
-                    <!-- .input-group -->
+
                 </form>
             </div>
             </div>
