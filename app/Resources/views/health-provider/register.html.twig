@@ -23,9 +23,9 @@
                     </div>
                 </div>
 
-                <form action="{{ url('homepage') }}sign-up" method="post" role="form" name="registrationForm" id="registrationForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <form action="{{ url('healthProvider.create') }}" method="post" role="form" name="registrationForm" id="registrationForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
 
-                    <div class="" id="reg_form_1">
+                    <div class="reg_form" id="reg_form_1">
                         <div class="form-group">
                             <label for="first_name">First Name</label>
                             <input type="text"
@@ -142,23 +142,6 @@
                         </div><!-- .form-group -->
 
                         <div class="form-group mt-5">
-                            <label for="clinic_files">Photo, You can upload up to 20 photos of your clinic and yourself</label>
-                            <input type="file"
-                                name="clinic_files"
-                                id="clinic_files"
-                                accept="image/x-png,image/jpeg"
-                                multiple
-                            >
-                            <small class="form-text text-muted">
-                                Only accepts images/photos of png and jpeg in format
-                            </small>
-                            <div class="invalid-feedback">
-                                Invalid Files. Please select valid images/photos and not exceeding 20
-                            </div>
-                            <div id="clinic_files_preview_container"></div>
-                        </div><!-- .form-group -->
-
-                        <div class="form-group mt-5">
                             <label for="bio">Bio: tell us about yourself, your experience and your personality. Make it catchy</label>
                             <textarea name="bio"
                                 rows="8"
@@ -173,23 +156,6 @@
                             <div class="invalid-feedback">
                                 Invalid Bio
                             </div>
-                        </div><!-- .form-group -->
-
-                        <div class="form-group mt-5">
-                            <label for="certificates_licenses">Upload your university degrees, certificates and license, up to 15 files</label>
-                            <input type="file"
-                                name="certificates_licenses_files"
-                                id="certificates_licenses_files"
-                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,image/x-png,image/jpeg"
-                                multiple
-                            >
-                            <small class="form-text text-muted">
-                                Only accepts images/photos of png and jpeg in format, documents and files in MS Word and PDF
-                            </small>
-                            <div class="invalid-feedback">
-                                Invalid Certificate Licenses. Please select valid images/photos, documents and files and not exceeding 15
-                            </div>
-                            <div id="certificates_licenses_files_preview_container"></div>
                         </div><!-- .form-group -->
 
                         <div class="form-group mt-5">
@@ -234,7 +200,7 @@
 
                     </div><!-- #reg_form_1 -->
 
-                    <div id="reg_form_2" class="d-none">
+                    <div id="reg_form_2" class="reg_form d-none">
 
                         <div class="form-group mt-5">
                             <label for="services_offered_text">What services do you offer</label>
@@ -266,53 +232,64 @@
                             </div>
                         </div><!-- .form-group -->
 
-                        <div class="form-group">
-                            <label for="availability">Availability</label>
-                            Calendar time
+                        <div class="form-group mt-5">
+                            <label for="clinic_files">Photo, You can upload up to 20 photos of your clinic and yourself</label>
+                            <input type="file"
+                                name="clinic_files"
+                                id="clinic_files"
+                                accept="image/x-png,image/jpeg"
+                                multiple
+                            >
+                            <small class="form-text text-muted">
+                                Only accepts images/photos of png and jpeg in format
+                            </small>
+                            <div class="invalid-feedback">
+                                Invalid Files. Please select valid images/photos and not exceeding 20
+                            </div>
+                            <div id="clinic_files_preview_container"></div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="certificates_licenses">Upload your university degrees, certificates and license, up to 15 files</label>
+                            <input type="file"
+                                name="certificates_licenses_files"
+                                id="certificates_licenses_files"
+                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,image/x-png,image/jpeg"
+                                multiple
+                            >
+                            <small class="form-text text-muted">
+                                Only accepts images/photos of png and jpeg in format, documents and files in MS Word and PDF
+                            </small>
+                            <div class="invalid-feedback">
+                                Invalid Certificate Licenses. Please select valid images/photos, documents and files and not exceeding 15
+                            </div>
+                            <div id="certificates_licenses_files_preview_container"></div>
                         </div><!-- .form-group -->
 
                         <div class="form-group">
-                            <label for="availability">Availability</label>
-                            Calendar time
-                        </div><!-- .form-group -->
-
-                        <div class="form-group">
-                            <label for="available_interview">Would you be available for skype/whatsApp interview?</label>
-                            <input type="radio"
-                                name="available_interview"
-                                id="available_interview_"
-                                value="0"
-                            > No
+                            <label for="">Would you be available for skype/whatsApp interview?</label>
                             <br />
                             <input type="radio"
                                 name="available_interview"
+                                id="available_interview_no"
+                                value="0"
+                            >
+                            <label for="available_interview_no" class="cursor-pointer">No</label>
+                            &nbsp;
+                            <input type="radio"
+                                name="available_interview"
+                                id="available_interview_yes"
                                 value="1"
-                            > Yes
+                            >
+                            <label for="available_interview_yes" class="cursor-pointer">Yes</label>
                             <br />
                             <div class="invalid-feedback">
                                 Invalid interview selected
                             </div>
                         </div><!-- .form-group -->
 
-                        <button type="button" class="btn btn-orange btn-lg col-md-6 col-sm-6 col-xs-6 float-left rounded-0 mt-5 btn-next-previous" data-value="1">
-                            <i class="fas fa-arrow-left"></i>&nbsp;
-                            Previous
-                        </button>
-
-                        <button type="button" class="btn btn-primary btn-lg col-md-6 col-sm-6 col-xs-6 float-right rounded-0 mt-5 btn-next-previous" data-value="3">
-                            Next&nbsp;
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-
-                    </div><!-- #reg_form_2 -->
-
-
-                    <div id="reg_form_3" class="d-none">
-                        Questionaires here..
-                        <!-- reCaptcha here -->
-
                         <div>
-                            <button type="button" class="btn btn-orange btn-lg col-md-6 col-sm-6 col-xs-6 float-left rounded-0 mt-5 btn-next-previous" data-value="2">
+                            <button type="button" class="btn btn-orange btn-lg col-md-6 col-sm-6 col-xs-6 float-left rounded-0 mt-5 btn-next-previous" data-value="1">
                                 <i class="fas fa-arrow-left"></i>&nbsp;
                                 Previous
                             </button>
@@ -327,10 +304,8 @@
                                 </span>
                             </button>
                         </div>
-                        <!-- .input-group -->
-                    </div><!-- reg_form_3 -->
 
-
+                    </div><!-- #reg_form_2 -->
 
                 </form>
             </div>
@@ -348,9 +323,9 @@
     <script src="{{ url('homepage') }}vendor/select2/js/select2.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <script src="{{ url('homepage') }}js/health-provider.js"></script>
+    <script src="{{ url('homepage') }}js/health-provider-register.js"></script>
     <script>
-        var hp = new HealthProvider();
+        var hp = new HealthProviderRegister();
         hp.validateEmailUrl = '{{ url('healthProvider.validateEmail') }}';
         hp.url.countrySearch = '{{ url('healthProvider.countrySearch') }}'
         hp.url.citySearch = '{{ url('healthProvider.citySearch') }}'

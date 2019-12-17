@@ -40,6 +40,19 @@ class HealthProviderController extends Controller
     }
 
     /**
+     * @Route("/health-provider/search", name="healthProvider.search")
+     */
+    public function searchAction(Request $request)
+    {
+        $html = ($this->render('health-provider/search.html.twig', [
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+        ]));
+
+        echo $html->getContent();
+        exit;
+    }
+
+    /**
      * @Route("/health-provider/email-validate", name="healthProvider.validateEmail")
      */
     public function validateEmialAction(Request $request)

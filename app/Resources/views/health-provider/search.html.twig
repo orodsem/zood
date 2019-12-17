@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Health Providers - Search{% endblock %}
+
+{% block styles %}
+    <link href="{{ url('homepage') }}vendor/select2/css/select2.min.css" rel="stylesheet">
+    <link href="{{ url('homepage') }}css/general.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link href="{{ url('homepage') }}css/health-provider.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid pb-5 pt-5 mt-5" id="health-provider-search">
+
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 col-sm-12">
+
+                <div class="row mb-5">
+                    <div class="col-lg-12 text-center">
+                        <h2>Search for a health provider</h2>
+                    </div>
+                </div>
+
+                <form action="{{ url('healthProvider.search') }}" method="post" role="form" name="searchForm" id="searchForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
+
+                    <div>
+                        <div class="form-group mt-5">
+                            <label for="date_of_birth">Date of Birth</label>
+                            <div>
+                                <input type="text"
+                                    name="date_of_birth"
+                                    class="form-control d-inline rounded-0 col-md-4 col-sm-8 col-xs-12 text-center"
+                                    id="date_of_birth"
+                                    aria-describedby="date_of_birth"
+                                    autocomplete="off"
+                                    required
+                                >
+                            </div>
+
+                            <div class="text-danger d-none" id="date-of-birth-error">
+                                Please add valid date of birth
+                            </div>
+                        </div><!-- .form-group -->
+
+                        
+
+                        <div class="input-group mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block rounded-0 mt-5" id="btn-register-submit">
+                                <span id="signUp-text">
+                                    <i id="signUp-icon" class="fas fa-paper-plane mr-1"></i>
+                                    <i id="signUp-spinner" class="fas fa-circle-notch fa-spin d-none"></i>
+                                    Submit
+                                </span>
+                            </button>
+                        </div>
+
+                    </div><!-- #reg_form_2 -->
+
+                </form>
+            </div>
+            </div>
+        </div>
+
+    </div><!-- .container-fluid -->
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{{ url('homepage') }}js/app.min.js"></script>
+    <script src="{{ url('homepage') }}vendor/sweetalert/js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="{{ url('homepage') }}js/health-provider-search.js"></script>
+    <script>
+        var hp = new HealthProviderSearch();
+        // hp.validateEmailUrl = '{{ url('healthProvider.validateEmail') }}';
+        // hp.url.countrySearch = '{{ url('healthProvider.countrySearch') }}'
+        // hp.url.citySearch = '{{ url('healthProvider.citySearch') }}'
+        hp.init();
+    </script>
+{% endblock %}

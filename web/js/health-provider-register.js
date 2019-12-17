@@ -1,7 +1,7 @@
 /**
- * HealthProvider class
+ * HealthProviderRegister class
  */
-class HealthProvider {
+class HealthProviderRegister {
 
     constructor() {
         this.isLoading = false;
@@ -73,6 +73,7 @@ class HealthProvider {
         });
 
         this.showRegForm(2);
+
     }
 
     showRegForm(reg_form_no) {

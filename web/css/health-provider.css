@@ -22,3 +22,16 @@
 .select2-selection__arrow {
     height: 44px !important;
 }
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.reg_form.d-none {
+    opacity: 0;
+}
+
+.reg_form:not(.d-none) {
+    opacity: 1;
+    transition: opacity 4s linear;
+}
