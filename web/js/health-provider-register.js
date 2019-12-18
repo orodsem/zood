@@ -64,6 +64,20 @@ class HealthProviderRegister {
             _this.previewCertificatesLicensesFiles($(this));
         });
 
+        $('#calendar_availability_text').daterangepicker({
+            opens: 'center',
+            timePicker: true,
+            locale: {
+                format: 'YYYY-MM-DD hh:mm'
+            }
+        }).on('show.daterangepicker', (ev, picker) => {
+            //
+        });
+
+        $('#btn-add-availability').on('click', () => {
+            _this.addCalendarAvailability();
+        });
+
         $('#btn-register-submit').on('click', function(e) {
             _this.validateFormsAndSubmit(e);
         });
@@ -72,14 +86,13 @@ class HealthProviderRegister {
             _this.showRegForm($(this).attr('data-value'));
         });
 
-        this.showRegForm(2);
+        this.showRegForm(1);
 
     }
 
     showRegForm(reg_form_no) {
         $('#reg_form_1').addClass('d-none');
         $('#reg_form_2').addClass('d-none');
-        $('#reg_form_3').addClass('d-none');
         $('#reg_form_'+reg_form_no).removeClass('d-none');
     }
 
@@ -175,6 +188,47 @@ class HealthProviderRegister {
             .html(html)
             .on('click', '.btn-delete-working-hour-item', function(e)  {
                 $(this).parent('.working_hours_item').remove();
+            });
+    }
+
+    addCalendarAvailability() {
+
+        let html = $('#calendar_availability_list_container').html();
+
+        let calendar_availability_value = $('#calendar_availability_text').val();
+
+        let valid = true;
+
+        if ($('.calendar_availability').length) {
+            $('.calendar_availability').each(function(i,v) {
+                if ($(v).val() == calendar_availability_value) {
+                    swal({
+                        title: "Calendar availability already exists",
+                        text: "Please choose another date and time",
+                        icon: "error",
+                    });
+                    valid = false;
+                    return;
+                }
+            });
+        }
+
+        if (!valid) return;
+
+        html += `
+            <li class="text-muted calendar_availability_item">
+                <input type="hidden" name="calendar_availability[]" class="calendar_availability" value="${calendar_availability_value}">
+                <span>${calendar_availability_value}</span>
+                <a href="javascript:void(0)" class="text-danger btn-delete-calendar-availability-item" title="Remove">
+                    <i class="fas fa-times"></i>
+                </a>
+            </li>
+        `;
+
+        $('#calendar_availability_list_container')
+            .html(html)
+            .on('click', '.btn-delete-calendar-availability-item', function(e)  {
+                $(this).parent('.calendar_availability_item').remove();
             });
     }
 

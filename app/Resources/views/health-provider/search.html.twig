@@ -25,13 +25,56 @@
 
                 <form action="{{ url('healthProvider.search') }}" method="post" role="form" name="searchForm" id="searchForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
 
-                    <div>
+                    <div class="search_form" id="search_form_1">
+                        <div class="form-group">
+                            <label for="looking_for">What are you looking for?</label>
+                            <div id="looking_for_list_container"></div>
+                            <div class="invalid-feedback">
+                                Please check atleast one that you're looking for
+                            </div>
+                        </div><!-- .form-group -->
+
+
+                        <div class="form-group mt-5">
+                            <label for="country">Country?</label>
+                            <div id="country_list_container"></div>
+                            <div class="invalid-feedback">
+                                Please check atleast one country
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="working_hours">Availability</label>
+                            <input type="text"
+                                name="calendar_availability"
+                                class="form-control rounded-0 col-sm-12 col-md-6 mb-2 text-center"
+                                id="calendar_availability"
+                                aria-describedby="calendar_availability"
+                                placeholder=""
+                                maxlength="100"
+                                autocomplete="off"
+                                required
+                            >
+                            <div class="text-danger d-none" id="date-of-birth-error">
+                                Please add valid date of birth
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <button type="button" class="btn btn-primary btn-lg col-md-6 col-sm-6 col-xs-6 float-right rounded-0 mt-5 btn-next-previous" data-value="2">
+                            Next&nbsp;
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+
+                    </div><!-- #search_form_1 -->
+
+                    <div class="search_form d-none" id="search_form_2">
+
                         <div class="form-group mt-5">
                             <label for="date_of_birth">Date of Birth</label>
                             <div>
                                 <input type="text"
                                     name="date_of_birth"
-                                    class="form-control d-inline rounded-0 col-md-4 col-sm-8 col-xs-12 text-center"
+                                    class="form-control d-inline rounded-0 col-md-6 col-sm-8 col-xs-12 text-center"
                                     id="date_of_birth"
                                     aria-describedby="date_of_birth"
                                     autocomplete="off"
@@ -44,7 +87,101 @@
                             </div>
                         </div><!-- .form-group -->
 
-                        
+                        <div class="form-group mt-5">
+                            <label for="is_pregnant">If female, are you pregnant?</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="is_pregnant" id="is_pregnant_yes" value="1" required>
+                                    <label class="form-check-label" for="is_pregnant_yes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="is_pregnant" id="is_pregnant_no" value="0" required>
+                                    <label class="form-check-label" for="is_pregnant_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="invalid-feedback">
+                                Please check yes or no
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="is_breastfeeding">Breast feeding?</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="is_breastfeeding" id="is_pregnant_yes" value="1" required>
+                                    <label class="form-check-label" for="is_breastfeeding_yes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="is_breastfeeding" id="is_pregnant_no" value="0" required>
+                                    <label class="form-check-label" for="is_breastfeeding_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="invalid-feedback">
+                                Please check yes or no
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="allergies">Any allergies?</label>
+                            <textarea class="form-control" id="allergies" rows="4" maxlength="1000"></textarea>
+                            <div class="invalid-feedback">
+                                Please type valid allergies
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="medication">Any medication?</label>
+                            <textarea class="form-control" id="medication" rows="4" maxlength="1000"></textarea>
+                            <div class="invalid-feedback">
+                                Please type valid medication
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="country">Please tick if you have any of this conditions</label>
+                            <div id="health_conditions_list_container" class="row"></div>
+                            <div class="invalid-feedback">
+                                Please check atleast one condition
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="is_operation_12_months">Have you had any operation in the last 12 months?</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="is_operation_12_months" id="is_operation_12_months_yes" value="1" required>
+                                    <label class="form-check-label" for="is_operation_12_months_yes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="is_operation_12_months" id="is_operation_12_months_no" value="0" required>
+                                    <label class="form-check-label" for="is_operation_12_months_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="invalid-feedback">
+                                Please check yes or no
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="is_condition_discuss">Is there any condition that you wish to discuss it with your doctor privately?</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="is_condition_discuss" id="is_condition_discuss_yes" value="1" required>
+                                    <label class="form-check-label" for="is_condition_discuss_yes">Yes</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="is_condition_discuss" id="is_condition_discuss_no" value="0" required>
+                                    <label class="form-check-label" for="is_condition_discuss_no">No</label>
+                                </div>
+                            </div>
+
+                            <div class="invalid-feedback">
+                                Please check yes or no
+                            </div>
+                        </div><!-- .form-group -->
 
                         <div class="input-group mt-5">
                             <button type="submit" class="btn btn-primary btn-lg btn-block rounded-0 mt-5" id="btn-register-submit">
@@ -56,7 +193,7 @@
                             </button>
                         </div>
 
-                    </div><!-- #reg_form_2 -->
+                    </div><!-- #search_form_2 -->
 
                 </form>
             </div>
@@ -75,10 +212,41 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="{{ url('homepage') }}js/health-provider-search.js"></script>
     <script>
-        var hp = new HealthProviderSearch();
-        // hp.validateEmailUrl = '{{ url('healthProvider.validateEmail') }}';
-        // hp.url.countrySearch = '{{ url('healthProvider.countrySearch') }}'
-        // hp.url.citySearch = '{{ url('healthProvider.citySearch') }}'
-        hp.init();
+        var hpSearch = new HealthProviderSearch();
+        hpSearch.looking_for_list = [
+            "Dentist",
+            "Plastic surgeon",
+            "Beuty therapist",
+            "Meditation camp",
+            "Yoga camp",
+            "Anti-wrinkle injections",
+            "Knee surgeon",
+            "Orthodontist",
+            "Implant",
+            "Physiotherapist",
+            "Others",
+        ];
+        hpSearch.country_list = [
+            "Thailand",
+            "India",
+            "Malaysia",
+            "Bali",
+            "Mexico",
+            "Turkey",
+        ];
+        hpSearch.health_conditions_list = [
+            "Hearth",
+            "Thyroid",
+            "Blood pressure",
+            "Respiratory disease",
+            "Diabetes",
+            "Congenital hearth",
+            "History of Cancer",
+            "Osteoprosis",
+            "Blood thining medication",
+            "Mental disease",
+            "Neuromascular",
+        ];
+        hpSearch.init();
     </script>
 {% endblock %}
