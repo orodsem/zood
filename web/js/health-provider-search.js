@@ -66,18 +66,6 @@ class HealthProviderSearch {
 
         this.healthConditionsInit();
 
-        this.showSearchForm(2);
-
-        $('.btn-next-previous').on('click', function() {
-            _this.showSearchForm($(this).attr('data-value'));
-        });
-
-    }
-
-    showSearchForm(search_form_no) {
-        $('#search_form_1').addClass('d-none');
-        $('#search_form_2').addClass('d-none');
-        $('#search_form_'+search_form_no).removeClass('d-none');
     }
 
     lookingForInit() {
@@ -89,7 +77,7 @@ class HealthProviderSearch {
 
         for (const i in this.looking_for_list) {
             html += `
-                <div class="form-check form-check-inline">
+                <div class="form-check col-md-5 col-sm-6 col-xs-12 mt-2">
                     <input class="form-check-input" name="looking_for[]" type="checkbox" id="looking_for_${this.looking_for_list[i]}" value="${this.looking_for_list[i]}" required>
                     <label class="form-check-label" for="looking_for_${this.looking_for_list[i]}">${this.looking_for_list[i]}</label>
                 </div>
@@ -109,7 +97,7 @@ class HealthProviderSearch {
         for (const i in this.country_list) {
 
             html += `
-                <div class="form-check form-check-inline">
+                <div class="form-check form-check-inline mt-2">
                     <input class="form-check-input" name="country[]" type="checkbox" id="country_${this.country_list[i]}" value="${this.country_list[i]}" required>
                     <label class="form-check-label" for="country_${this.country_list[i]}">${this.country_list[i]}</label>
                 </div>
