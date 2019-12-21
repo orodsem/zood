@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <form action="{{ url('healthProvider.create') }}" method="post" role="form" name="registrationForm" id="registrationForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <form action="{{ url('healthProvider.store') }}" method="post" role="form" name="registrationForm" id="registrationForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
 
                     <div class="reg_form" id="reg_form_1">
                         <div class="form-group">
@@ -147,7 +147,6 @@
                                 rows="8"
                                 class="form-control"
                                 placeholder="Make your story interesting yet professional"
-                                required
                                 maxlength="1000"
                             ></textarea>
                             <small class="form-text text-muted">
@@ -191,6 +190,9 @@
                                 </button>
                             </div>
 
+                            <div class="invalid-feedback">
+                                Invalid working hours
+                            </div>
                         </div><!-- .form-group -->
 
                         <button type="button" class="btn btn-primary btn-lg col-md-6 col-sm-6 col-xs-6 float-right rounded-0 mt-5 btn-next-previous" data-value="2">
@@ -354,6 +356,7 @@
     <script src="{{ url('homepage') }}js/health-provider-register.js"></script>
     <script>
         var hp = new HealthProviderRegister();
+        hp.token = '{{ csrf_token('register') }}';
         hp.validateEmailUrl = '{{ url('healthProvider.validateEmail') }}';
         hp.url.countrySearch = '{{ url('healthProvider.countrySearch') }}'
         hp.url.citySearch = '{{ url('healthProvider.citySearch') }}'

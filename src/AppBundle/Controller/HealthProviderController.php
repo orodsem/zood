@@ -40,6 +40,15 @@ class HealthProviderController extends Controller
     }
 
     /**
+     * @Route("/health-provider/store", name="healthProvider.store")
+     */
+    public function storeAction(Request $request)
+    {
+        // var_dump($request->all());die;
+        exit;
+    }
+
+    /**
      * @Route("/health-provider/search", name="healthProvider.search")
      */
     public function searchAction(Request $request)
@@ -76,6 +85,14 @@ class HealthProviderController extends Controller
      */
     public function countrySearchAction(Request $request)
     {
+        $token = $request->get('token');
+
+        $isValidToken = $this->isCsrfTokenValid('register', $token);
+
+        if (!$isValidToken) {
+            echo json_encode(["results" => []]);
+            exit;
+        }
 
         $search = trim($request->get('search'));
 

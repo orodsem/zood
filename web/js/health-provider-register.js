@@ -4,6 +4,9 @@
 class HealthProviderRegister {
 
     constructor() {
+
+        this.token = '';
+
         this.isLoading = false;
 
         this.url = {
@@ -27,8 +30,6 @@ class HealthProviderRegister {
         'use strict';
 
         var _this = this;
-
-        this.initSubmit();
 
         this.initSelect2();
 
@@ -79,14 +80,34 @@ class HealthProviderRegister {
         });
 
         $('#btn-register-submit').on('click', function(e) {
-            _this.validateFormsAndSubmit(e);
+            _this.validateOtherFormsAndSubmit(e);
         });
 
         $('.btn-next-previous').on('click', function() {
-            _this.showRegForm($(this).attr('data-value'));
+            let validForm1 = _this.validateForm1();
+
+            if (validForm1)
+                _this.showRegForm($(this).attr('data-value'));
         });
 
         this.showRegForm(1);
+
+        this.test();
+    }
+
+    test() {
+
+        setTimeout(function() {
+            $('#first_name').val('First name');
+            $('#last_name').val('Last name');
+            $('#profession').val('profession');
+            $('#email').val('ramonchristophermorales@gmail.com');
+            $('#btn-add-working-hour').click();
+            $('#services_offered_text').val('Services offered');
+            setTimeout(function() {$('#btn-add-service').click()}, 500);
+            $('#btn-add-availability').click();
+        }, 1000);
+
 
     }
 
@@ -96,58 +117,74 @@ class HealthProviderRegister {
         $('#reg_form_'+reg_form_no).removeClass('d-none');
     }
 
+    validateForm1() {
+
+        let valid = true;
+        let focus_elem = '';
+
+        $('.invalid-feedback').removeClass('d-none');
+
+        if ($('[name="first_name"]').val().trim() == '') {
+            $('[name="first_name"]').siblings('.invalid-feedback').addClass('d-block');
+            focus_elem = '[name="first_name"]';
+            valid = false;
+        }
+
+        if ($('[name="last_name"]').val().trim() == '') {
+            $('[name="last_name"]').siblings('.invalid-feedback').addClass('d-block');
+            focus_elem = focus_elem ? focus_elem : '[name="last_name"]';
+            valid = false;
+        }
+
+        if ($('[name="country"]').val() == null || $('[name="country"]').val().trim() == '') {
+            $('[name="country"]').siblings('.invalid-feedback').addClass('d-block');
+            focus_elem = focus_elem ? focus_elem : '[name="country"]';
+            valid = false;
+        }
+
+        if ($('[name="city"]').val() == null || $('[name="city"]').val().trim() == '' ) {
+            $('[name="city"]').siblings('.invalid-feedback').addClass('d-block');
+            focus_elem = focus_elem ? focus_elem : '[name="city"]';
+            valid = false;
+        }
+
+        if ($('[name="profession"]').val().trim() == '') {
+            $('[name="profession"]').siblings('.invalid-feedback').addClass('d-block');
+            focus_elem = focus_elem ? focus_elem : '[name="profession"]';
+            valid = false;
+        }
+
+        if ($('[name="email"]').val().trim() == '') {
+            $('[name="email"]').siblings('.invalid-feedback').addClass('d-block');
+            focus_elem = focus_elem ? focus_elem : '[name="email"]';
+            valid = false;
+        }
+
+        if ($('[name="working_hours[]"]').length < 1) {
+            $('#working_hours_list_container').siblings('.invalid-feedback').addClass('d-block');
+            focus_elem = focus_elem ? focus_elem : '#working_hours_start_day';
+            valid = false;
+        }
+
+        if (focus_elem)
+            $(focus_elem).focus();
+
+        return valid;
+    }
+
     validateOtherFormsAndSubmit(e) {
 
         let valid = true;
 
-        if ($('[name="first_name"]').val().trim() == '')
-            $('[name="first_name"]').focus();
+        valid = this.validateForm1();
 
-        if ($('[name="last_name"]').val().trim() == '')
-            $('[name="last_name"]').focus();
-
-        if ($('[name="country"]').val().trim() == '')
-            $('[name="country"]').focus();
-
-        if ($('[name="city"]').val().trim() == '')
-            $('[name="city"]').focus();
-
-        if ($('[name="profession"]').val().trim() == '')
-            $('[name="profession"]').focus();
-
-        if ($('[name="email"]').val().trim() == '')
-            $('[name="email"]').focus();
-
-        if ($('[name="working_hours[]"]').length < 1) {
-            swal({
-                title: "Working Hours is required",
-                text: "Please add working hours",
-                icon: "error",
-            }).then(() => {
-                $('#working_hours_start_day').focus();
-            });
-            valid = false;
+        if (!valid) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
         }
 
-        if (valid)
-            $('#registrationForm').submit();
-    }
-
-    initSubmit() {
-        window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
+        $('#registrationForm').submit();
     }
 
     addWorkingHour() {
@@ -422,6 +459,9 @@ class HealthProviderRegister {
     }
 
     initSelect2() {
+
+        let _this = this;
+
         $('#country').select2({
             width: 'resolve',
             delay: 500,
@@ -432,7 +472,8 @@ class HealthProviderRegister {
                 url: this.url.countrySearch,
                 data: function(params) {
                     var query = {
-                        search: params.term
+                        search: params.term,
+                        token: _this.token,
                     }
                     return query;
                 },
@@ -456,7 +497,8 @@ class HealthProviderRegister {
                 data: function(params) {
                     var query = {
                         search: params.term,
-                        country: $('#country').val()
+                        country: $('#country').val(),
+                        token: _this.token
                     }
                     return query;
                 },
