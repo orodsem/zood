@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use AppBundle\Entity\RegisteredUser;
+use AppBundle\Repository\RegisteredUserRepository;
+
 class HealthProviderController extends Controller
 {
     /**
@@ -29,7 +32,7 @@ class HealthProviderController extends Controller
     /**
      * @Route("/health-provider/register", name="healthProvider.create")
      */
-    public function registerAction(Request $request)
+    public function registerAction(Request $request, $validationMessages=[])
     {
         $html = ($this->render('health-provider/register.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
@@ -44,7 +47,99 @@ class HealthProviderController extends Controller
      */
     public function storeAction(Request $request)
     {
-        // var_dump($request->all());die;
+        $data = $request->request->all();
+
+        $valid = true;
+
+        $messages = [];
+
+        if (!isset($data['first_name']) || strlen(trim($data['first_name'])) < 1 || strlen(trim($data['first_name'])) > 255) {
+            $valid = false;
+            $messages[] = 'Invalid First Name';
+        }
+
+        if (!isset($data['last_name']) || strlen(trim($data['first_name'])) < 1 || strlen(trim($data['last_name'])) > 255) {
+            $valid = false;
+            $messages[] = 'Invalid Last Name';
+        }
+
+        $countriesJson = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/countries-and-cities.json');
+
+        if (!isset($data['country'])) {
+            $valid = false;
+            $messages[] = 'Invalid Country1';
+        } else {
+
+            if (!$countriesJson) {
+                $valid = false;
+                $messages[] = 'Invalid Country2';
+            } else {
+                $countriesArr = json_decode($countriesJson);
+                $validCountry = false;
+                foreach($countriesArr as $k => $v) {
+                    if ($k == $data['country']) {
+                        $validCountry = true;
+                        break;
+                    }
+                }
+
+                if (!$validCountry) {
+                    $valid = false;
+                    $messages[] = 'Invalid Country3';
+                }
+            }
+        }
+
+        if (!isset($data['city'])) {
+            $valid = false;
+            $messages[] = 'Invalid City1';
+        } else {
+            if (!$countriesJson) {
+                $valid = false;
+                $messages[] = 'Invalid City';
+            } else {
+                $citiesArr = (array)json_decode($countriesJson);
+                $validCity = false;
+                foreach($citiesArr[$data['country']] as $k => $v) {
+                    if ($v == $data['city']) {
+                        $validCity = true;
+                        break;
+                    }
+                }
+
+                if (!$validCity) {
+                    $valid = false;
+                    $messages[] = 'Invalid City';
+                }
+            }
+        }
+
+        if (!isset($data['working_hours']) || is_array($data['working_hours']) == false || count($data['working_hours']) < 1) {
+            $valid = false;
+            $messages[] = 'Invalid Working Hours';
+        }
+
+        if (!isset($data['services_offered']) || is_array($data['services_offered']) == false || count($data['services_offered']) < 1) {
+            $valid = false;
+            $messages[] = 'Invalid Services Offered';
+        }
+
+        if (!isset($data['calendar_availability']) || is_array($data['calendar_availability']) == false || count($data['calendar_availability']) < 1) {
+            $valid = false;
+            $messages[] = 'Invalid Calendar Availability';
+        }
+
+        if (!$valid) {
+            $this->addFlash(
+                'warning',
+                $messages
+            );
+            return $this->redirectToRoute('healthProvider.create', [], 301);
+        }
+
+        // @todo: save new user
+        // @todo: automatically login successful registered user
+
         exit;
     }
 
@@ -75,8 +170,16 @@ class HealthProviderController extends Controller
 
         echo json_encode(['message' => '', 'result' => Response::HTTP_OK, 'data' => ['valid' => $valid]]);
 
-        // @todo: check if email already exists on the database
+        /** @var RegisteredUserRepository $repo */
+        $repo = $this->getDoctrine()->getRepository(RegisteredUser::class);
+        $registeredUser = $repo->findBy(['email' => $email]);
 
+        if (!empty($registeredUser)) {
+            // already registered
+            echo json_encode(['message' => 'Email already registered', 'result' => Response::HTTP_OK, 'data' => ['valid' => false]]);
+        }
+
+        echo json_encode(['message' => '', 'result' => Response::HTTP_OK, 'data' => ['valid' => $valid]]);
         exit;
     }
 
@@ -124,8 +227,17 @@ class HealthProviderController extends Controller
     public function citySearchAction(Request $request)
     {
 
+        $token = $request->get('token');
+
         $search = trim($request->get('search'));
         $country = trim($request->get('country'));
+
+        $isValidToken = $this->isCsrfTokenValid('register', $token);
+
+        if (!$isValidToken) {
+            echo json_encode(["results" => []]);
+            exit;
+        }
 
         $citiesJson = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/countries-and-cities.json');
 
