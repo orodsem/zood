@@ -148,12 +148,56 @@ class HealthProviderController extends Controller
      */
     public function searchAction(Request $request)
     {
+
+        $errorMessage = '';
+        $recaptchaKey = '';
+
+        if ($_POST) {
+
+            $recaptchaKey = $this->container->getParameter('recaptcha_key');
+
+            $data = $request->request->all();
+
+            $validReCaptcha = $this->validateReCaptcha($data);
+            var_dump($validReCaptcha);die;
+            if (!$validReCaptcha) {
+                $errorMessage = 'Invalid ReCaptcha';
+            }
+        }
+
         $html = ($this->render('health-provider/search.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'recaptcha_key' => $recaptchaKey,
+            'errorMessage' => $errorMessage
         ]));
 
         echo $html->getContent();
         exit;
+    }
+
+    /**
+     * validate recaptcha $data[g-recaptcha]
+     */
+    protected function validateReCaptcha(array $data=[])
+    {
+        $token = isset($data['g-recaptcha']) ? $data['g-recaptcha'] : '';
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, [
+            'secret' => $this->container->getParameter('recaptcha_secret'),
+            'response' => $token,
+        ]);
+
+        $resp = json_decode(curl_exec($ch));
+        curl_close($ch);
+
+        var_dump(curl_exec($ch));die;
+
+        return $resp->success ? true : false;
     }
 
     /**

@@ -40,10 +40,13 @@
                         <a class="nav-link {{ app.request.attributes.get('_route') == 'healthProvider.index' ? 'active' : '' }}" href="{{ url('healthProvider.index') }}">Health Provider</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2 rounded-0" type="search" placeholder="Search" aria-label="Search" id="nav-search">
-                    <button class="btn btn-primary my-2 my-sm-0 rounded-0" id="login-button" type="button">Login</button>
-                </form>
+                <ul class="navbar-nav float-md-right">
+                    <li class="nav-item ml-1 float-right">
+                        <a class="nav-link" href="javascript:void(0)" id="login-button">
+                            Login
+                        </a>
+                    </li>
+                </ul>
             </div>
         </nav>
 

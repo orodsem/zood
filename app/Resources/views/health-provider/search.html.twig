@@ -23,7 +23,18 @@
                     </div>
                 </div>
 
+                {% if (errorMessage) %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ errorMessage }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %}
+
                 <form action="{{ url('healthProvider.search') }}" method="post" role="form" name="searchForm" id="searchForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
+
+                        <input type="hidden" name="g-recaptcha" value="" />
 
                         <div class="form-group">
                             <label for="looking_for">What are you looking for?</label>
@@ -78,6 +89,16 @@
 
 
 {% block scripts %}
+
+    <!-- <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_key }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ recaptcha_key }}', {action: 'healthProviderSearchPage'}).then(function(token) {
+                $('[name="g-recaptcha"]').val(token);
+            });
+        });
+    </script> -->
+
     <script src="{{ url('homepage') }}js/app.min.js"></script>
     <script src="{{ url('homepage') }}vendor/sweetalert/js/sweetalert.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
