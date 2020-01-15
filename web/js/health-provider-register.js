@@ -478,9 +478,8 @@ class HealthProviderRegister {
                     return query;
                 },
                 processResults: function(res) {
-                    let result = $.parseJSON(res);
                     return {
-                        results: result.results,
+                        results: res.results,
                     };
                 },
             },
@@ -503,9 +502,8 @@ class HealthProviderRegister {
                     return query;
                 },
                 processResults: function(res) {
-                    let result = $.parseJSON(res);
                     return {
-                        results: result.results,
+                        results: res.results,
                     };
                 },
             },

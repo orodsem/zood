@@ -10,9 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-use AppBundle\Entity\RegisteredUser;
-use AppBundle\Repository\RegisteredUserRepository;
+use AppBundle\Entity\User;
+use AppBundle\Repository\UserRepository;
 
 class HealthProviderController extends Controller
 {
@@ -137,6 +138,9 @@ class HealthProviderController extends Controller
             return $this->redirectToRoute('healthProvider.create', [], 301);
         }
 
+        echo "<pre>";
+        var_dump($data);die;
+
         // @todo: save new user
         // @todo: automatically login successful registered user
 
@@ -212,19 +216,16 @@ class HealthProviderController extends Controller
 
         $valid = preg_match($regEx, $email);
 
-        echo json_encode(['message' => '', 'result' => Response::HTTP_OK, 'data' => ['valid' => $valid]]);
-
         /** @var RegisteredUserRepository $repo */
         $repo = $this->getDoctrine()->getRepository(RegisteredUser::class);
         $registeredUser = $repo->findBy(['email' => $email]);
 
         if (!empty($registeredUser)) {
             // already registered
-            echo json_encode(['message' => 'Email already registered', 'result' => Response::HTTP_OK, 'data' => ['valid' => false]]);
+            return new JsonResponse(['message' => 'Email already registered', 'result' => Response::HTTP_OK, 'data' => ['valid' => false]]);
         }
 
-        echo json_encode(['message' => '', 'result' => Response::HTTP_OK, 'data' => ['valid' => $valid]]);
-        exit;
+        return new JsonResponse(['message' => '', 'result' => Response::HTTP_OK, 'data' => ['valid' => $valid]]);
     }
 
     /**
@@ -237,7 +238,7 @@ class HealthProviderController extends Controller
         $isValidToken = $this->isCsrfTokenValid('register', $token);
 
         if (!$isValidToken) {
-            echo json_encode(["results" => []]);
+            return new JsonResponse(["results" => []]);
             exit;
         }
 
@@ -246,7 +247,7 @@ class HealthProviderController extends Controller
         $countriesJson = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/countries-and-cities.json');
 
         if (!$countriesJson) {
-            echo json_encode(["results" => []]);
+            return new JsonResponse(["results" => []]);
             exit;
         }
 
@@ -261,7 +262,7 @@ class HealthProviderController extends Controller
                 $countries[] = ['id' => $k, 'text' => $k];
         }
 
-        echo json_encode(["results" => $countries]);
+        return new JsonResponse(["results" => $countries]);
         exit;
     }
 
@@ -279,26 +280,26 @@ class HealthProviderController extends Controller
         $isValidToken = $this->isCsrfTokenValid('register', $token);
 
         if (!$isValidToken) {
-            echo json_encode(["results" => []]);
+            return new JsonResponse(["results" => []]);
             exit;
         }
 
         $citiesJson = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/countries-and-cities.json');
 
         if (!$citiesJson) {
-            echo json_encode(["results" => []]);
+            return new JsonResponse(["results" => []]);
             exit;
         }
 
         if (!$country) {
-            echo json_encode(["results" => []]);
+            return new JsonResponse(["results" => []]);
             exit;
         }
 
         $citiesArr = json_decode($citiesJson);
 
         if (!isset($citiesArr->$country)) {
-            echo json_encode(["results" => []]);
+            return new JsonResponse(["results" => []]);
             exit;
         }
 
@@ -311,7 +312,7 @@ class HealthProviderController extends Controller
                 $cities[] = ['id' => $v, 'text' => $v];
         }
 
-        echo json_encode(["results" => $cities]);
+        return new JsonResponse(["results" => $cities]);
         exit;
     }
 
