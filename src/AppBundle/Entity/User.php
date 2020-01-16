@@ -120,6 +120,13 @@ class User
     /**
      * @var string
      *
+     * @ORM\Column(name="is_available_interview", type="boolean")
+     */
+    private $is_available_interview;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $created_at;
@@ -127,14 +134,7 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="available_interview", type="boolean", default=false)
-     */
-    private $available_interview;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updated_at;
 
@@ -175,6 +175,17 @@ class User
     public function getEmail()
     {
         return $this->email;
+    }
+
+    public function setData(array $data=[])
+    {
+        if (!$data || empty($data))
+            return false;
+
+        foreach ($data as $k => $v):
+            if (isset($this->$k))
+                $this->$k = $v;
+        endforeach;
     }
 
     /**

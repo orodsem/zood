@@ -464,7 +464,7 @@ class HealthProviderRegister {
 
         $('#country').select2({
             width: 'resolve',
-            delay: 500,
+            delay: 1000,
             placeholder: 'Search a Country',
             minimumInputLength: 1,
             ajax: {
@@ -487,7 +487,7 @@ class HealthProviderRegister {
 
         $('#city').select2({
             width: 'resolve',
-            delay: 500,
+            delay: 1000,
             placeholder: 'Search a City',
             minimumInputLength: 1,
             ajax: {

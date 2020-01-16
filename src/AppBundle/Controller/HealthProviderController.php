@@ -137,9 +137,21 @@ class HealthProviderController extends Controller
             );
             return $this->redirectToRoute('healthProvider.create', [], 301);
         }
-
         echo "<pre>";
-        var_dump($data);die;
+        var_dump($data);
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $user = new User();
+        $user->setData($data);
+
+        // tells Doctrine you want to (eventually) save the Product (no queries yet)
+        $entityManager->persist($user);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+
+
+        die;
 
         // @todo: save new user
         // @todo: automatically login successful registered user
@@ -217,10 +229,10 @@ class HealthProviderController extends Controller
         $valid = preg_match($regEx, $email);
 
         /** @var RegisteredUserRepository $repo */
-        $repo = $this->getDoctrine()->getRepository(RegisteredUser::class);
-        $registeredUser = $repo->findBy(['email' => $email]);
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $user = $repo->findBy(['email' => $email]);
 
-        if (!empty($registeredUser)) {
+        if (!empty($user)) {
             // already registered
             return new JsonResponse(['message' => 'Email already registered', 'result' => Response::HTTP_OK, 'data' => ['valid' => false]]);
         }
