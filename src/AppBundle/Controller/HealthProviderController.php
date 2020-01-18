@@ -12,11 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-use AppBundle\Entity\User;
-use AppBundle\Repository\UserRepository;
+use AppBundle\Entity\RegisteredUser;
+use AppBundle\Repository\RegisteredUserRepository;
 
 class HealthProviderController extends Controller
 {
+
+    private $messages = [];
+
     /**
      * @Route("/health-provider", name="healthProvider.index")
      */
@@ -48,32 +51,103 @@ class HealthProviderController extends Controller
      */
     public function storeAction(Request $request)
     {
+
+        // $regUserRepo = new RegisteredUserRepository(RegisteredUser::class);
+
+        // $entityManager = $this->getDoctrine()->getManager();
+        //
+        // $regUser = $entityManager->getRepository(RegisteredUser::class);
+
         $data = $request->request->all();
 
+        $valid = $this->isHealthProviderValid($data);
+
+        if (!$valid) {
+
+            $this->addFlash(
+                'warning',
+                $this->messages
+            );
+            return $this->redirectToRoute('healthProvider.create', [], 301);
+        }
+
+        $data = $this->updateOrCreate(['id' => @$data['id']], $data);
+        echo "<pre>";
+        var_dump($data);
+
+
+
+        die;
+
+        // @todo: save new user
+        // @todo: automatically login successful registered user
+
+        exit;
+    }
+
+    public function updateOrCreate($where=[], $data=[])
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $regUser = $entityManager->getRepository(RegisteredUser::class)->findOneBy($where);
+
+       if (!$regUser)
+          $regUser = new RegisteredUser();
+
+        $regUser->setEmail($data['email']);
+        $regUser->setFirstName($data['first_name']);
+        $regUser->setLastName($data['last_name']);
+        $regUser->setType($data['type'] ? $data['type'] : 'health provider');
+        $regUser->setCountry($data['country']);
+        $regUser->setCity($data['city']);
+        $regUser->setProfession($data['profession']);
+        $regUser->setBio($data['bio']);
+        $regUser->setWorkingHours($data['working_hours']);
+        $regUser->setWorkingHoursStartDay($data['working_hours_start_day']);
+        $regUser->setWorkingHoursEndDay($data['working_hours_end_day']);
+        $regUser->setServicesOffered($data['services_offered']);
+        $regUser->setCalendarAvailability($data['calendar_availability']);
+        $regUser->setIsAvailableInterview($data['is_available_interview']);
+        $regUser->setCreatedAt();
+        $regUser->setUpdatedAt();
+
+        // tells Doctrine you want to (eventually) save the Product (no queries yet)
+        $entityManager->persist($regUser);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+
+        return $data;
+    }
+
+
+    public function isHealthProviderValid($data)
+    {
         $valid = true;
 
-        $messages = [];
+        $this->messages = [];
 
         if (!isset($data['first_name']) || strlen(trim($data['first_name'])) < 1 || strlen(trim($data['first_name'])) > 255) {
             $valid = false;
-            $messages[] = 'Invalid First Name';
+            $this->messages[] = 'Invalid First Name';
         }
 
         if (!isset($data['last_name']) || strlen(trim($data['first_name'])) < 1 || strlen(trim($data['last_name'])) > 255) {
             $valid = false;
-            $messages[] = 'Invalid Last Name';
+            $this->messages[] = 'Invalid Last Name';
         }
 
         $countriesJson = file_get_contents($this->get('kernel')->getRootDir() . '/../web/data/countries-and-cities.json');
 
         if (!isset($data['country'])) {
             $valid = false;
-            $messages[] = 'Invalid Country1';
+            $this->messages[] = 'Invalid Country1';
         } else {
 
             if (!$countriesJson) {
                 $valid = false;
-                $messages[] = 'Invalid Country2';
+                $this->messages[] = 'Invalid Country2';
             } else {
                 $countriesArr = json_decode($countriesJson);
                 $validCountry = false;
@@ -86,18 +160,18 @@ class HealthProviderController extends Controller
 
                 if (!$validCountry) {
                     $valid = false;
-                    $messages[] = 'Invalid Country3';
+                    $this->messages[] = 'Invalid Country3';
                 }
             }
         }
 
         if (!isset($data['city'])) {
             $valid = false;
-            $messages[] = 'Invalid City1';
+            $this->messages[] = 'Invalid City1';
         } else {
             if (!$countriesJson) {
                 $valid = false;
-                $messages[] = 'Invalid City';
+                $this->messages[] = 'Invalid City';
             } else {
                 $citiesArr = (array)json_decode($countriesJson);
                 $validCity = false;
@@ -110,53 +184,27 @@ class HealthProviderController extends Controller
 
                 if (!$validCity) {
                     $valid = false;
-                    $messages[] = 'Invalid City';
+                    $this->messages[] = 'Invalid City';
                 }
             }
         }
 
         if (!isset($data['working_hours']) || is_array($data['working_hours']) == false || count($data['working_hours']) < 1) {
             $valid = false;
-            $messages[] = 'Invalid Working Hours';
+            $this->messages[] = 'Invalid Working Hours';
         }
 
         if (!isset($data['services_offered']) || is_array($data['services_offered']) == false || count($data['services_offered']) < 1) {
             $valid = false;
-            $messages[] = 'Invalid Services Offered';
+            $this->messages[] = 'Invalid Services Offered';
         }
 
         if (!isset($data['calendar_availability']) || is_array($data['calendar_availability']) == false || count($data['calendar_availability']) < 1) {
             $valid = false;
-            $messages[] = 'Invalid Calendar Availability';
+            $this->messages[] = 'Invalid Calendar Availability';
         }
 
-        if (!$valid) {
-            $this->addFlash(
-                'warning',
-                $messages
-            );
-            return $this->redirectToRoute('healthProvider.create', [], 301);
-        }
-        echo "<pre>";
-        var_dump($data);
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $user = new User();
-        $user->setData($data);
-
-        // tells Doctrine you want to (eventually) save the Product (no queries yet)
-        $entityManager->persist($user);
-
-        // actually executes the queries (i.e. the INSERT query)
-        $entityManager->flush();
-
-
-        die;
-
-        // @todo: save new user
-        // @todo: automatically login successful registered user
-
-        exit;
+        return $valid;
     }
 
     /**
