@@ -477,7 +477,7 @@ class RegisteredUser
      */
     public function setCreatedAt($date='')
     {
-        $this->created_at = $date ? $date : date('Y-m-d H:i:s');
+        $this->created_at = $date ? $date : new \DateTime();
         return $this;
     }
 
@@ -495,7 +495,7 @@ class RegisteredUser
      */
     public function setUpdatedAt($date='')
     {
-        $this->updated_at = $date ? $date : date('Y-m-d H:i:s');
+        $this->updated_at = $date ? $date : new \DateTime();
         return $this;
     }
 

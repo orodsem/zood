@@ -92,7 +92,7 @@ class HealthProviderRegister {
 
         this.showRegForm(1);
 
-        this.test();
+        // this.test();
     }
 
     test() {

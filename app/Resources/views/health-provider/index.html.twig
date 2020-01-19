@@ -17,6 +17,11 @@
                 <br />
                 <br />
                 <br />
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
 
                 <a href="{{ url('healthProvider.create') }}" class="btn btn-primary mt-3 mr-1 rounded-lg p-3 shadow">
                     <h3><i class="fas fa-clinic-medical fa-2x"></i> Be a Health Provider</h3>
