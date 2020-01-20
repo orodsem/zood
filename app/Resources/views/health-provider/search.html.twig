@@ -83,6 +83,25 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 col-sm-12 mt-5">
+                <h4>Search Result:</h4>
+                {% if searchResults %}
+                    {% for v in searchResults %}
+                        <div class="list-group mt-2 cursor-pointer">
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">{{ v.firstName }} {{ v.lastName }}</h4>
+                                <small class="list-group-item-text">
+                                    Country: {{ v.country }}<br />
+                                    City: {{ v.country }}<br />
+                                </small>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
     </div><!-- .container-fluid -->
 
 {% endblock %}

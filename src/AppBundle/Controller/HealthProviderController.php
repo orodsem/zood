@@ -219,19 +219,43 @@ class HealthProviderController extends Controller
         if ($_POST) {
 
             // $recaptchaKey = $this->container->getParameter('recaptcha_key');
+            // $validReCaptcha = $this->validateReCaptcha($data);
 
             $data = $request->request->all();
 
-            // $validReCaptcha = $this->validateReCaptcha($data);
+            $entityManager = $this->getDoctrine()->getManager();
 
-        // @todo: get searchResults
+            $professionQueryStr = '';
+            $professionQueryArr = [];
+            if ($data['looking_for']) {
+                foreach ($data['looking_for'] as $v) {
+                    $professionQueryArr[] = " r.profession LIKE '%$v%' ";
+                }
+            }
+            $professionQueryStr = $professionQueryArr ? ' WHERE ' . implode(" AND ", $professionQueryArr) : '';
 
+            $countryQueryStr = '';
+            $countryQueryStr = isset($data['country']) && $data['country'] ? " OR r.country IN ('". implode("','", $data['country']) ."')" : '';
+            $countryQueryStr = !$professionQueryStr && $countryQueryStr ? ' WHERE '.$countryQueryStr : $countryQueryStr;
+
+            $availabilityStr = '';
+
+            $query = "
+                SELECT r
+                FROM AppBundle:RegisteredUser r
+                $professionQueryStr
+                $countryQueryStr
+                $availabilityStr
+            ";
+
+            $searchResults = $entityManager->createQuery($query)->getResult();
         }
+
 
         $html = ($this->render('health-provider/search.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
             'recaptcha_key' => $recaptchaKey,
-            'errorMessage' => $errorMessage
+            'errorMessage' => $errorMessage,
             'searchResults' => $searchResults
         ]));
 
