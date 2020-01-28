@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Health Providers - Search{% endblock %}
+
+{% block styles %}
+    <link href="{{ url('homepage') }}vendor/select2/css/select2.min.css" rel="stylesheet">
+    <link href="{{ url('homepage') }}css/general.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link href="{{ url('homepage') }}css/health-provider.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid pb-5 pt-5 mt-5" id="health-provider-search">
+
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 col-sm-12">
+
+                <div class="row mb-5">
+                    <div class="col-lg-12 text-center">
+                        <h2>Search for a health provider</h2>
+                    </div>
+                </div>
+
+                {% if (errorMessage) %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ errorMessage }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endif %}
+
+                <form action="{{ url('healthProvider.search') }}" method="post" role="form" name="searchForm" id="searchForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
+
+                        <input type="hidden" name="g-recaptcha" value="" />
+
+                        <div class="form-group">
+                            <label for="looking_for">What are you looking for?</label>
+                            <div id="looking_for_list_container" class="row pl-3"></div>
+                            <div class="invalid-feedback">
+                                Please check atleast one that you're looking for
+                            </div>
+                        </div><!-- .form-group -->
+
+
+                        <div class="form-group mt-5">
+                            <label for="country">Country?</label>
+                            <div id="country_list_container" class="row pl-3"></div>
+                            <div class="invalid-feedback">
+                                Please check atleast one country
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="form-group mt-5">
+                            <label for="working_hours">Availability</label>
+                            <input type="text"
+                                name="calendar_availability"
+                                class="form-control rounded-0 col-sm-12 col-md-6 mb-2 text-center"
+                                id="calendar_availability"
+                                aria-describedby="calendar_availability"
+                                placeholder=""
+                                maxlength="100"
+                                autocomplete="off"
+                                required
+                            >
+                            <div class="text-danger d-none" id="date-of-birth-error">
+                                Please add valid date of birth
+                            </div>
+                        </div><!-- .form-group -->
+
+                        <div class="input-group mt-1">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block rounded-0 mt-5" id="btn-register-submit">
+                                <span id="signUp-text">
+                                    <i class="fas fa-search"></i>
+                                    Search
+                                </span>
+                            </button>
+                        </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 col-sm-12 mt-5">
+                <h4>Search Result:</h4>
+                {% if searchResults %}
+                    {% for v in searchResults %}
+                        <div class="list-group mt-2 cursor-pointer">
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">{{ v.firstName }} {{ v.lastName }}</h4>
+                                <small class="list-group-item-text">
+                                    Country: {{ v.country }}<br />
+                                    City: {{ v.country }}<br />
+                                </small>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+    </div><!-- .container-fluid -->
+
+{% endblock %}
+
+
+{% block scripts %}
+
+    <!-- <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_key }}"></script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('{{ recaptcha_key }}', {action: 'healthProviderSearchPage'}).then(function(token) {
+                $('[name="g-recaptcha"]').val(token);
+            });
+        });
+    </script> -->
+
+    <script src="{{ url('homepage') }}js/app.min.js"></script>
+    <script src="{{ url('homepage') }}vendor/sweetalert/js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="{{ url('homepage') }}js/health-provider-search.js"></script>
+    <script>
+        var hpSearch = new HealthProviderSearch();
+        hpSearch.looking_for_list = [
+            "Dentist",
+            "Plastic surgeon",
+            "Beuty therapist",
+            "Meditation camp",
+            "Yoga camp",
+            "Anti-wrinkle injections",
+            "Knee surgeon",
+            "Orthodontist",
+            "Implant",
+            "Physiotherapist",
+            "Others",
+        ];
+        hpSearch.country_list = [
+            "Thailand",
+            "India",
+            "Malaysia",
+            "Bali",
+            "Mexico",
+            "Turkey",
+        ];
+        hpSearch.health_conditions_list = [
+            "Hearth",
+            "Thyroid",
+            "Blood pressure",
+            "Respiratory disease",
+            "Diabetes",
+            "Congenital hearth",
+            "History of Cancer",
+            "Osteoprosis",
+            "Blood thining medication",
+            "Mental disease",
+            "Neuromascular",
+        ];
+        hpSearch.init();
+    </script>
+{% endblock %}

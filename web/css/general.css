@@ -1,4 +1,18 @@
 /** general.css **/
+
+*, h5, h6
+ {
+    font-family: 'Open Sans', Helvetica, sans-serif;
+    font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 767px) {
+    *, h5, h6
+    {
+        font-size: 1em;
+    }
+}
+
 .bg-orange {
     background: #f0940a !important;
 }
@@ -27,4 +41,18 @@
     color: #fff;
     background-color: #f0940a;
     border-color: #f0940a;
+}
+
+.text-orange {
+    color: #f0940a !important
+}
+
+a.text-orange {
+    color: #f0940a !important;
+}
+
+a.text-orange:hover,
+a.text-orange:visited,
+{
+    color: #f0940a !important;
 }

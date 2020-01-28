@@ -1,15 +1,3 @@
-*, h5, h6
- {
-    font-family: 'Open Sans', Helvetica, sans-serif;
-    font-size: 1.2rem;
-}
-
-@media only screen and (max-width: 767px) {
-    *, h5, h6
-    {
-        font-size: 1em;
-    }
-}
 
 .container-fluid {
     padding-left: 10%;
@@ -142,5 +130,27 @@ footer small {
 @media only screen and (max-width: 900px) {
     #background-mask  {
         background-image: url("../images/sunset-vertical.jpeg");
+    }
+}
+
+#index {
+    padding-top: 70px;
+}
+
+@media only screen and (max-width: 1200px) {
+    #index {
+        margin-bottom: 50px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    #index {
+        margin-bottom: 70px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #index {
+        margin-bottom: 110px;
     }
 }

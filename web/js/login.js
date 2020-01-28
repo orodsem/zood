@@ -4,23 +4,28 @@
 class Login {
 
     constructor() {
-
-        var _this = this;
         this.url = '';
         this.isLoading = false;
+        this.aboutUsUrl = '';
+        this.healthProviderUrl = '';
+    } // constructor()
+
+    init() {
+
+        var _this = this;
 
         $('body').on('click', '#login-button', function() {
-            $("#burger-button").popover('hide');
+            // $("#burger-button").popover('hide');
             $('#loginModal').modal('show');
-            $("#burger-button").removeClass('hover');
+            // $("#burger-button").removeClass('hover');
         });
 
-        $("#burger-button").on('click', function() {
-            if ($('.popover').length)
-                $(this).removeClass('hover');
-            else
-                $(this).addClass('hover');
-        });
+        // $("#burger-button").on('click', function() {
+        //     if ($('.popover').length)
+        //         $(this).removeClass('hover');
+        //     else
+        //         $(this).addClass('hover');
+        // });
 
         $('#btn-login').on('click', function() {
             _this.tryLogin();
@@ -44,20 +49,23 @@ class Login {
         $("#burger-button").popover({
             html: true,
             content: function() {
-                return '' +
-                    '<a href="#" id="login-button">' +
-                        'Log In' +
-                    '</a><br />' +
-                    '<a href="about-us" class="">' +
-                        'About Us' +
-                    '</a>';
+                return `
+                    <a href="#" class="login-button">
+                        Log In
+                    </a><br />
+                    <a href="${_this.aboutusUrl}" class="">
+                        About Us
+                    </a><br />
+                    <a href="${_this.healthProviderUrl}" class="">
+                        Health Provicers
+                    </a>`
+                ;
             },
             title: function() {
                 return '';
             }
         });
-
-    } // constructor()
+    }
 
     tryLogin() {
 
