@@ -1,4 +1,5 @@
 {% block styles %}
+    <link href="{{ url('homepage') }}vendor/select2/css/select2.min.css" rel="stylesheet">
     <link href="{{ url('homepage') }}css/signUp.css" rel="stylesheet">
 {% endblock %}
 
@@ -50,6 +51,34 @@
                     </div><!-- .form-group -->
 
                     <div class="form-group">
+                        <label for="country">Country</label>
+                        <div id="country-select"></div>
+                        <div class="invalid-feedback">
+                            Invalid Country
+                        </div>
+                    </div><!-- .form-group -->
+
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <select type="text"
+                            name="city"
+                            class="select2 form-control rounded-0"
+                            id="city"
+                            aria-describedby="city"
+                            placeholder=""
+                            maxlength="255"
+                            autocomplete="off"
+                            required
+                        ></select>
+                        <small class="form-text text-muted">
+                            Please select a country before selecting a city
+                        </small>
+                        <div class="invalid-feedback">
+                            Invalid City
+                        </div>
+                    </div><!-- .form-group -->
+
+                    <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" name="email" class="form-control rounded-0" id="signUp-email" aria-describedby="email" placeholder="" maxlength="255" autocomplete="off">
                     </div><!-- .form-group -->
@@ -85,6 +114,15 @@
 
 {% block scripts %}
 
+<script src="{{ url('homepage') }}vendor/select2/js/select2.min.js"></script>
+<script src="{{ url('homepage') }}js/components/country-select.js"></script>
 <script src="{{ url('homepage') }}js/signUp.js"></script>
+
+<script>
+    let countrySelect = new CountrySelect();
+    countrySelect.getUrl = '{{ url('healthProvider.countrySearch') }}';
+    countrySelect.selector = '#country-select';
+    countrySelect.init();
+</script>
 
 {% endblock %}
