@@ -2,28 +2,9 @@
 
 {% block styles %}
     <link href="{{ url('homepage') }}css/index.css" rel="stylesheet">
-    <link href="{{ url('homepage') }}css/login.css" rel="stylesheet">
-    <link href="{{ url('homepage') }}css/signUp.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-
-    {% include 'templates/login.html.twig' %}
-    {% include 'templates/signUp.html.twig' %}
-            <!-- data-toggle="modal"  -->
-
-    <!-- <div class="login-button-container">
-        <button
-            class="btn btn-secondary pr-2 pl-2 pt-1 pb-1"
-            id="burger-button"
-            data-container="body"
-            data-toggle="popover"
-            data-placement="bottom"
-        >
-            <i class="fas fa-bars"></i>
-        </button>
-    </div> -->
-    <!-- .login-button-container -->
 
     <div class="container-fluid pb-1" id="index">
 
@@ -116,13 +97,14 @@
     </footer>
 
     <div id="background-mask"></div>
+
+    {% include 'components/login.html.twig' %}
+
 {% endblock %}
 
 {% block scripts %}
 
     <script src="{{ url('homepage') }}vendor/sweetalert/js/sweetalert.min.js"></script>
-    <script src="{{ url('homepage') }}js/login.js"></script>
-    <script src="{{ url('homepage') }}js/signUp.js"></script>
 
     <script>
         // remap jQuery to $

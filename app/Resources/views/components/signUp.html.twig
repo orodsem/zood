@@ -1,4 +1,8 @@
-<!-- Modal -->
+{% block styles %}
+    <link href="{{ url('homepage') }}css/signUp.css" rel="stylesheet">
+{% endblock %}
+
+<!-- SignUp -->
 <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="signUpModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content rounded-0">
@@ -77,5 +81,10 @@
         </div>
     </div>
 </div>
+<!-- /SignUp -->
 
-<!-- /signUp template -->
+{% block scripts %}
+
+<script src="{{ url('homepage') }}js/signUp.js"></script>
+
+{% endblock %}

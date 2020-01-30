@@ -1,14 +1,9 @@
 
-<!-- login template -->
+{% block styles %}
+    <link href="{{ url('homepage') }}css/login.css" rel="stylesheet">
+{% endblock %}
 
-<!-- <div class="login-button-container">
-    <button class="btn btn-secondary pr-2 pl-2 pt-1 pb-1" data-toggle="modal" data-target="#loginModal" id="login-button">
-        <i class="fas fa-bars"></i>
-    </button>
-</div> -->
-<!-- .login-button-container -->
-
-<!-- Modal -->
+<!-- login -->
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content rounded-0">
@@ -73,5 +68,12 @@
         </div>
     </div>
 </div>
+<!-- /login -->
 
-<!-- /login template -->
+{% include 'components/signUp.html.twig' %}
+
+{% block scripts %}
+
+<script src="{{ url('homepage') }}js/login.js"></script>
+
+{% endblock %}
