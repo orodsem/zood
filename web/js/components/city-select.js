@@ -1,10 +1,11 @@
 /**
- * country-select class
+ * city-select class
  */
-class CountrySelect {
+class CitySelect {
 
     constructor() {
 
+        this.selector = '';
         this.selector = '';
 
         this.options = [];
@@ -37,10 +38,10 @@ class CountrySelect {
 
         $(this.selector).html(`
             <select type="text"
-                id="country"
-                name="country"
+                id="city"
+                name="city"
                 class="form-control rounded-0"
-                aria-describedby="country"
+                aria-describedby="city"
                 placeholder=""
                 maxlength="255"
                 autocomplete="off"
@@ -50,14 +51,14 @@ class CountrySelect {
 
         setTimeout(function() {
 
-            $('#country').on('change', function() {
+            $('#city').on('change', function() {
                 _this.value = $(this).val();
             });
 
-            $('#country').select2({
+            $('#city').select2({
                 width: 'resolve',
                 delay: 1000,
-                placeholder: 'Search a Country',
+                placeholder: 'Search a City',
                 minimumInputLength: 1,
                 ajax: {
                     cache: false,
@@ -65,6 +66,7 @@ class CountrySelect {
                     data: function(params) {
                         var query = {
                             search: params.term,
+                            country: $('#country').val(),
                             token: _this.token,
                         }
                         return query;

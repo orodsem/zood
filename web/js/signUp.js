@@ -5,9 +5,54 @@ class SignUp {
 
     constructor() {
 
-        var _this = this;
         this.url = '';
         this.isLoading = false;
+
+        this.countrySelect = new CountrySelect();
+        this.citySelect = new CitySelect();
+
+        this.form = {
+            type : {
+                value: '',
+                valid: true
+            },
+            first_name : {
+                value: '',
+                valid: true
+            },
+            last_name : {
+                value: '',
+                valid: true
+            },
+            country : {
+                value: '',
+                valid: true
+            },
+            city : {
+                value: '',
+                valid: true
+            },
+            email : {
+                value: '',
+                valid: true
+            },
+            password : {
+                value: '',
+                valid: true
+            },
+            password_conf : {
+                value: '',
+                valid: true
+            },
+        }
+    } // constructor()
+
+    init() {
+
+        let _this = this;
+
+        this.countrySelect.init();
+        this.citySelect.init();
 
         $('#btn-signUp-submit').on('click', function() {
             _this.trySignUp();
@@ -20,12 +65,13 @@ class SignUp {
         $('#signUpModal').on('hide.bs.modal', function(e) {
             _this.tryPreventModalClose(e);
         });
-
-    } // constructor()
+    }
 
     trySignUp() {
 
         let _this = this;
+
+        let formValid = this.isFormValid();
 
         this.showLoading();
 
@@ -33,13 +79,7 @@ class SignUp {
             url: this.url,
             type: "post",
             dataType: "json",
-            data: {
-                first_name: $('#signUp-first_name').val(),
-                last_name: $('#signUp-last_name').val(),
-                email: $('#signUp-email').val(),
-                password: $('#signUp-password').val(),
-                password_confirmation: $('#signUp-password_confirmation').val(),
-            },
+            data: {_this.form},
             success: function (res)
             {
                 _this.hideLoading();
@@ -61,6 +101,22 @@ class SignUp {
             }
         });
 
+    }
+
+    isFormValid() {
+
+        this.form.first_name.value = $('#signUp-first_name').val();
+        this.form.last_name.value = $('#signUp-last_name').val();
+        this.form.country.value = this.countrySearch.value;
+        this.form.city.value = this.countrySearch.value;
+        this.form.email.value = $('#signUp-email').val();
+        this.form.email.password = $('#signUp-password').val();
+        this.form.email.password_confirm = $('#signUp-password_confirmation').val();
+
+        let re_name = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
+        if (!firstName.match(re_name))
+            this.form.first_name.valid = false;
+        
     }
 
     hideModalError() {

@@ -60,16 +60,7 @@
 
                     <div class="form-group">
                         <label for="city">City</label>
-                        <select type="text"
-                            name="city"
-                            class="select2 form-control rounded-0"
-                            id="city"
-                            aria-describedby="city"
-                            placeholder=""
-                            maxlength="255"
-                            autocomplete="off"
-                            required
-                        ></select>
+                        <div id="city-select"></div>
                         <small class="form-text text-muted">
                             Please select a country before selecting a city
                         </small>
@@ -116,13 +107,20 @@
 
 <script src="{{ url('homepage') }}vendor/select2/js/select2.min.js"></script>
 <script src="{{ url('homepage') }}js/components/country-select.js"></script>
+<script src="{{ url('homepage') }}js/components/city-select.js"></script>
 <script src="{{ url('homepage') }}js/signUp.js"></script>
 
 <script>
-    let countrySelect = new CountrySelect();
-    countrySelect.getUrl = '{{ url('healthProvider.countrySearch') }}';
-    countrySelect.selector = '#country-select';
-    countrySelect.init();
+    let signUp = new SignUp();
+    signUp.countrySelect.getUrl = '{{ url('healthProvider.countrySearch') }}';
+    signUp.countrySelect.selector = '#country-select';
+    signUp.countrySelect.token = '{{ csrf_token('register') }}';
+
+    signUp.citySelect.getUrl = '{{ url('healthProvider.citySearch') }}';
+    signUp.citySelect.selector = '#city-select';
+    signUp.citySelect.token = '{{ csrf_token('register') }}';
+
+    signUp.init();
 </script>
 
 {% endblock %}
