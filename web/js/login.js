@@ -46,25 +46,25 @@ class Login {
             }, 500);
         });
 
-        $("#burger-button").popover({
-            html: true,
-            content: function() {
-                return `
-                    <a href="#" class="login-button">
-                        Log In
-                    </a><br />
-                    <a href="${_this.aboutusUrl}" class="">
-                        About Us
-                    </a><br />
-                    <a href="${_this.healthProviderUrl}" class="">
-                        Health Provicers
-                    </a>`
-                ;
-            },
-            title: function() {
-                return '';
-            }
-        });
+        // $("#burger-button").popover({
+        //     html: true,
+        //     content: function() {
+        //         return `
+        //             <a href="#" class="login-button">
+        //                 Log In
+        //             </a><br />
+        //             <a href="${_this.aboutusUrl}" class="">
+        //                 About Us
+        //             </a><br />
+        //             <a href="${_this.healthProviderUrl}" class="">
+        //                 Health Provicers
+        //             </a>`
+        //         ;
+        //     },
+        //     title: function() {
+        //         return '';
+        //     }
+        // });
     }
 
     tryLogin() {

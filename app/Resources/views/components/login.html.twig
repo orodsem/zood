@@ -76,4 +76,12 @@
 
 <script src="{{ url('homepage') }}js/login.js"></script>
 
+<script>
+    var login = new Login();
+    login.url = '{{ url('homepage') }}authenticate';
+    login.aboutUsUrl = '{{ url('aboutUs') }}';
+    login.healthProviderUrl = '{{ url('healthProvider.index') }}';
+    login.init()
+</script>
+
 {% endblock %}

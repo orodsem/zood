@@ -22,32 +22,41 @@
                   </button>
                 </div>
 
-                <form action="{{ url('homepage') }}sign-up" method="post" role="form" name="signUpForm" id="signUpForm" autocomplete="off">
+                <form action="{{ url('homepage') }}sign-up" method="post" role="form" name="signUpForm" id="signUpForm" autocomplete="off" class="needs-validation">
 
                     <div class="form-group">
                         <label for="first_name">I am:</label>
                         <div class="form-check">
-                            <input type="radio" value="provider" class="form-check-input signUp-type" name="type" id="signUp-type-provider" aria-describedby="type">
-                            <label class="form-check-label" for="type">
+                            <label class="form-check-label" for="signUp-type-provider">
+                                <input type="radio" value="provider" class="form-check-input signUp-type" name="type" id="signUp-type-provider" aria-describedby="type" required>
                                 Providing a service
                             </label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" value="seeker" class="form-check-input signUp-type" name="type" id="signUp-type-seeker" aria-describedby="type">
-                            <label class="form-check-label" for="type">
+                            <label class="form-check-label" for="signUp-type-seeker">
+                                <input type="radio" value="seeker" class="form-check-input signUp-type" name="type" id="signUp-type-seeker" aria-describedby="type" required>
                                 Looking for a service
                             </label>
+                        </div>
+                        <div class="invalid-feedback">
+                            Invalid Type
                         </div>
                     </div><!-- .form-group -->
 
                     <div class="form-group">
                         <label for="first_name">First Name</label>
-                        <input type="text" name="first_name" class="form-control rounded-0" id="signUp-first_name" aria-describedby="first_name" placeholder="" maxlength="255" autocomplete="off">
+                        <input type="text" name="first_name" class="form-control rounded-0" id="signUp-first_name" aria-describedby="first_name" placeholder="" maxlength="255" autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            Invalid First Name
+                        </div>
                     </div><!-- .form-group -->
 
                     <div class="form-group">
                         <label for="last_name">Last Name</label>
-                        <input type="text" name="last_name" class="form-control rounded-0" id="signUp-last_name" aria-describedby="last_name" placeholder="" maxlength="255" autocomplete="off">
+                        <input type="text" name="last_name" class="form-control rounded-0" id="signUp-last_name" aria-describedby="last_name" placeholder="" maxlength="255" autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            Invalid Last Name
+                        </div>
                     </div><!-- .form-group -->
 
                     <div class="form-group">
@@ -71,17 +80,27 @@
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" name="email" class="form-control rounded-0" id="signUp-email" aria-describedby="email" placeholder="" maxlength="255" autocomplete="off">
+                        <input type="email" name="email" class="form-control rounded-0" id="signUp-email" aria-describedby="email" placeholder="" maxlength="255" autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            Invalid Email
+                        </div>
                     </div><!-- .form-group -->
 
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" name="password" class="form-control rounded-0" id="signUp-password" aria-describedby="password" placeholder="" maxlength="255" autocomplete="new-password">
+                        <input type="password" name="password" class="form-control rounded-0" id="signUp-password" aria-describedby="password" placeholder="" maxlength="255" autocomplete="new-password" required>
+                        <small class="form-text text-muted">Minimum eight characters, at least one letter and one number</small>
+                        <div class="invalid-feedback">
+                            Invalid Passwords
+                        </div>
                     </div><!-- .form-group -->
 
                     <div class="form-group">
                         <label for="password_confirmation">Password Confirmation</label>
-                        <input type="password" name="password_confirmation" class="form-control rounded-0" id="signUp-password_confirmation" aria-describedby="password_confirmation" placeholder="" maxlength="255" autocomplete="off">
+                        <input type="password" name="password_confirmation" class="form-control rounded-0" id="signUp-password_confirmation" aria-describedby="password_confirmation" placeholder="" maxlength="255" autocomplete="off" required>
+                        <div class="invalid-feedback">
+                            Invalid Passwords
+                        </div>
                     </div><!-- .form-group -->
 
                     <!-- reCaptcha here -->
@@ -112,6 +131,7 @@
 
 <script>
     let signUp = new SignUp();
+    signUp.url = '{{ url('register') }}';
     signUp.countrySelect.getUrl = '{{ url('healthProvider.countrySearch') }}';
     signUp.countrySelect.selector = '#country-select';
     signUp.countrySelect.token = '{{ csrf_token('register') }}';

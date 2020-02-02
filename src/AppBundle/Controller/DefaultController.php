@@ -73,6 +73,11 @@ class DefaultController extends Controller
      */
     public function registerAction(Request $request)
     {
+        $errorMessage = $this->validateForm($request);
+
+        if ($errorMessage)
+            return new JsonResponse(["results" => [], "message" => $errorMessage, "status" => false]);
+
         try {
             $clientIpAddress = $request->getClientIp();
             $email = $request->get('email', null);
@@ -89,6 +94,8 @@ class DefaultController extends Controller
                 // already registered
                 return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
             }
+
+            $type = $request->get('type', null);
 
             $registeredUser = new RegisteredUser();
             $registeredUser->setEmail($email);
@@ -118,6 +125,9 @@ class DefaultController extends Controller
 //        $this->get('mailer')->send($emailMessage);
     }
 
+    public function validateForm($request) {
+        // @todo: here
+    }
 
 
 }
