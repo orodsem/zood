@@ -1,0 +1,19 @@
+
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.reg_form.d-none {
+    opacity: 0;
+}
+
+.reg_form:not(.d-none) {
+    opacity: 1;
+    transition: opacity 4s linear;
+}
+
+.form-check-input {
+    height: 20px;
+    width: 20px;
+}

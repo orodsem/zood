@@ -66,22 +66,22 @@ class SignUp {
             _this.tryPreventModalClose(e);
         });
 
-        $('#signUpForm').find('input[type="text"]').on('change keyup', function() {
+        $('#signUpForm').find('input[type="text"]').on('change blur', function() {
              _this.validateForm($(this).attr('name'));
              _this.showHideErrors(true);
         });
 
-        $('#signUpForm').find('input[type="radio"]').on('change keyup', function() {
+        $('#signUpForm').find('input[type="radio"]').on('change blur', function() {
              _this.validateForm($(this).attr('name'));
              _this.showHideErrors(true);
         });
 
-        $('#signUpForm').find('input[type="email"]').on('change keyup', function() {
+        $('#signUpForm').find('input[type="email"]').on('change blur', function() {
              _this.validateForm($(this).attr('name'));
              _this.showHideErrors(true);
         });
 
-        $('#signUpForm').find('input[type="password"]').on('change keyup', function() {
+        $('#signUpForm').find('input[type="password"]').on('change blur', function() {
              _this.validateForm($(this).attr('name'));
              _this.showHideErrors(true);
         });
@@ -102,6 +102,14 @@ class SignUp {
             });
 
         }, 1000);
+
+        $('[name="first_name"]').val('first name');
+        $('[name="last_name"]').val('last name');
+        $('[name="email"]').val('ramonchristophermorales@gmail.com');
+        $('[name="password"]').val('admin1231232');
+        $('[name="password_confirmation"]').val('admin1231232');
+        $('[name="type"]').val('seeker');
+        $('[name="type"]').trigger('click');
     }
 
     trySignUp() {
@@ -116,25 +124,36 @@ class SignUp {
 
         this.showLoading();
 
-        let formVals = [];
+        let formData = new FormData();
         $.each(_this.form, function(i,v) {
-            formVals[i] = v.value;
+            formData.append(i, v.value);
         });
 
         $.ajax({
             url: this.url,
-            type: "post",
-            dataType: "json",
-            data: formVals,
+            type: "POST",
+            // dataType: "json",
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function (res)
             {
                 _this.hideLoading();
 
-                if (!res.result || res.result == '400') {
-                    _this.showModalError(res.message);
+                if (!res.messages) {
+                    swal({
+                        title: "Something went wrong!",
+                        text: "We apologize for the inconvinience. Please report this by sending us an email to contact@zood.com",
+                        icon: "error",
+                    });
+                }
+
+                if (res.status == false) {
+                    _this.showMessage(res.messages, 'error');
                     return;
                 }
 
+                _this.showMessage(res.messages, 'success');
                 window.location = res.data.url;
             },
             error: function (xhr, status, errorThrown) {
@@ -242,13 +261,15 @@ class SignUp {
             }
         }
 
-        if (this.form.password_confirmation.value != this.form.password.value) {
-            this.form.password.valid = false;
-            this.form.password_confirmation.valid = false;
-            valid = false;
-        } else if (this.form.password.value.match(re_pass) && this.form.password_confirmation.value.match(re_pass)) {
-            this.form.password.valid = true;
-            this.form.password_confirmation.valid = true;
+        if (form_name == 'all') {
+            if (this.form.password_confirmation.value != this.form.password.value) {
+                this.form.password.valid = false;
+                this.form.password_confirmation.valid = false;
+                valid = false;
+            } else if (this.form.password.value.match(re_pass) && this.form.password_confirmation.value.match(re_pass)) {
+                this.form.password.valid = true;
+                this.form.password_confirmation.valid = true;
+            }
         }
 
         return valid;
@@ -278,14 +299,39 @@ class SignUp {
         $('#signUpModal').find('.alert').addClass('d-none');
     }
 
-    showModalError(msg) {
+    showMessage(msg, type) {
 
-        if (typeof msg === 'undefined' || !msg)
+        let messages = [];
+
+        let container = $('#signUpModal').find('#errorMessagesContainer');
+        container.html(null);
+        container.addClass('d-none');
+
+        if (typeof msg === 'string')
+            messages.push(msg);
+        else if (typeof msg === 'array' || typeof msg === 'object')
+            messages = msg;
+        else
             return;
 
-        let modalAlert = $('#signUpModal').find('.alert');
-        modalAlert.find('small').html(msg);
-        modalAlert.removeClass('d-none');
+        type = typeof type === 'undefined' || !type ? 'error' : type;
+
+        let alertType = type == 'error' ? 'alert-danger' : 'alert-success';
+
+        let html = '';
+        $.each(messages, function(i,v) {
+            html += `<div class="alert ${alertType} alert-dismissible fade show p-1 rounded-0 text-center" role="alert">
+                  <small>${v}</small>
+                  <button type="button" class="close p-1 pr-2" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+            `;
+        });
+
+        container.html(html);
+        container.removeClass('d-none');
+        $('#signUpModal').scrollTop(0);
     }
 
     tryPreventModalClose(e) {
@@ -306,10 +352,12 @@ class SignUp {
         $('#btn-submit').attr('disabled', true);
         $('#signUp-type').attr('disabled', true);
         $('#signUp-email').attr('disabled', true);
+        $('#city').attr('disabled', true);
+        $('#country').attr('disabled', true);
         $('#signUp-first_name').attr('disabled', true);
         $('#signUp-last_name').attr('disabled', true);
         $('#signUp-password').attr('disabled', true);
-        $('#signUp-password_confirmationation').attr('disabled', true);
+        $('#signUp-password_confirmation').attr('disabled', true);
         $('#signUp-icon').addClass('d-none');
         $('#signUp-spinner').removeClass('d-none');
     }
@@ -319,10 +367,12 @@ class SignUp {
         $('#btn-submit').attr('disabled', false);
         $('#signUp-type').attr('disabled', false);
         $('#signUp-email').attr('disabled', false);
+        $('#city').attr('disabled', false);
+        $('#country').attr('disabled', false);
         $('#signUp-first_name').attr('disabled', false);
         $('#signUp-last_name').attr('disabled', false);
         $('#signUp-password').attr('disabled', false);
-        $('#signUp-password_confirmationation').attr('disabled', false);
+        $('#signUp-password_confirmation').attr('disabled', false);
         $('#signUp-icon').removeClass('d-none');
         $('#signUp-spinner').addClass('d-none');
     }

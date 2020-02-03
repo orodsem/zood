@@ -10,8 +10,11 @@ use ProviderBundle\Repository\ProviderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class DefaultController extends Controller
 {
@@ -69,47 +72,47 @@ class DefaultController extends Controller
      * @Method("GET")
      *
      * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
      * @return View
      */
-    public function registerAction(Request $request)
+    public function registerAction(Request $request, UserPasswordEncoderInterface $encoder)
     {
-        $errorMessage = $this->validateForm($request);
-
-        if ($errorMessage)
-            return new JsonResponse(["results" => [], "message" => $errorMessage, "status" => false]);
-
         try {
             $clientIpAddress = $request->getClientIp();
             $email = $request->get('email', null);
-
-            if (empty($email)) {
-                return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
-            }
+            $password = $request->get('password');
 
             /** @var RegisteredUserRepository $repo */
             $repo = $this->getDoctrine()->getRepository(RegisteredUser::class);
             $registeredUser = $repo->findBy(['email' => $email]);
 
-            if (!empty($registeredUser)) {
-                // already registered
-                return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
-            }
-
-            $type = $request->get('type', null);
+            if (!empty($registeredUser))
+                return new JsonResponse(["results" => [], "messages" => ['Email is already registered'], "status" => false]);
 
             $registeredUser = new RegisteredUser();
-            $registeredUser->setEmail($email);
             $registeredUser->setIpAddress($clientIpAddress);
+            $registeredUser->setType($request->get('type', null));
+            $registeredUser->setFirstName($request->get('first_name', null));
+            $registeredUser->setLastName($request->get('last_name', null));
+            $registeredUser->setCountry($request->get('country', null));
+            $registeredUser->setCity($request->get('city', null));
+            $registeredUser->setEmail($email);
+            $registeredUser->setPassword($password);
+            $registeredUser->setPasswordConfirmation($request->get('password_confirmation', null));
 
-            if (!$registeredUser->isEmailValid()) {
-                // invalid email
-                return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
-            }
+            if (!$registeredUser->isUserValid())
+                return new JsonResponse(["results" => [], "messages" => $registeredUser->getMessages(), "status" => false]);
+
+            // @todo: encode user
+            // $user = new AppBundle\Entity\User();
+            $encodedPass = $encoder->encodePassword($user, $password);
+            $registeredUser->setPassword($encodedPass);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($registeredUser);
             $em->flush();
 
-            return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
+            return new JsonResponse(["results" => [], "messages" => [RegisteredUser::REGISTRATION_SUCCESS_MESSAGE], "status" => true]);
         } catch (\Exception $e) {
             return new View($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
@@ -123,10 +126,6 @@ class DefaultController extends Controller
 //            );
 //
 //        $this->get('mailer')->send($emailMessage);
-    }
-
-    public function validateForm($request) {
-        // @todo: here
     }
 
 

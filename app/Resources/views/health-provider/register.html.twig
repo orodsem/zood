@@ -144,13 +144,6 @@
                             </div>
                         </div><!-- .form-group -->
 
-                        <div class="form-group">
-                            <button type="button" class="btn btn-primary rounded-0" id="btn-verify-email">
-                                <i class="fas fa-check"></i>&nbsp;
-                                Verify your email
-                            </button>
-                        </div><!-- .form-group -->
-
                         <div class="form-group mt-5">
                             <label for="bio">Bio: tell us about yourself, your experience and your personality. Make it catchy</label>
                             <textarea name="bio"
@@ -369,7 +362,6 @@
     <script>
         var hp = new HealthProviderRegister();
         hp.token = '{{ csrf_token('register') }}';
-        hp.validateEmailUrl = '{{ url('healthProvider.validateEmail') }}';
         hp.url.countrySearch = '{{ url('healthProvider.countrySearch') }}'
         hp.url.citySearch = '{{ url('healthProvider.citySearch') }}'
         hp.init();

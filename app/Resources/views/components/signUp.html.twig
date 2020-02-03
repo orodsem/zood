@@ -15,12 +15,7 @@
             </div>
             <div class="modal-body overflow-auto">
 
-                <div class="alert alert-danger alert-dismissible fade show p-1 d-none rounded-0 text-center" role="alert">
-                  <small></small>
-                  <button type="button" class="close p-1 pr-2" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
+                <div id="errorMessagesContainer" class="d-none"></div>
 
                 <form action="{{ url('homepage') }}sign-up" method="post" role="form" name="signUpForm" id="signUpForm" autocomplete="off" class="needs-validation">
 

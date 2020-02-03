@@ -62,6 +62,15 @@ class RegisteredUser
     /**
      * @var string
      *
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    private $password;
+
+    private $password_cofirmation;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
@@ -135,7 +144,7 @@ class RegisteredUser
     /**
      * @var string
      *
-     * @ORM\Column(name="is_available_interview", type="boolean")
+     * @ORM\Column(name="is_available_interview", type="boolean", nullable=true)
      */
     private $is_available_interview;
 
@@ -168,29 +177,6 @@ class RegisteredUser
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return $this
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
     }
 
     /**
@@ -262,6 +248,52 @@ class RegisteredUser
     public function setLastName($str='')
     {
         $this->last_name = $str;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $last_name
+     * @return $this
+     */
+    public function setEmail($str='')
+    {
+        $this->email = $str;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $last_name
+     * @return $this
+     */
+    public function setPassword($str='')
+    {
+        $this->password = $str;
+        return $this;
+    }
+
+    /**
+     * @param string $last_name
+     * @return $this
+     */
+    public function setPasswordConfirmation($str='')
+    {
+        $this->password_confirmation = $str;
         return $this;
     }
 
@@ -499,51 +531,47 @@ class RegisteredUser
         return $this;
     }
 
-    // public function getMessages()
-    // {
-    //     return $this->messages;
-    // }
+    public function getMessages()
+    {
+        return $this->messages;
+    }
 
     public function isEmailValid()
     {
         return filter_var($this->email, FILTER_VALIDATE_EMAIL);
     }
 
+    public function isUserValid()
+    {
+        $this->messages = [];
 
-    // public function updateOrCreate($where=[], $val=[])
-    // {
-    //
-    //     $entityManager = $this->getDoctrine()->getManager();
-    //
-    //     $regUser = $entityManager->getRepository($this)->findOneBy($where);
-    //
-    //    if (!$product)
-    //       $regUser = $entityManager->getRepository($this);
-    //
-    //     $regUser->setLastName($data['email']);
-    //     $regUser->setFirstName($data['first_name']);
-    //     $regUser->setLastName($data['last_name']);
-    //     $regUser->setType($data['type']);
-    //     $regUser->setCountry($data['country']);
-    //     $regUser->setCity($data['city']);
-    //     $regUser->setProfession($data['profession']);
-    //     $regUser->setBio($data['bio']);
-    //     $regUser->setWorkingHours($data['working_hours']);
-    //     $regUser->setWorkingHoursStartDay($data['working_hours_start_day']);
-    //     $regUser->setWorkingHoursEndDay($data['working_hours_end_day']);
-    //     $regUser->setServicesOffered($data['services_offered']);
-    //     $regUser->setCalendarAvailability($data['calendar_availability']);
-    //     $regUser->setIsAvailableInterview($data['is_available_interview']);
-    //     $regUser->setCreatedAt();
-    //     $regUser->setUpdatedAt();
-    //
-    //     // tells Doctrine you want to (eventually) save the Product (no queries yet)
-    //     $entityManager->persist($regUser);
-    //
-    //     // actually executes the queries (i.e. the INSERT query)
-    //     $entityManager->flush();
-    //
-    //     return $data;
-    // }
+        $re_name = "/^([a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*){1,255}$/";
+
+        $re_email = '/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/iD';
+
+        // Minimum eight characters, at least one letter and one number:
+        $re_pass = "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/";
+
+        if (!preg_match($re_name, $this->first_name))
+            $this->messages['first_name'] = 'Invalid First Name';
+        if (!preg_match($re_name, $this->last_name))
+            $this->messages['last_name'] = 'Invalid Last Name';
+        if (!preg_match($re_name, $this->country))
+            $this->messages['country'] = 'Invalid Country';
+        if (!preg_match($re_name, $this->city))
+            $this->messages['city'] = 'Invalid Country';
+        if (!preg_match($re_email, $this->email) || !filter_var($this->email, FILTER_VALIDATE_EMAIL))
+            $this->messages['email'] = 'Invalid Email';
+        if (!preg_match($re_pass, $this->password))
+            $this->messages['password'] = 'Invalid Passwords';
+        if (!preg_match($re_pass, $this->password_confirmation))
+            $this->messages['password'] = 'Invalid Passwords';
+        if ($this->password != $this->password_confirmation)
+            $this->messages['password'] = 'Invalid Passwords';
+
+
+        return $this->messages ? false : true;
+    }
+
 
 }

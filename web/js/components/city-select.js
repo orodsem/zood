@@ -57,7 +57,7 @@ class CitySelect {
 
             $('#city').select2({
                 width: 'resolve',
-                delay: 1000,
+                delay: 2000,
                 placeholder: 'Search a City',
                 minimumInputLength: 1,
                 ajax: {
