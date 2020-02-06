@@ -22,14 +22,21 @@ class UserController extends Controller
      */
     public function profileAction(Request $request)
     {
+        $email = $this->get('session')->get('email');
+
+        if ($email == null)
+            return $this->redirectToRoute('homepage', [], 308);
 
         $repo = $this->getDoctrine()->getRepository(RegisteredUser::class);
-        $user = $repo->findBy(['id' => 1]);
+        $user = $repo->findBy(['email' => $email]);
+        $user = isset($user[0]) ? $user[0] : null;
 
+        if (!$user)
+            return $this->redirectToRoute('homepage', [], 308);
 
         $html = ($this->render('user/profile.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            'user' => $user
+            'postData' => $user
         ]));
 
         echo $html->getContent();

@@ -5,14 +5,14 @@
 {% block styles %}
     <link href="{{ url('homepage') }}vendor/select2/css/select2.min.css" rel="stylesheet">
     <link href="{{ url('homepage') }}css/general.css" rel="stylesheet">
-    <link href="{{ url('homepage') }}css/user.css" rel="stylesheet">
+    <link href="{{ url('homepage') }}css/profile.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 {% endblock %}
 
 {% block body %}
 
-    <div class="container-fluid pb-5 pt-5 mt-5" id="user-register">
+    <div class="container-fluid pb-5 pt-5 mt-5" id="profile">
 
         <div class="row">
             <div class="col-lg-8 offset-lg-2 col-md-10 col-sm-12">
@@ -249,7 +249,7 @@
                         <input type="file"
                             name="certificates_licenses_files"
                             id="certificates_licenses_files"
-                            accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf,image/x-png,image/jpeg"
+                            accept="application/pdf,image/x-png,image/jpeg"
                             multiple
                         >
                         <small class="form-text text-muted">
@@ -328,8 +328,6 @@
 
     </div><!-- .container-fluid -->
 
-    {% include 'components/login.html.twig' %}
-
 {% endblock %}
 
 
@@ -339,7 +337,7 @@
     <script src="{{ url('homepage') }}vendor/select2/js/select2.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <script src="{{ url('homepage') }}js/user-register.js"></script>
+    <script src="{{ url('homepage') }}js/profile.js"></script>
     <script>
         var profile = new Profile();
         profile.token = '{{ csrf_token('register') }}';

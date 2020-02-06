@@ -41,7 +41,8 @@ class DefaultController extends Controller
 
         if ($email === null) {
             // no access and back to homepage
-            $this->indexAction($request);
+            // $this->indexAction($request);
+            return $this->redirectToRoute('homepage', [], 308);
         }
 
         // replace this example code with whatever you need
@@ -72,10 +73,9 @@ class DefaultController extends Controller
      * @Method("GET")
      *
      * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
      * @return View
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $encoder)
+    public function registerAction(Request $request)
     {
         try {
             $clientIpAddress = $request->getClientIp();
@@ -84,7 +84,7 @@ class DefaultController extends Controller
 
             /** @var RegisteredUserRepository $repo */
             $repo = $this->getDoctrine()->getRepository(RegisteredUser::class);
-            $registeredUser = $repo->findBy(['email' => $email]);
+            $registeredUser = $repo->findOneBy(['email' => $email]);
 
             if (!empty($registeredUser))
                 return new JsonResponse(["results" => [], "messages" => ['Email is already registered'], "status" => false]);
@@ -103,10 +103,12 @@ class DefaultController extends Controller
             if (!$registeredUser->isUserValid())
                 return new JsonResponse(["results" => [], "messages" => $registeredUser->getMessages(), "status" => false]);
 
+            // if everything is valid, hash the password
+            $registeredUser->setHashedPassword($password);
             // @todo: encode user
             // $user = new AppBundle\Entity\User();
-            $encodedPass = $encoder->encodePassword($user, $password);
-            $registeredUser->setPassword($encodedPass);
+            // $encodedPass = $encoder->encodePassword($user, $password);
+            // $registeredUser->setPassword($encodedPass);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($registeredUser);

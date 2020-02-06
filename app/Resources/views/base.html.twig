@@ -40,19 +40,44 @@
                         <a class="nav-link {{ app.request.attributes.get('_route') == 'healthProvider.index' ? 'active' : '' }}" href="{{ url('healthProvider.index') }}">Health Provider</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav float-md-right">
-                    <li class="nav-item ml-1 float-right">
-                        <a class="nav-link" href="javascript:void(0)" id="login-button">
-                            Login
-                        </a>
-                    </li>
-                </ul>
+
+                {% if app.session.get('email') %}
+                    <ul class="navbar-nav float-md-right">
+                        <li class="nav-item ml-1 float-right">
+                            <a class="nav-link" href="{{ url('dashboard') }}">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item ml-1 float-right">
+                            <a class="nav-link" href="{{ url('user.profile') }}">
+                                Profile
+                            </a>
+                        </li>
+                        <li class="nav-item ml-1 float-right">
+                            <a class="nav-link" href="{{ url('logout') }}">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav float-md-right">
+                        <li class="nav-item ml-1 float-right">
+                            <a class="nav-link" href="javascript:void(0)" id="login-button">
+                                Login
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
             </div>
         </nav>
 
         <div class="block-body">
             {% block body %}{% endblock %}
         </div>
+
+        {% if app.session.get('email') == false %}
+            {% include 'components/login.html.twig' %}
+        {% endif %}
 
 
         <script src="{{ url('homepage') }}vendor/bootstrap/js/popper.min.js"></script>

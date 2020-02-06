@@ -12,6 +12,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use AppBundle\Entity\RegisteredUser;
+use AppBundle\Repository\RegisteredUserRepository;
+
 class DefaultController extends Controller
 {
     /**
@@ -29,25 +32,24 @@ class DefaultController extends Controller
                 throw new \InvalidArgumentException('email/password is empty');
             }
 
-            /** @var ProviderRepository $repo */
-            $repo = $this->getDoctrine()->getRepository(Provider::class);
-            $provider = $repo->findProvidersByEmail($email);
+            /** @var RegisteredUserRepository $repo */
+            $repo = $this->getDoctrine()->getRepository(RegisteredUser::class);
+            $res = $repo->findBy(['email' => $email]);
+            $registeredUser = isset($res[0]) ? $res[0] : null;
 
-            if (!$provider instanceof Provider) {
-                throw new \InvalidArgumentException('No provider found for email [' . $email . ']');
-            }
-
-            // is password valid
-            if ($provider->getPassword() === $password) {
-                if (!$provider->isTokenValid()) {
-                    // if token invalid, then generate one
-                    $provider->generateToken();
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($provider);
-                    $em->flush();
+            if ($registeredUser) {
+                // is password valid
+                if ($registeredUser->isPasswordValid($password) ) {
+                    if (!$registeredUser->isTokenValid()) {
+                        // if token invalid, then generate one
+                        $registeredUser->generateToken();
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($registeredUser);
+                        $em->flush();
+                    }
+                    $this->get('session')->set('email', $registeredUser->getEmail());
+                    return ['message' => 'Login success.', 'result' => Response::HTTP_OK, 'data' => ['url' => '/dashboard']];
                 }
-                $this->get('session')->set('email', $provider->getEmail());
-                return ['message' => 'Login success.', 'result' => Response::HTTP_OK, 'data' => ['url' => '/dashboard']];
             }
 
             return ['message' => 'Login failed. Invalid email or password.', 'result' => Response::HTTP_BAD_REQUEST];
@@ -59,8 +61,48 @@ class DefaultController extends Controller
         }
     }
 
+    // public function authenticate(Request $request)
+    // {
+    //     try {
+    //         $email = $request->get('email');
+    //         $password = $request->get('password');
+    //
+    //         if ($email === null || $password === null) {
+    //             throw new \InvalidArgumentException('email/password is empty');
+    //         }
+    //
+    //         /** @var ProviderRepository $repo */
+    //         $repo = $this->getDoctrine()->getRepository(Provider::class);
+    //         $provider = $repo->findProvidersByEmail($email);
+    //
+    //         if (!$provider instanceof Provider) {
+    //             throw new \InvalidArgumentException('No provider found for email [' . $email . ']');
+    //         }
+    //
+    //         // is password valid
+    //         if ($provider->getPassword() === $password) {
+    //             if (!$provider->isTokenValid()) {
+    //                 // if token invalid, then generate one
+    //                 $provider->generateToken();
+    //                 $em = $this->getDoctrine()->getManager();
+    //                 $em->persist($provider);
+    //                 $em->flush();
+    //             }
+    //             $this->get('session')->set('email', $provider->getEmail());
+    //             return ['message' => 'Login success.', 'result' => Response::HTTP_OK, 'data' => ['url' => '/dashboard']];
+    //         }
+    //
+    //         return ['message' => 'Login failed. Invalid email or password.', 'result' => Response::HTTP_BAD_REQUEST];
+    //
+    //     } catch (\InvalidArgumentException $e) {
+    //         return ['message' => 'Login failed. Invalid email or password.', 'result' => Response::HTTP_BAD_REQUEST];
+    //     } catch (NonUniqueResultException $e) {
+    //         return ['message' => $e->getMessage(), 'result' => Response::HTTP_BAD_REQUEST];
+    //     }
+    // }
+
     /**
-     * @Route("/logout")
+     * @Route("/logout", name="logout")
      * @Method("GET")
      *
      */

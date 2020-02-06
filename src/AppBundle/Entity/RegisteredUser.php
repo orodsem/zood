@@ -15,6 +15,8 @@ class RegisteredUser
 {
     const REGISTRATION_SUCCESS_MESSAGE = "Thanks for showing your interest. We'll be in touch with you shortly";
 
+    const SALT = '44FABBH29691B6775F93B5C416F5C';
+
     /**
      * @var int
      *
@@ -155,6 +157,27 @@ class RegisteredUser
      */
     private $created_at;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deleted", type="boolean", options={"default":"0"}))
+     */
+    private $deleted;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @var \DateTime $token_expiration
+     *
+     * @ORM\Column(name="token_expiration", type="datetime", nullable=true)
+     */
+    private $token_expiration;
+
     private $messages = [];
 
     /**
@@ -284,6 +307,16 @@ class RegisteredUser
     public function setPassword($str='')
     {
         $this->password = $str;
+        return $this;
+    }
+
+    /**
+     * @param string $last_name
+     * @return $this
+     */
+    public function setHashedPassword($str='')
+    {
+        $this->password = password_hash($str . self::SALT, PASSWORD_BCRYPT);
         return $this;
     }
 
@@ -536,6 +569,22 @@ class RegisteredUser
         return $this->messages;
     }
 
+    /**
+     * @return string
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @param string $deleted
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+    }
+
     public function isEmailValid()
     {
         return filter_var($this->email, FILTER_VALIDATE_EMAIL);
@@ -571,6 +620,88 @@ class RegisteredUser
 
 
         return $this->messages ? false : true;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTokenExpiration()
+    {
+        return $this->token_expiration;
+    }
+
+    /**
+     * @param \DateTime $token_expiration
+     */
+    public function setTokenExpiration($token_expiration)
+    {
+        $this->token_expiration = $token_expiration;
+    }
+
+    /**
+     *
+     */
+    public function generateToken()
+    {
+        $token = password_hash($this->getEmail() . self::SALT, PASSWORD_BCRYPT);
+        $this->setToken($token);
+
+        $date = new \DateTime();
+        $date->modify('+4 hours');
+        $this->setTokenExpiration($date);
+        return;
+    }
+
+    /**
+     * @return bool
+     * @throws \Exception
+     */
+    public function isTokenValid()
+    {
+        if (empty($this->getToken())) {
+            return false;
+        }
+
+        $now = new \DateTime();
+        if ($this->getTokenExpiration() < $now) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     * @throws \Exception
+     */
+    public function isPasswordValid($str='')
+    {
+
+
+        return true;
+    }
+
+    public function clearToken()
+    {
+        $this->setToken(null);
+        $this->setTokenExpiration(null);
+        return;
     }
 
 
