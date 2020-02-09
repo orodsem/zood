@@ -38,8 +38,12 @@ class DefaultController extends Controller
             $registeredUser = isset($res[0]) ? $res[0] : null;
 
             if ($registeredUser) {
+
+                $encoderService = $this->container->get('security.password_encoder');
+                $match = $encoderService->isPasswordValid($registeredUser, $password);
+
                 // is password valid
-                if ($registeredUser->isPasswordValid($password) ) {
+                if ($match) {
                     if (!$registeredUser->isTokenValid()) {
                         // if token invalid, then generate one
                         $registeredUser->generateToken();

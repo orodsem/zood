@@ -12,6 +12,7 @@ class Profile {
         this.url = {
             countrySearch: '',
             citySearch: '',
+            save: '',
         };
 
     } // constructor()
@@ -75,8 +76,8 @@ class Profile {
             _this.addCalendarAvailability();
         });
 
-        $('#btn-register-submit').on('click', function(e) {
-            _this.validateOtherFormsAndSubmit(e);
+        $('#profileForm').on('submit', function(e) {
+            _this.submitForm(e);
         });
 
         // this.test();
@@ -95,10 +96,59 @@ class Profile {
             $('#btn-add-availability').click();
         }, 1000);
 
-
     }
 
-    validateForm1() {
+    submitForm(e) {
+        // validation
+
+        let valid = this.validateForm()
+
+        // if (!valid) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        // }
+
+        let formData = new FormData($('#profileForm')[0])
+
+        $.ajax({
+            url: this.url,
+            type: "POST",
+            // dataType: "json",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (res)
+            {
+                _this.hideLoading();
+
+                if (!res.messages) {
+                    swal({
+                        title: "Something went wrong!",
+                        text: "We apologize for the inconvinience. Please report this by sending us an email to contact@zood.com",
+                        icon: "error",
+                    });
+                }
+
+                if (res.status == false) {
+                    _this.showMessage(res.messages, 'error');
+                    return;
+                }
+
+                
+            },
+            error: function (xhr, status, errorThrown) {
+                _this.hideLoading();
+                swal({
+                    title: "Something went wrong!",
+                    text: "We apologize for the inconvinience. Please report this by sending us an email to contact@zood.com",
+                    icon: "error",
+                });
+            }
+        });
+    }
+
+    validateForm() {
 
         let valid = true;
         let focus_elem = '';
@@ -151,21 +201,6 @@ class Profile {
             $(focus_elem).focus();
 
         return valid;
-    }
-
-    validateOtherFormsAndSubmit(e) {
-
-        let valid = true;
-
-        valid = this.validateForm1();
-
-        if (!valid) {
-            e.preventDefault();
-            e.stopPropagation();
-            return;
-        }
-
-        $('#registrationForm').submit();
     }
 
     addWorkingHour() {

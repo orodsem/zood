@@ -4,6 +4,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Provider
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="registered_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\RegisteredUserRepository")
  */
-class RegisteredUser
+class RegisteredUser implements UserInterface
 {
     const REGISTRATION_SUCCESS_MESSAGE = "Thanks for showing your interest. We'll be in touch with you shortly";
 
@@ -160,7 +161,7 @@ class RegisteredUser
     /**
      * @var string
      *
-     * @ORM\Column(name="deleted", type="boolean", options={"default":"0"}))
+     * @ORM\Column(name="deleted", type="boolean", options={"default":"0"}, nullable=true))
      */
     private $deleted;
 
@@ -307,16 +308,6 @@ class RegisteredUser
     public function setPassword($str='')
     {
         $this->password = $str;
-        return $this;
-    }
-
-    /**
-     * @param string $last_name
-     * @return $this
-     */
-    public function setHashedPassword($str='')
-    {
-        $this->password = password_hash($str . self::SALT, PASSWORD_BCRYPT);
         return $this;
     }
 
@@ -590,6 +581,24 @@ class RegisteredUser
         return filter_var($this->email, FILTER_VALIDATE_EMAIL);
     }
 
+    public function getRoles()
+    {
+        return;
+    }
+    public function getSalt()
+    {
+        return;
+    }
+    public function getUsername()
+    {
+        return;
+    }
+    public function eraseCredentials()
+    {
+        return;
+    }
+
+
     public function isUserValid()
     {
         $this->messages = [];
@@ -694,7 +703,7 @@ class RegisteredUser
     {
 
 
-        return true;
+        return $match;
     }
 
     public function clearToken()

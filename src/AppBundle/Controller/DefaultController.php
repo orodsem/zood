@@ -103,12 +103,11 @@ class DefaultController extends Controller
             if (!$registeredUser->isUserValid())
                 return new JsonResponse(["results" => [], "messages" => $registeredUser->getMessages(), "status" => false]);
 
+            $encoderService = $this->container->get('security.password_encoder');
+            $pass = $encoderService->encodePassword($registeredUser, $password);
+
             // if everything is valid, hash the password
-            $registeredUser->setHashedPassword($password);
-            // @todo: encode user
-            // $user = new AppBundle\Entity\User();
-            // $encodedPass = $encoder->encodePassword($user, $password);
-            // $registeredUser->setPassword($encodedPass);
+            $registeredUser->setPassword($pass);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($registeredUser);

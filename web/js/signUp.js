@@ -102,14 +102,6 @@ class SignUp {
             });
 
         }, 1000);
-
-        $('[name="first_name"]').val('first name');
-        $('[name="last_name"]').val('last name');
-        $('[name="email"]').val('ramonchristophermorales@gmail.com');
-        $('[name="password"]').val('admin1231232');
-        $('[name="password_confirmation"]').val('admin1231232');
-        $('[name="type"]').val('seeker');
-        $('[name="type"]').trigger('click');
     }
 
     trySignUp() {
@@ -153,8 +145,9 @@ class SignUp {
                     return;
                 }
 
+                _this.clearForm();
+
                 _this.showMessage(res.messages, 'success');
-                window.location = res.data.url;
             },
             error: function (xhr, status, errorThrown) {
                 _this.hideLoading();
@@ -166,6 +159,17 @@ class SignUp {
             }
         });
 
+    }
+
+    clearForm() {
+        $('[name="first_name"]').val(null);
+        $('[name="last_name"]').val(null);
+        $('[name="country"]').val(null);
+        $('[name="country"]').trigger('change');
+        $('[name="city"]').val(null);
+        $('[name="city"]').trigger('change');
+        $('[name="email"]').val(null);
+        $('[name="password_confirmation"]').val(null);
     }
 
     validateForm(form_name) {

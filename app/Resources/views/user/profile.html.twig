@@ -31,7 +31,7 @@
                     {% endfor %}
                 {% endfor %}
 
-                <form action="{{ url('healthProvider.store') }}" method="post" role="form" name="registrationForm" id="registrationForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <form action="{{ url('user.profileSave') }}" method="post" role="form" name="profileForm" id="profileForm" autocomplete="off" accept-charset="utf-8" enctype="multipart/form-data" class="needs-validation" novalidate>
 
                     <div class="form-group">
                         <label for="first_name">First Name</label>
@@ -44,7 +44,7 @@
                             maxlength="255"
                             autocomplete="off"
                             required
-                            value="{{ postData.first_name }}"
+                            value="{{ user.getFirstName() }}"
                         >
                         <div class="invalid-feedback">
                             Invalid First Name
@@ -62,7 +62,7 @@
                             maxlength="255"
                             autocomplete="off"
                             required
-                            value="{{ postData.last_name }}"
+                            value="{{ user.getLastName() }}"
                         >
                         <div class="invalid-feedback">
                             Invalid Last Name
@@ -80,6 +80,7 @@
                             maxlength="255"
                             autocomplete="off"
                             required
+                            value="{{ user.getCountry() }}"
                         ></select>
                         <div class="invalid-feedback">
                             Invalid Country
@@ -97,6 +98,7 @@
                             maxlength="255"
                             autocomplete="off"
                             required
+                            value="{{ user.getCity() }}"
                         ></select>
                         <small class="form-text text-muted">
                             Please select a country before selecting a city
@@ -117,6 +119,7 @@
                             maxlength="255"
                             autocomplete="off"
                             required
+                            value="{{ user.getProfession() }}"
                         >
                         <div class="invalid-feedback">
                             Invalid Profession
@@ -134,6 +137,7 @@
                             maxlength="255"
                             autocomplete="off"
                             required
+                            value="{{ user.getEmail() }}"
                         >
                         <div class="invalid-feedback">
                             Invalid Email
@@ -150,7 +154,7 @@
                             class="form-control"
                             placeholder="Make your story interesting yet professional"
                             maxlength="1000"
-                        ></textarea>
+                        >{{ user.getBio() }}</textarea>
                         <small class="form-text text-muted">
                             Your bio must be no more than 1000 characters long must not contain special characters.
                         </small>
@@ -161,7 +165,7 @@
 
                     <div class="form-group mt-5">
                         <label for="working_hours">Working hours</label>
-                        <ul id="working_hours_list_container"></ul>
+                        <ul id="working_hours_list_container" value="{{ user.getWorkingHours() }}"></ul>
                         <div>
                             <select name="working_hours_start_day"
                                 id="working_hours_start_day"
@@ -199,7 +203,7 @@
 
                     <div class="form-group mt-5">
                         <label for="services_offered_text">What services do you offer</label>
-                        <ul id="services_offered_list_container"></ul>
+                        <ul id="services_offered_list_container" value="{{ user.getServicesOffered() }}"></ul>
                         <div>
                             <input type="text"
                                 name="services_offered_text"
@@ -264,7 +268,7 @@
 
                     <div class="form-group mt-5">
                         <label for="working_hours">Availability</label>
-                        <ul id="calendar_availability_list_container"></ul>
+                        <ul id="calendar_availability_list_container" value="{{ user.getCalendarAvailability() }}"></ul>
                         <div>
                             <input type="text"
                                 name="calendar_availability_text"
@@ -296,6 +300,7 @@
                             name="available_interview"
                             id="available_interview_no"
                             value="0"
+                            {{ user.getIsAvailableInterview() ? '' : 'checked' }}
                         >
                         <label for="available_interview_no" class="cursor-pointer">No</label>
                         &nbsp;
@@ -303,6 +308,7 @@
                             name="available_interview"
                             id="available_interview_yes"
                             value="1"
+                            {{ user.getIsAvailableInterview() ? 'checked' : '' }}
                         >
                         <label for="available_interview_yes" class="cursor-pointer">Yes</label>
                         <br />
@@ -343,6 +349,7 @@
         profile.token = '{{ csrf_token('register') }}';
         profile.url.countrySearch = '{{ url('healthProvider.countrySearch') }}'
         profile.url.citySearch = '{{ url('healthProvider.citySearch') }}'
+        profile.url.save = '{{ url('user.profile') }}'
         profile.init();
     </script>
 {% endblock %}

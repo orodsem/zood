@@ -27,19 +27,37 @@ class UserController extends Controller
         if ($email == null)
             return $this->redirectToRoute('homepage', [], 308);
 
-        $repo = $this->getDoctrine()->getRepository(RegisteredUser::class);
-        $user = $repo->findBy(['email' => $email]);
-        $user = isset($user[0]) ? $user[0] : null;
+        // $repo = $this->getDoctrine()->getRepository(RegisteredUser::class);
+        // $user = $repo->findBy(['email' => $email]);
+        // $user = isset($user[0]) ? $user[0] : null;
+
+        $user = $this->getDoctrine()
+                ->getRepository('AppBundle:RegisteredUser')
+                ->findOneBy(array('email' => $email));
 
         if (!$user)
             return $this->redirectToRoute('homepage', [], 308);
 
         $html = ($this->render('user/profile.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            'postData' => $user
+            'user' => $user
         ]));
 
         echo $html->getContent();
         exit;
+    }
+
+    /**
+     * @Route("/profile-save", name="user.profileSave")
+     */
+    public function profileSaveAction(Request $request)
+    {
+        // @todo: validation
+
+        // @todo: save data
+
+        // @todo: return response
+
+        echo "<pre>";var_dump($request->get('first_name'));
     }
 }
