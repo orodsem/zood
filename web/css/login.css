@@ -1,5 +1,9 @@
 /** login.css */
 
+#loginModal {
+    position: fixed;
+}
+
 .login-button-container {
     display: block;
     z-index: 10;

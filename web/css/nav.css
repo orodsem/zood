@@ -1,7 +1,7 @@
 
 nav {
     padding: 0 !important;
-    z-index:7777 !important;
+    z-index:100 !important;
 }
 
 nav a:not(.navbar-brand) {

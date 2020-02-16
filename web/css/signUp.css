@@ -4,6 +4,7 @@
 }
 
 #signUpModal .signUp-type {
-    transform:scale(1.5);
-    margin-top: 12px;
+    /* transform:scale(1.5); */
+    height: 15px;
+    width: 15px;
 }

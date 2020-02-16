@@ -1,12 +1,4 @@
 
-#health-provider {
-    background-image: url('../images/health-provider/health_provider_index.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    height: 100vh;
-}
-
 
 .cursor-pointer {
     cursor: pointer !important;

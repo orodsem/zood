@@ -23,7 +23,7 @@
                     </div>
                 {% endfor %}
 
-                <a href="{{ url('healthProvider.create') }}" class="btn btn-primary mt-3 mr-1 rounded-lg p-3 shadow">
+                <a href="javascript:void(0)" class="btn btn-primary mt-3 mr-1 rounded-lg p-3 shadow" id="btn-be-health-provider">
                     <h3><i class="fas fa-clinic-medical fa-2x"></i> Be a Health Provider</h3>
                 </a>
                 <a href="{{ url('healthProvider.search') }}" class="btn btn-orange mt-3 ml-1 rounded-lg p-3 shadow">
@@ -41,5 +41,12 @@
 {% endblock %}
 
 {% block scripts %}
-
+    <script>
+        $('#btn-be-health-provider').on('click', function() {
+            $('#loginModal').modal('hide');
+            setTimeout(function() {
+                $('#signUpModal').modal('show');
+            }, 500);
+        });
+    </script>
 {% endblock %}

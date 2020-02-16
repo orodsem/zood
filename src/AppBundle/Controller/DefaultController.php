@@ -10,8 +10,11 @@ use ProviderBundle\Repository\ProviderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class DefaultController extends Controller
 {
@@ -38,7 +41,8 @@ class DefaultController extends Controller
 
         if ($email === null) {
             // no access and back to homepage
-            $this->indexAction($request);
+            // $this->indexAction($request);
+            return $this->redirectToRoute('homepage', [], 308);
         }
 
         // replace this example code with whatever you need
@@ -76,33 +80,40 @@ class DefaultController extends Controller
         try {
             $clientIpAddress = $request->getClientIp();
             $email = $request->get('email', null);
-
-            if (empty($email)) {
-                return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
-            }
+            $password = $request->get('password');
 
             /** @var RegisteredUserRepository $repo */
             $repo = $this->getDoctrine()->getRepository(RegisteredUser::class);
-            $registeredUser = $repo->findBy(['email' => $email]);
+            $registeredUser = $repo->findOneBy(['email' => $email]);
 
-            if (!empty($registeredUser)) {
-                // already registered
-                return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
-            }
+            if (!empty($registeredUser))
+                return new JsonResponse(["results" => [], "messages" => ['Email is already registered'], "status" => false]);
 
             $registeredUser = new RegisteredUser();
-            $registeredUser->setEmail($email);
             $registeredUser->setIpAddress($clientIpAddress);
+            $registeredUser->setType($request->get('type', null));
+            $registeredUser->setFirstName($request->get('first_name', null));
+            $registeredUser->setLastName($request->get('last_name', null));
+            $registeredUser->setCountry($request->get('country', null));
+            $registeredUser->setCity($request->get('city', null));
+            $registeredUser->setEmail($email);
+            $registeredUser->setPassword($password);
+            $registeredUser->setPasswordConfirmation($request->get('password_confirmation', null));
 
-            if (!$registeredUser->isEmailValid()) {
-                // invalid email
-                return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
-            }
+            if (!$registeredUser->isUserValid())
+                return new JsonResponse(["results" => [], "messages" => $registeredUser->getMessages(), "status" => false]);
+
+            $encoderService = $this->container->get('security.password_encoder');
+            $pass = $encoderService->encodePassword($registeredUser, $password);
+
+            // if everything is valid, hash the password
+            $registeredUser->setPassword($pass);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($registeredUser);
             $em->flush();
 
-            return new View(RegisteredUser::REGISTRATION_SUCCESS_MESSAGE, Response::HTTP_OK);
+            return new JsonResponse(["results" => [], "messages" => [RegisteredUser::REGISTRATION_SUCCESS_MESSAGE], "status" => true]);
         } catch (\Exception $e) {
             return new View($e->getMessage(), Response::HTTP_BAD_REQUEST);
         }
@@ -117,7 +128,6 @@ class DefaultController extends Controller
 //
 //        $this->get('mailer')->send($emailMessage);
     }
-
 
 
 }
